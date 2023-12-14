@@ -23,13 +23,13 @@ void Database::close() {
     }
 }
 
-int Database::addUser(const std::string& userID, const std::string& password) {
+int Database::addUser(const std::string& username, const std::string& password) {
     if (!db) {
         // Handle error, database not open
         std::cerr << "Cannot open database" << std::endl;
         return -1;
     }
-    int checkUser = userExists(userID);
+    int checkUser = userExists(username);
 
     if (checkUser == 0) {
         std::string encrytedPassword = encryptPassword(password); // Encrypt password before adding to database
@@ -38,11 +38,11 @@ int Database::addUser(const std::string& userID, const std::string& password) {
             return -1;
         }
         sqlite3_stmt *stmt = nullptr;
-        const char *query = "INSERT INTO USER (id, password) VALUES (?, ?)";
+        const char *query = "INSERT INTO USER (NAME, PASSWORD) VALUES (?, ?)";
 
         // Prepare and bind parameters
         if (sqlite3_prepare_v2(db, query, -1, &stmt, nullptr) == SQLITE_OK) {
-            sqlite3_bind_text(stmt, 1, userID.c_str(), -1, SQLITE_TRANSIENT);
+            sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_TRANSIENT);
             sqlite3_bind_text(stmt, 2, encrytedPassword.c_str(), -1, SQLITE_TRANSIENT);
 
             if (sqlite3_step(stmt) == SQLITE_DONE) {
@@ -60,20 +60,20 @@ int Database::addUser(const std::string& userID, const std::string& password) {
     return -1;
 }
 
-int Database::userExists(const std::string& userID) {
+int Database::userExists(const std::string& username) {
     if (!db) {
         // Handle error, database not open
         std::cerr << "Cannot open database" << std::endl;
         return -1;
     }
 
-    const char* query = "SELECT COUNT(*) FROM USER WHERE ID = ?;";
+    const char* query = "SELECT COUNT(*) FROM USER WHERE NAME = ?;";
     sqlite3_stmt* stmt = nullptr;
     int result = 0;
 
     // Prepare and bind parameters
     if (sqlite3_prepare_v2(db, query, -1, &stmt, nullptr) == SQLITE_OK) {
-        sqlite3_bind_text(stmt, 1, userID.c_str(), -1, SQLITE_STATIC);
+        sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
 
         // Execute the statement and retrieve the result
         if (sqlite3_step(stmt) == SQLITE_ROW) {
@@ -92,21 +92,21 @@ int Database::userExists(const std::string& userID) {
     return result;
 }
 
-int Database::validateUser(const std::string& userID, const std::string& password) {
+int Database::validateUser(const std::string& username, const std::string& password) {
     if (!db) {
         // Handle error, database not open
         std::cerr << "Cannot open database" << std::endl;
         return -1;
     }
 
-    if (userExists(userID)) {
-        const char* query = "SELECT PASSWORD FROM USER WHERE ID = ?;";
+    if (userExists(username)) {
+        const char* query = "SELECT PASSWORD FROM USER WHERE NAME = ?;";
         sqlite3_stmt* stmt = nullptr;
         std::string result = "";
 
         // Prepare and bind parameters
         if (sqlite3_prepare_v2(db, query, -1, &stmt, nullptr) == SQLITE_OK) {
-            sqlite3_bind_text(stmt, 1, userID.c_str(), -1, SQLITE_STATIC);
+            sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
 
             // Execute the statement and retrieve the result
             if (sqlite3_step(stmt) == SQLITE_ROW) {
@@ -127,15 +127,20 @@ int Database::validateUser(const std::string& userID, const std::string& passwor
     }
 }
 
-bool Database::addMatch(const std::string& whiteID, const std::string& blackID,
+int Database::addMatch(const std::string& whiteID, const std::string& blackID,
                               int result, const std::string& moves) {
     if (!db) {
         // Handle error, database not open
         std::cerr << "Cannot open database" << std::endl;
-        return false;
+        return -1;
+    }
+    int checkW = userExists(whiteID), checkB = userExists(blackID);
+    if (checkW < 1 || checkB < 1) {
+        return checkW < 1 ? checkW : checkB;
     }
 
-    const char* query = "INSERT INTO HISTORY (WID, BID, RESULT, MOVES) VALUES (?, ?, ?, ?)";
+    const char* query = "INSERT INTO HISTORY (WID, BID, RESULT, MOVES) VALUES "
+        "((SELECT UID FROM USER WHERE NAME = ?), (SELECT UID FROM USER WHERE NAME = ?), ?, ?)";
     sqlite3_stmt* stmt = nullptr;
 
     // Prepare and bind statement
@@ -151,18 +156,18 @@ bool Database::addMatch(const std::string& whiteID, const std::string& blackID,
         } else {
             // Handle error
             std::cerr << "Error: " << sqlite3_errmsg(db) << std::endl;
-            return false;
+            return -1;
         }
     } else {
         // Handle error
         std::cerr << "Error: " << sqlite3_errmsg(db) << std::endl;
-        return false;
+        return -1;
     }
 
-    return false;
+    return -1;
 }
 
-std::vector<std::vector<std::string>> Database::getMatch(const std::string& userID) {
+std::vector<std::vector<std::string>> Database::getMatch(const std::string& username) {
     std::vector<std::vector<std::string>> matchList;
     
     if (!db) {
@@ -171,15 +176,21 @@ std::vector<std::vector<std::string>> Database::getMatch(const std::string& user
         return matchList;
     }
 
+    // If username not found, return empty list
+    if (userExists(username) < 1) {
+        return matchList;
+    }
+
     // Fetch matches where the user is either the white or black player
-    const char* query = "SELECT WID, BID, RESULT, MOVES, TIME, HID FROM HISTORY "
-        "WHERE WID = ? OR BID = ? ORDER BY HID DESC;";
+    const char* query = "SELECT U1.NAME, U2.NAME, RESULT, MOVES, TIME, HID FROM HISTORY H JOIN "
+        "USER U1 ON H.WID = U1.UID JOIN USER U2 ON H.BID = U2.UID WHERE WID = ? OR BID = ? ORDER "
+        "BY H.HID DESC;";
     sqlite3_stmt* stmt = nullptr;
 
     // Prepare and bind parameters
     if (sqlite3_prepare_v2(db, query, -1, &stmt, nullptr) == SQLITE_OK) {
-        sqlite3_bind_text(stmt, 1, userID.c_str(), -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(stmt, 2, userID.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(stmt, 2, username.c_str(), -1, SQLITE_TRANSIENT);
 
         // Execute the statement and retrieve the result
         while (sqlite3_step(stmt) == SQLITE_ROW) {
@@ -210,9 +221,8 @@ std::vector<std::vector<std::string>> Database::getMatch(const std::string& user
     return matchList;
 }
 
-std::vector<std::vector<std::string>> Database::getMatch(const std::string& userID, const std::string& opponentID) {
+std::vector<std::vector<std::string>> Database::getMatch(const std::string& username, const std::string& opponentName) {
     std::vector<std::vector<std::string>> matchList;
-    std::vector<std::string> match;
     
     if (!db) {
         // Handle error, database not open
@@ -220,21 +230,28 @@ std::vector<std::vector<std::string>> Database::getMatch(const std::string& user
         return matchList;
     }
 
+    // If username not found, return empty list
+    if (userExists(username) < 1) {
+        return matchList;
+    }
+
     // Fetch matches where the user is either the white or black player
-    const char* query = "SELECT WID, BID, RESULT, MOVES, TIME, HID FROM HISTORY WHERE "
-        "(WID = ? AND BID = ?) OR (BID = ? AND WID = ?) ORDER BY HID DESC;";
+    const char* query = "SELECT U1.NAME, U2.NAME, RESULT, MOVES, TIME, HID FROM HISTORY H JOIN "
+        "USER U1 ON H.WID = U1.UID JOIN USER U2 ON H.BID = U2.UID WHERE (WID = ? AND BID = ?) OR "
+        "(BID = ? AND WID = ?) ORDER BY H.HID DESC;";
     sqlite3_stmt* stmt = nullptr;
 
     // Prepare and bind parameters
     if (sqlite3_prepare_v2(db, query, -1, &stmt, nullptr) == SQLITE_OK) {
-        sqlite3_bind_text(stmt, 1, userID.c_str(), -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(stmt, 2, opponentID.c_str(), -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(stmt, 3, userID.c_str(), -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(stmt, 4, opponentID.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(stmt, 2, opponentName.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(stmt, 3, username.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(stmt, 4, opponentName.c_str(), -1, SQLITE_TRANSIENT);
 
         // Execute the statement and retrieve the result
         while (sqlite3_step(stmt) == SQLITE_ROW) {
             // Retrieve values from columns
+            std::vector<std::string> match;
             std::string whiteID = (const char*)sqlite3_column_text(stmt, 0);
             std::string blackID = (const char*)sqlite3_column_text(stmt, 1);
             int result = sqlite3_column_int(stmt, 2);
