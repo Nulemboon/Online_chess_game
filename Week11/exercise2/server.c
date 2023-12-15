@@ -104,7 +104,7 @@ account *findUser(char *id) {
     account *acc;
     acc = head;
     while (acc != NULL) {
-        if (strcmp(id, acc->userid) == 0) {
+        if (strcmp(id, acc->userid) == 0 && strcmp(acc->userid, id) == 0) {
             return acc;  // User found
         }
         acc = acc->next;
@@ -126,7 +126,7 @@ void login(int connfd, char *userid, char *password) {
             strcpy(buff, "1"); // Message for blocked acc
         } else { 
             // Check password
-            if (strcmp(password, acc->password) != 0) {
+            if (strcmp(password, acc->password) != 0 || strcmp(acc->password, password) != 0) {
                 acc->failLogin++;
                 printf("%d\n", acc->failLogin);
                 // Change status to blocked (0) after 5 fail attempts
