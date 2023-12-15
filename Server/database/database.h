@@ -18,36 +18,36 @@ class Database {
         /*  This function adds a new record to table User, registers the new user.
             Returns -1 if an error occurs, 0 if the user is already registered, and 1 if the user was successfully registered.
         */
-        int addUser(const std::string& userID, const std::string& password);
+        int addUser(const std::string& username, const std::string& password);
 
         /*  This function checks if a user is registered in the database.
             Returns -1 if an error occurs, 0 if the user is not registered, and 1 if the user is registered.
         */
-        int userExists(const std::string& userID);
+        int userExists(const std::string& username);
 
         /*  This function is used for logging in, checks if a user's password is correct.
             Returns -1 if an error occurs, 0 if the password is incorrect or the user is not registered, and 1 if the password is correct.
         */
-        int validateUser(const std::string& userID, const std::string& password);
+        int validateUser(const std::string& username, const std::string& password);
 
         // Match history functions
 
         /*  This function adds a new record to table History.
-            Returns true if the record was added successfully and false otherwise.
+            Returns -1 if an error occured, 1 if the record was added successfully and 0 if whiteID or blackID not found.
         */
-        bool addMatch(const std::string& whiteID, const std::string& blackID, int result, const std::string& moves);
+        int addMatch(const std::string& whiteID, const std::string& blackID, int result, const std::string& moves);
         
-        /*  This function returns all matches of the user with userID
+        /*  This function returns all matches of the user with username
             Output order: whiteID, blackID, result, moves, time, history, historyID
             result: 0 = draw, 1 = white wins, 2 = black wins
         */
-        std::vector<std::vector<std::string>> getMatch(const std::string& userID);
+        std::vector<std::vector<std::string>> getMatch(const std::string& username);
         
-        /*  This function returns all matches between userID and opponentID
+        /*  This function returns all matches between username and opponentID
             Output order: whiteID, blackID, result, moves, time, history, historyID
             result: 0 = draw, 1 = white wins, 2 = black wins
         */
-        std::vector<std::vector<std::string>> getMatch(const std::string& userID, const std::string& opponentID); // Get all match with an opponent
+        std::vector<std::vector<std::string>> getMatch(const std::string& username, const std::string& opponentID); // Get all match with an opponent
 
     private:
         sqlite3* db;
