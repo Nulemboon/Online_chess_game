@@ -8,6 +8,10 @@ Database::~Database() {
     close();
 }
 
+sqlite3* Database::getConnection() const {
+    return db;
+}
+
 bool Database::open() {
     int n = sqlite3_open(dbName, &db) == SQLITE_OK;
     if (db != NULL) {
@@ -99,7 +103,7 @@ int Database::validateUser(const std::string& username, const std::string& passw
         return -1;
     }
 
-    if (userExists(username)) {
+    if (userExists(username) == 1) {
         const char* query = "SELECT PASSWORD FROM USER WHERE NAME = ?;";
         sqlite3_stmt* stmt = nullptr;
         std::string result = "";
@@ -123,7 +127,7 @@ int Database::validateUser(const std::string& username, const std::string& passw
         return bcrypt_checkpw(password.c_str(), result.c_str()) == 0? 1 : 0;  
     } else {
         // User not found
-        return 0;
+        return 2;
     }
 }
 
@@ -167,8 +171,8 @@ int Database::addMatch(const std::string& whiteID, const std::string& blackID,
     return -1;
 }
 
-std::vector<std::vector<std::string>> Database::getMatch(const std::string& username) {
-    std::vector<std::vector<std::string>> matchList;
+std::vector<std::map<std::string, std::string>> Database::getHistory(const std::string& username) {
+    std::vector<std::map<std::string, std::string>> matchList;
     
     if (!db) {
         // Handle error, database not open
@@ -182,7 +186,7 @@ std::vector<std::vector<std::string>> Database::getMatch(const std::string& user
     }
 
     // Fetch matches where the user is either the white or black player
-    const char* query = "SELECT U1.NAME, U2.NAME, RESULT, MOVES, TIME, HID FROM HISTORY H JOIN "
+    const char* query = "SELECT U1.NAME, U2.NAME, RESULT, TIME, HID FROM HISTORY H JOIN "
         "USER U1 ON H.WID = U1.UID JOIN USER U2 ON H.BID = U2.UID WHERE WID = ? OR BID = ? ORDER "
         "BY H.HID DESC;";
     sqlite3_stmt* stmt = nullptr;
@@ -195,21 +199,19 @@ std::vector<std::vector<std::string>> Database::getMatch(const std::string& user
         // Execute the statement and retrieve the result
         while (sqlite3_step(stmt) == SQLITE_ROW) {
             // Retrieve values from columns
+            std::map<std::string, std::string> match;
             std::string whiteID = (const char*)sqlite3_column_text(stmt, 0);
             std::string blackID = (const char*)sqlite3_column_text(stmt, 1);
             int result = sqlite3_column_int(stmt, 2);
-            std::string moves = (const char*)sqlite3_column_text(stmt, 3);
-            std::string time = (const char*)sqlite3_column_text(stmt, 4);
-            int hID = sqlite3_column_int(stmt, 5);
+            std::string time = (const char*)sqlite3_column_text(stmt, 3);
+            int hID = sqlite3_column_int(stmt, 4);
 
             // Pushing column values into the matrix
-            std::vector<std::string> match;
-            match.push_back(whiteID);
-            match.push_back(blackID);
-            match.push_back(std::to_string(result));
-            match.push_back(moves);
-            match.push_back(time);
-            match.push_back(std::to_string(hID));
+            match["whiteID"] = whiteID;
+            match["blackID"] = blackID;
+            match["result"] = std::to_string(result);
+            match["time"] = time;
+            match["matchID"] = std::to_string(hID);
 
             matchList.push_back(match);
         }
@@ -221,8 +223,8 @@ std::vector<std::vector<std::string>> Database::getMatch(const std::string& user
     return matchList;
 }
 
-std::vector<std::vector<std::string>> Database::getMatch(const std::string& username, const std::string& opponentName) {
-    std::vector<std::vector<std::string>> matchList;
+std::vector<std::map<std::string, std::string>> Database::getHistory(const std::string& username, const std::string& opponentName) {
+    std::vector<std::map<std::string, std::string>> matchList;
     
     if (!db) {
         // Handle error, database not open
@@ -235,8 +237,8 @@ std::vector<std::vector<std::string>> Database::getMatch(const std::string& user
         return matchList;
     }
 
-    // Fetch matches where the user is either the white or black player
-    const char* query = "SELECT U1.NAME, U2.NAME, RESULT, MOVES, TIME, HID FROM HISTORY H JOIN "
+    // Fetch matches of the userID and opponentID 
+    const char* query = "SELECT U1.NAME, U2.NAME, RESULT, TIME, HID FROM HISTORY H JOIN "
         "USER U1 ON H.WID = U1.UID JOIN USER U2 ON H.BID = U2.UID WHERE (WID = ? AND BID = ?) OR "
         "(BID = ? AND WID = ?) ORDER BY H.HID DESC;";
     sqlite3_stmt* stmt = nullptr;
@@ -251,7 +253,52 @@ std::vector<std::vector<std::string>> Database::getMatch(const std::string& user
         // Execute the statement and retrieve the result
         while (sqlite3_step(stmt) == SQLITE_ROW) {
             // Retrieve values from columns
-            std::vector<std::string> match;
+            std::map<std::string, std::string> match;
+            std::string whiteID = (const char*)sqlite3_column_text(stmt, 0);
+            std::string blackID = (const char*)sqlite3_column_text(stmt, 1);
+            int result = sqlite3_column_int(stmt, 2);
+            std::string time = (const char*)sqlite3_column_text(stmt, 4);
+            int hID = sqlite3_column_int(stmt, 5);
+
+            // Pushing column values into the matrix
+            match["whiteID"] = whiteID;
+            match["blackID"] = blackID;
+            match["result"] = std::to_string(result);
+            match["time"] = time;
+            match["matchID"] = std::to_string(hID);
+
+            matchList.push_back(match);
+        }
+    } else {
+        // Handle error
+        std::cerr << "Error: " << sqlite3_errmsg(db) << std::endl;
+    }
+    
+    return matchList;
+}
+
+std::vector<std::map<std::string, std::string>> Database::getMatch(const int matchID) {
+    std::vector<std::map<std::string, std::string>> matchList;
+    
+    if (!db) {
+        // Handle error, database not open
+        std::cerr << "Cannot open database" << std::endl;
+        return matchList;
+    }
+
+    // Fetch moves of matchID
+    const char* query = "SELECT U1.NAME, U2.NAME, RESULT, MOVES, TIME, HID FROM HISTORY H JOIN "
+        "USER U1 ON H.WID = U1.UID JOIN USER U2 ON H.BID = U2.UID WHERE HID = ?;";
+    sqlite3_stmt* stmt = nullptr;
+
+    // Prepare and bind parameters
+    if (sqlite3_prepare_v2(db, query, -1, &stmt, nullptr) == SQLITE_OK) {
+        sqlite3_bind_int(stmt, 1, matchID);
+
+        // Execute the statement and retrieve the result
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            // Retrieve values from columns
+            std::map<std::string, std::string> match;
             std::string whiteID = (const char*)sqlite3_column_text(stmt, 0);
             std::string blackID = (const char*)sqlite3_column_text(stmt, 1);
             int result = sqlite3_column_int(stmt, 2);
@@ -260,14 +307,12 @@ std::vector<std::vector<std::string>> Database::getMatch(const std::string& user
             int hID = sqlite3_column_int(stmt, 5);
 
             // Pushing column values into the matrix
-            match.push_back(whiteID);
-            match.push_back(blackID);
-            match.push_back(std::to_string(result));
-            match.push_back(moves);
-            match.push_back(time);
-            match.push_back(std::to_string(hID));
-
-            matchList.push_back(match);
+            match["whiteID"] = whiteID;
+            match["blackID"] = blackID;
+            match["result"] = std::to_string(result);
+            match["moves"] = moves;
+            match["time"] = time;
+            match["matchID"] = std::to_string(hID);
         }
     } else {
         // Handle error
