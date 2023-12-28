@@ -2,15 +2,15 @@
 #define MESSAGE_H
 
 #include <string>
-#include "json/nlohmann/json.hpp"
+#include <json.hpp>
 
 using json = nlohmann::json;
 
 // Define message types
 enum MessageType : uint8_t {
     // Client message
-    ACCEPT,
-    REJECT,
+    OK,
+    NOT_OK,
     SEE_HISTORY,
     RANDOM_MATCHMAKING,
     CREATE_ROOM,
@@ -22,11 +22,13 @@ enum MessageType : uint8_t {
     INVITE, // <username> 
     MOVE, // <source_position> <destination_position>
     DELETE_ROOM, // <room_id>
-    ACCEPT_INVITE, // <invite_id>
-    REJECT_INVITE, // <invite_id>
+    ACCEPT_INVITE, // <username>
+    REJECT_INVITE, // <username>
+    SEE_MATCH, // <match_id>
 
     // Server message
     HISTORY, // <matches>
+    MATCH, // <match>
     REGISTER_USERNAME_EXISTED,
     REGISTER_PASSWORD_FAIL,
     REGISTER_SUCCESSFUL,
@@ -35,9 +37,11 @@ enum MessageType : uint8_t {
     USER_LOGGED_IN,
     LOGIN_SUCCESSFUL,
     MATCH_FOUND,
+    MOVE_NOT_OK,
     GAME_DRAW,
     GAME_WIN,
     GAME_LOSE,
+    ERROR,
 
 };
 
@@ -48,53 +52,74 @@ class Message {
 
         MessageType getType() const;
         uint16_t getLength() const;
+        std::string getPayload() const;
+        // Parse the message into a string
         virtual std::string serialize() const;
 
     protected:
         MessageType type;
         uint16_t length;
-        json payload;
+        std::string payload;
 };
 
-class UserMessage : protected Message {
+class UserMessage : public Message {
     public:
         UserMessage(MessageType type, std::string username, std::string password);
         UserMessage(Message message);
 
         std::string getUsername() const;
         std::string getPassword() const;
-        std::string serialize() const override;
 
     private:
         std::string username;
         std::string password;
 };
 
-class MoveMessage : protected Message {
+class MoveMessage : public Message {
     public:
         MoveMessage(std::string source, std::string destination);
         MoveMessage(Message message);
 
         std::string getSource() const;
         std::string getDestination() const;
-        std::string serialize() const override;
     
     private:
         std::string source;
         std::string destination;
 };
 
-class HistoryMessage : protected Message {
+class HistoryMessage : public Message {
     public:
-        HistoryMessage(std::vector<std::vector<std::string>> matches);
+        HistoryMessage(MessageType type, std::vector<std::map<std::string, std::string>> matches);
         HistoryMessage(Message message);
 
-        std::vector<std::vector<std::string>> getMatches() const;
+        std::vector<std::map<std::string, std::string>> getMatches() const;
         std::string serialize() const override;
 
     private:
-        std::vector<std::vector<std::string>> matches;
+        std::vector<std::map<std::string, std::string>> matches;
 };
 
+class MatchMessage : public Message {
+    public:
+    MatchMessage(int matchID);
+    MatchMessage(Message message);
+
+    int getMatchID() const;
+    
+    private:
+    int matchID;
+};
+
+class ErrorMessage : public Message {
+    public:
+    ErrorMessage(std::string error);
+    ErrorMessage(Message message);
+
+    std::string getError() const;
+    
+    private:
+    std::string error;
+};
 
 #endif // MESSAGE_H
