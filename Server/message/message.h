@@ -37,12 +37,15 @@ enum MessageType : uint8_t {
     USER_LOGGED_IN,
     LOGIN_SUCCESSFUL,
     MATCH_FOUND,
+    MATCHMAKING_TIMEOUT,
     MOVE_NOT_OK,
+    STALEMATE,
+    THREE_FOLD,
+    FIFTY,
     GAME_DRAW,
     GAME_WIN,
     GAME_LOSE,
     ERROR,
-
 };
 
 class Message {
