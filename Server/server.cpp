@@ -25,7 +25,8 @@ struct Client {
 
 std::unordered_map<std::string, int> session;
 std::vector<Client> waitingQueue;
-std::unordered_map<int, ChessGame> gameList; //map fron gameID to chess game
+std::unordered_map<int, ChessGame*> gameList; //map fron gameID to chess game
+int lastGameID;
 std::unordered_map<int, int> gameMap; //map from client socket to gameID
 std::unordered_map<int, std::pair<int, int>> playerMap; // map from gameID to client socket
 std::vector<std::pair<std::string, int>> readyList; //ready-to-play players
@@ -184,11 +185,37 @@ void deleteRoom(int clientSocket) {
     }
 }
 
-void invite(int clientSocket, Message* msg) {
+void invite(int clientSocket, Message* msg, Database* db) {
     UserMessage* userMsg = new UserMessage(*msg);
     std::string username = userMsg->getUsername();
-
+    std::string curName = "";
+    
+    for (auto& p : session) {
+        if (p.second == clientSocket) {
+            curName = p.first;
+            break;
+        }
+    }
+    char buffer[BUFF_SIZE];
     int receiver = session[username];
+    UserMessage* invite = new UserMessage(INVITE, curName, "");
+    sendMessage(receiver, invite);
+    int rc = recv(receiver, buffer, BUFF_SIZE, 0);
+    Message* receive = new Message(buffer);
+    if (receive->getType() == ACCEPT_INVITE) {
+        // std::mutex::lock(lastGameID);
+        int gameID = ++lastGameID;
+        gameList.insert({gameID, new ChessGame()});
+        gameMap.insert({clientSocket, gameID});
+        gameMap.insert({receiver, gameID});
+        playerMap.insert({gameID, {clientSocket, receiver}});
+        deleteRoom(clientSocket);
+        deleteRoom(receiver);
+        sendMessage(clientSocket, new Message(MATCH_FOUND));
+        sendMessage(receiver, new Message(MATCH_FOUND));
+    } else {
+        sendMessage(clientSocket, new Message(REJECT_INVITE));
+    }
 
 }
 
@@ -218,7 +245,7 @@ void randomMatch(int clientSocket, std::string username, Database* db) {
 
 void move(int clientSock, Message *msg) {
     int gameID = gameMap[clientSock];
-    ChessGame curGame = gameList[gameID];
+    ChessGame* curGame = gameList[gameID];
     MoveMessage* moveMsg = new MoveMessage(*msg);
     std::string src = moveMsg->getSource();
     std::string dest = moveMsg->getDestination();
@@ -227,9 +254,9 @@ void move(int clientSock, Message *msg) {
     int endRow = (int)(dest[0] - '0');
     int endCol = (int)(dest[1] - '0');
 
-    bool valid = curGame.validateMove(curGame.chessboard.MainGameBoard, startRow, startCol, endRow, endCol);
+    bool valid = curGame->validateMove(curGame->chessboard.MainGameBoard, startRow, startCol, endRow, endCol);
     if (valid) {
-        curGame.AlternateTurn();
+        curGame->AlternateTurn();
         if (clientSock == playerMap[gameID].first) {
             sendMessage(playerMap[gameID].second, moveMsg);
         } else {
@@ -237,7 +264,7 @@ void move(int clientSock, Message *msg) {
         }
         Message* rep1;
         Message* rep2;
-        switch(curGame.IsGameOver()) {
+        switch(curGame->IsGameOver()) {
             case 0: {
                 rep1 = new Message(OK);
 
@@ -287,7 +314,7 @@ void move(int clientSock, Message *msg) {
         }
 
         //Update game list
-        if (curGame.IsGameOver() > 0) {
+        if (curGame->IsGameOver() > 0) {
             gameList.erase(gameID);
             gameMap.erase(playerMap[gameID].first);
             gameMap.erase(playerMap[gameID].second);
@@ -406,7 +433,7 @@ void handleClient(int clientSocket, Database *db) {
                 break;
 
             case INVITE: // <username>
-                invite(clientSocket, msg);
+                invite(clientSocket, msg, db);
                 break;
 
             case MOVE: // <source_position> <destination_position>
@@ -417,11 +444,11 @@ void handleClient(int clientSocket, Database *db) {
                 deleteRoom(clientSocket);
                 break;
 
-            case ACCEPT_INVITE: // <username>
-                break;
+            // case ACCEPT_INVITE: // <username>
+            //     break;
 
-            case REJECT_INVITE: // <username>
-                break;
+            // case REJECT_INVITE: // <username>
+            //     break;
 
             case SEE_MATCH: // <match_id>
                 seeMatch(clientSocket, username, msg, db);
@@ -479,6 +506,7 @@ int main() {
     std::cout << "Chess Server listening on port " << PORT << std::endl;
 
     std::thread(checkWaitingQueue).detach();
+    lastGameID = db.getLastMatchID();
 
     while (true) {
         // Accept a new connection
