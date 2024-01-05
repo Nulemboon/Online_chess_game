@@ -1,0 +1,27 @@
+# ninja log v5
+17706	33574	1704384914775506565	CMakeFiles/Chess.dir/rook.cpp.o	965e8ef608c29beb
+18461	32328	1704384913525506572	CMakeFiles/Chess.dir/knight.cpp.o	e9129fef4503081c
+893	18875	1704384900035506647	CMakeFiles/Chess.dir/chesspiece.cpp.o	cdbf3f2b50cd3be7
+22	3809	1704407531293143863	CMakeFiles/Chess.dir/chesssquare.cpp.o	858f681540b2e3a9
+18875	33292	1704384914495506567	CMakeFiles/Chess.dir/bishop.cpp.o	7b55831ad1c0c79
+22585	25292	1704384906495506610	CMakeFiles/Chess.dir/Chess_autogen/EWIEGA46WW/qrc_resource.cpp.o	ed4f7b3037acb4bd
+22	4432	1704407531913143865	CMakeFiles/Chess.dir/game.cpp.o	55f5c6f03d657c9c
+845	921	1704384735685506340	/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen/EWIEGA46WW/qrc_resource.cpp	f373be94a0c1c16b
+21	4054	1704407531543143864	CMakeFiles/Chess.dir/home.cpp.o	87486a574f275182
+20205	33705	1704384914905506565	CMakeFiles/Chess.dir/queen.cpp.o	aaeebdf6aa4b6d97
+317	4059	1704407268163142444	CMakeFiles/Chess.dir/Chess_autogen/mocs_compilation.cpp.o	1025e63ffe56c686
+20493	35593	1704384916795506555	CMakeFiles/Chess.dir/king.cpp.o	747e9490cf0df5f2
+2	20	1704407527503143847	/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen/timestamp	1a3da3175b9405c3
+900	25293	1704384906495506610	CMakeFiles/Chess.dir/pawn.cpp.o	1cf6b079ce6fc9f3
+924	21049	1704384755725505501	CMakeFiles/Chess.dir/button.cpp.o	7af50393936d2be5
+24	3570	1704349181503763822	CMakeFiles/Chess.dir/main.cpp.o	510b2de03345610c
+21	3703	1704407531193143862	CMakeFiles/Chess.dir/login.cpp.o	b4ae54444d48314f
+2	20	1704407527503143847	/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen/mocs_compilation.cpp	1a3da3175b9405c3
+21	3905	1704407531393143863	CMakeFiles/Chess.dir/mainwindow.cpp.o	67bbada946fc3dd
+845	921	1704384735685506340	Chess_autogen/EWIEGA46WW/qrc_resource.cpp	f373be94a0c1c16b
+38	9848	1704393364325503726	CMakeFiles/Chess.dir/chessbox.cpp.o	4774e91dcc2704a6
+889	20205	1704384901365506640	CMakeFiles/Chess.dir/chessboard.cpp.o	7f492eaf1409bd99
+4432	4937	1704407532423143867	Chess	277542133ca7456c
+2	20	1704407527503143847	Chess_autogen/timestamp	1a3da3175b9405c3
+2	20	1704407527503143847	Chess_autogen/mocs_compilation.cpp	1a3da3175b9405c3
+22	4210	1704407531693143864	CMakeFiles/Chess.dir/history.cpp.o	8ec02eca49b53924

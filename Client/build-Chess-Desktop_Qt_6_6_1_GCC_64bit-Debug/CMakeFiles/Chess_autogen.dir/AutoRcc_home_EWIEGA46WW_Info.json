@@ -1,0 +1,22 @@
+{
+	"BUILD_DIR" : "/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen",
+	"CMAKE_BINARY_DIR" : "/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess",
+	"CMAKE_SOURCE_DIR" : "/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess",
+	"INCLUDE_DIR" : "/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen/include",
+	"INPUTS" : 
+	[
+		"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/home.jpg"
+	],
+	"LOCK_FILE" : "/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/Chess_autogen.dir/AutoRcc_home_EWIEGA46WW_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "home" ],
+	"OUTPUT_CHECKSUM" : "EWIEGA46WW",
+	"OUTPUT_NAME" : "qrc_home.cpp",
+	"RCC_EXECUTABLE" : "/home/pert/Qt/6.6.1/gcc_64/./libexec/rcc",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/Chess_autogen.dir/AutoRcc_home_EWIEGA46WW_Used.txt",
+	"SOURCE" : "/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/home.qrc",
+	"VERBOSITY" : 0
+}

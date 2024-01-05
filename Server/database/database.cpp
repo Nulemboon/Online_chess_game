@@ -132,7 +132,7 @@ int Database::validateUser(const std::string& username, const std::string& passw
 }
 
 int Database::addMatch(const std::string& whiteID, const std::string& blackID,
-                              int result, const std::string& moves) {
+                              int result, const std::string& moves, const int matchID) {
     if (!db) {
         // Handle error, database not open
         std::cerr << "Cannot open database" << std::endl;
@@ -143,16 +143,17 @@ int Database::addMatch(const std::string& whiteID, const std::string& blackID,
         return checkW < 1 ? checkW : checkB;
     }
 
-    const char* query = "INSERT INTO HISTORY (WID, BID, RESULT, MOVES) VALUES "
-        "((SELECT UID FROM USER WHERE NAME = ?), (SELECT UID FROM USER WHERE NAME = ?), ?, ?)";
+    const char* query = "INSERT INTO HISTORY (HID, WID, BID, RESULT, MOVES) VALUES "
+        "(?, (SELECT UID FROM USER WHERE NAME = ?), (SELECT UID FROM USER WHERE NAME = ?), ?, ?)";
     sqlite3_stmt* stmt = nullptr;
 
     // Prepare and bind statement
     if (sqlite3_prepare_v2(db, query, -1, &stmt, nullptr) == SQLITE_OK) {
-        sqlite3_bind_text(stmt, 1, whiteID.c_str(), -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(stmt, 2, blackID.c_str(), -1, SQLITE_TRANSIENT);
-        sqlite3_bind_int(stmt, 3, result);
-        sqlite3_bind_text(stmt, 4, moves.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_int(stmt, 1, matchID);
+        sqlite3_bind_text(stmt, 2, whiteID.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(stmt, 3, blackID.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_int(stmt, 4, result);
+        sqlite3_bind_text(stmt, 5, moves.c_str(), -1, SQLITE_TRANSIENT);
 
         if (sqlite3_step(stmt) == SQLITE_DONE) {
             sqlite3_finalize(stmt);
@@ -343,4 +344,83 @@ std::string Database::encryptPassword(const std::string& password) {
     }
 
     return hashedPassword;
+}
+
+int Database::getELO(const std::string& username){
+    int elo = 0;
+    if (!db) {
+        // Handle error, database not open
+        std::cerr << "Cannot open database" << std::endl;
+        return elo;
+    }
+
+    // Fetch moves of matchID
+    const char* query = "SELECT ELO FROM USER WHERE NAME = ?;";
+    sqlite3_stmt* stmt = nullptr;
+
+    // Prepare and bind parameters
+    if (sqlite3_prepare_v2(db, query, -1, &stmt, nullptr) == SQLITE_OK) {
+        sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_TRANSIENT);
+
+        // Execute the statement and retrieve the result
+        while (sqlite3_step(stmt) == SQLITE_ROW) {
+            elo = sqlite3_column_int(stmt, 0);
+        }
+    } else {
+        // Handle error
+        std::cerr << "Error: " << sqlite3_errmsg(db) << std::endl;
+    }
+    
+    return elo;
+}
+
+int Database::updateELO(const std::string& username, int eloValue) {
+    if (!db) {
+        // Handle error, database not open
+        std::cerr << "Cannot open database" << std::endl;
+        return 0;
+    }
+
+    // Fetch moves of matchID
+    const char* query = "UPDATE TABLE SET ELO = ELO + ? WHERE NAME = ?;";
+    sqlite3_stmt* stmt = nullptr;
+
+    // Prepare and bind parameters
+    if (sqlite3_prepare_v2(db, query, -1, &stmt, nullptr) == SQLITE_OK) {
+        sqlite3_bind_int(stmt, 1, eloValue);
+        sqlite3_bind_text(stmt, 2, username.c_str(), -1, SQLITE_TRANSIENT);
+
+        // Execute the statement and retrieve the result
+        while (sqlite3_step(stmt) == SQLITE_DONE) {
+            elo = sqlite3_column_int(stmt, 0);
+            sqlite3_finalize(stmt);
+                std::cout << "Added successfully" << std::endl;
+                return 1;
+        }
+    } else {
+        // Handle error
+        std::cerr << "Error: " << sqlite3_errmsg(db) << std::endl;
+    }
+    
+    return 0;
+}
+
+int Database::getLastMatchID() {
+    int matchID = 0;
+    if (!db) {
+        // Handle error, database not open
+        std::cerr << "Cannot open database" << std::endl;
+        return matchID;
+    }
+
+    // Fetch moves of matchID
+    const char* query = "SELECT HID FROM HISTORY ORDER BY DESC LIMIT;";
+    sqlite3_stmt* stmt = nullptr;
+
+    // Execute the statement and retrieve the result
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        matchID = sqlite3_column_int(stmt, 0);
+    }
+    
+    return matchID;
 }

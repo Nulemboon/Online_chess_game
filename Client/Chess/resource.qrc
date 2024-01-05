@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/home">
+        <file>assets/home.jpg</file>
+        <file>assets/logo.png</file>
+        <file>assets/arrow-left.png</file>
+    </qresource>
+    <qresource prefix="/ChessPiece">
+        <file>assets/bishopB.png</file>
+        <file>assets/bishopW.png</file>
+        <file>assets/horseB.png</file>
+        <file>assets/horseW.png</file>
+        <file>assets/kingB.png</file>
+        <file>assets/kingW.png</file>
+        <file>assets/pawnB.png</file>
+        <file>assets/pawnW.png</file>
+        <file>assets/queenB.png</file>
+        <file>assets/queenW.png</file>
+        <file>assets/rookB.png</file>
+        <file>assets/rookW.png</file>
+    </qresource>
+</RCC>

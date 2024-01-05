@@ -37,7 +37,7 @@ class Database {
         /*  This function adds a new record to table History.
             Returns -1 if an error occured, 1 if the record was added successfully and 0 if whiteID or blackID not found.
         */
-        int addMatch(const std::string& whiteID, const std::string& blackID, int result, const std::string& moves);
+        int addMatch(const std::string& whiteID, const std::string& blackID, int result, const std::string& moves, const int matchID);
         
         /*  This function returns all matches of the user with username
             Output order: whiteID, blackID, result, moves, time, history, historyID
@@ -54,6 +54,16 @@ class Database {
         /* This function returns the details of matchID, including moves
         */
         std::vector<std::map<std::string, std::string>> getMatch(const int matchID);
+
+        // Get ELO
+        int getELO(const std::string& username);
+
+        // Update ELO, return 0 = error, 1 = success
+        int updateELO(const std::string& username, int eloValue);
+
+        // Return the greatest value of HID
+        int getLastMatchID();
+
     private:
         sqlite3* db;
         const char* dbName;
