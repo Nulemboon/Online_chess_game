@@ -4,39 +4,48 @@
 #include <QWidget>
 #include <QGraphicsView>
 #include "chesssquare.h"
+#include "mainwindow.h"
 
 namespace Ui {
 class game;
 }
-
-enum Side {
-    WHITE,
-    BLACK
-};
 
 class game : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit game(Side side, QString opponentName, QWidget *parent = nullptr);
+    explicit game(Side side, QString opponentName, MainWindow* mainwindow, QWidget *parent = nullptr);
     ~game();
 
     void setupBoard();
     void drawBoxes();
+    void addDead();
+    QString getPath(ChessPiece piece);
 
     ChessSquare *collection[8][8];
     QPair<int, int> squareSelected;
 public slots:
     void chessSquareClicked(int row, int col);
+private slots:
+    void on_btnDraw_clicked();
+
+    void on_btnYes_clicked();
+
+    void on_btnNo_clicked();
+
+    void on_btnResign_clicked();
+
 private:
     Ui::game *ui;
     QGraphicsScene *scene;
     QGraphicsView *view;
+    MainWindow* mainwindow;
+    QList <ChessPiece> playerDead;
     Side side;
     QString opponentName;
-    // QList <ChessPiece *> whiteDead;
-    // QList <ChessPiece *> blackDead;
+    QList <ChessPiece> opponentDead;
+    int choice;
     // QList <ChessPiece> white;
     // QList <ChessPiece> black;
     // QGraphicsRectItem * deadHolder;
@@ -44,6 +53,8 @@ private:
     // ChessBoard *chess;
     // QList <QGraphicsItem *> listG;
     // QGraphicsTextItem * turnDisplay;
+
+    void moves(ChessSquare* src, ChessSquare* dst);
 
 };
 

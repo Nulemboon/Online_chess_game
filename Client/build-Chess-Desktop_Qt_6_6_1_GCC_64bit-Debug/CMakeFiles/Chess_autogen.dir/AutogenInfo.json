@@ -384,9 +384,27 @@
 			null
 		],
 		[
+			"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/match.h",
+			"MU",
+			"EWIEGA46WW/moc_match.cpp",
+			null
+		],
+		[
 			"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/play.h",
 			"MU",
 			"EWIEGA46WW/moc_play.cpp",
+			null
+		],
+		[
+			"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/gameplay.h",
+			"MU",
+			"GRWZ6WNSF4/moc_gameplay.cpp",
+			null
+		],
+		[
+			"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/message/message.h",
+			"MU",
+			"VO4GRSBC3H/moc_message.cpp",
 			null
 		]
 	],
@@ -479,7 +497,22 @@
 			null
 		],
 		[
+			"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/match.cpp",
+			"MU",
+			null
+		],
+		[
 			"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/play.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/gameplay.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/message/message.cpp",
 			"MU",
 			null
 		]

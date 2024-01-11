@@ -81,7 +81,7 @@ QLabel {color: white;}</string>
      </font>
     </property>
     <property name="text">
-     <string>Player</string>
+     <string>You</string>
     </property>
    </widget>
    <widget class="QFrame" name="frCapturedO">
@@ -93,12 +93,26 @@ QLabel {color: white;}</string>
       <height>30</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #F4DCC5;</string>
+    </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
     </property>
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
+    <widget class="QWidget" name="horizontalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>561</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="hboxOpponent"/>
+    </widget>
    </widget>
    <widget class="QFrame" name="frCapturedP">
     <property name="geometry">
@@ -109,12 +123,26 @@ QLabel {color: white;}</string>
       <height>30</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #F4DCC5;</string>
+    </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
     </property>
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
+    <widget class="QWidget" name="horizontalLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>561</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="hboxPlayer"/>
+    </widget>
    </widget>
    <widget class="QFrame" name="frame_2">
     <property name="geometry">
@@ -142,7 +170,7 @@ background-color: #EF9A09;
       <rect>
        <x>0</x>
        <y>520</y>
-       <width>108</width>
+       <width>113</width>
        <height>41</height>
       </rect>
      </property>
@@ -159,9 +187,9 @@ background-color: #EF9A09;
     <widget class="QPushButton" name="btnResign">
      <property name="geometry">
       <rect>
-       <x>117</x>
+       <x>113</x>
        <y>520</y>
-       <width>108</width>
+       <width>112</width>
        <height>41</height>
       </rect>
      </property>
@@ -242,6 +270,107 @@ color: white}</string>
        </color>
       </property>
      </column>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="lbDim">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1000</width>
+      <height>750</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0,0,0,0.7);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frConfirm">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>225</y>
+      <width>300</width>
+      <height>200</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QFrame{background-color: #F4DCC5;
+ border: 8px solid orange; }
+
+QPushButton{ border: none; color:black;background-color:#EF9A09;border-radius:10px
+}
+
+QPushButton:hover{background-color:#d98100}</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="lbCfTitle">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>45</y>
+       <width>240</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>13</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border:none; color: black</string>
+     </property>
+     <property name="text">
+      <string>Are you sure to offer draw?</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnYes">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>140</y>
+       <width>80</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Confirm</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnNo">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>140</y>
+       <width>80</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Cancel</string>
+     </property>
     </widget>
    </widget>
   </widget>

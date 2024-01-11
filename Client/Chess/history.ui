@@ -82,8 +82,8 @@
     <property name="styleSheet">
      <string notr="true">QTableWidget { 
 background-color: #2e2f30;
-gridline-color: white;
-border: 2px solid #fffff;
+gridline-color: #AB6C00;
+border: 2px solid #AB6C00;
 color: white
 
 }
@@ -92,6 +92,22 @@ QTableWidget::item {
 }
 QHeaderView::section {
 gridline-color: white;
+}
+QHeaderView::section:horizontal {
+    color:white;
+}
+QTableWidget::item:selected {
+    background-color: #F4DCC5; 
+    color: black; 
+}
+
+QTableWidget::item:focus {
+    background-color: #F4DCC5;  
+    color: black; 
+}
+QTableWidget::item:selected:focus {
+    background-color: #F4DCC5;  
+    color: black; 
 }
 </string>
     </property>
@@ -392,7 +408,7 @@ gridline-color: white;
      <string>HISTORY</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="btnBack">
     <property name="geometry">
      <rect>
       <x>350</x>
@@ -424,7 +440,7 @@ background-color: orange; border-radius: 25px;
     </property>
    </widget>
   </widget>
-  <widget class="QFrame" name="bgFrame">
+  <widget class="QFrame" name="frHome">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -433,17 +449,100 @@ background-color: orange; border-radius: 25px;
      <height>750</height>
     </rect>
    </property>
+   <property name="minimumSize">
+    <size>
+     <width>1000</width>
+     <height>750</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>1000</width>
+     <height>750</height>
+    </size>
+   </property>
    <property name="styleSheet">
-    <string notr="true">background-image: url(:/home/assets/home.jpg);</string>
+    <string notr="true">QFrame#frHome{background-image: url(:/home/assets/home.jpg)}
+QPushButton {border: none; 
+text-align: left;
+	font: 33pt &quot;Ubuntu&quot;;
+color: white;
+
+}</string>
    </property>
    <property name="frameShape">
-    <enum>QFrame::NoFrame</enum>
+    <enum>QFrame::StyledPanel</enum>
    </property>
    <property name="frameShadow">
-    <enum>QFrame::Plain</enum>
+    <enum>QFrame::Raised</enum>
    </property>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>320</y>
+      <width>201</width>
+      <height>351</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QPushButton" name="btnPlay_2">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border: none</string>
+       </property>
+       <property name="text">
+        <string>Play</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnHistory_2">
+       <property name="text">
+        <string>History</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnOptions_2">
+       <property name="text">
+        <string>Options</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnQuit_2">
+       <property name="text">
+        <string>Quit</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="lbDim">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1000</width>
+      <height>750</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(0,0,0,0.7)</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
-  <zorder>bgFrame</zorder>
+  <zorder>frHome</zorder>
   <zorder>historyFrame</zorder>
  </widget>
  <resources>

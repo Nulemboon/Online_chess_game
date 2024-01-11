@@ -36,6 +36,7 @@ enum MessageType : uint8_t {
     USER_BLOCKED,
     USER_LOGGED_IN,
     LOGIN_SUCCESSFUL,
+    ONLINE_LIST,
     MATCH_FOUND,
     MATCHMAKING_TIMEOUT,
     MOVE_NOT_OK,
@@ -107,11 +108,14 @@ class MatchMessage : public Message {
     public:
     MatchMessage(int matchID);
     MatchMessage(Message message);
+    MatchMessage(std::string match);
 
     int getMatchID() const;
+    std::string getMatch() const;
     
     private:
     int matchID;
+    std::string match;
 };
 
 class ErrorMessage : public Message {
@@ -123,6 +127,17 @@ class ErrorMessage : public Message {
     
     private:
     std::string error;
+};
+
+class InviteMessage : public Message {
+    public:
+    InviteMessage(std::vector<std::pair<std::string, int>> playerList);
+    InviteMessage(Message message);
+
+    std::vector<std::pair<std::string, int>> getPlayerList() const;
+
+    private:
+    std::vector<std::pair<std::string, int>> playerList;
 };
 
 #endif // MESSAGE_H

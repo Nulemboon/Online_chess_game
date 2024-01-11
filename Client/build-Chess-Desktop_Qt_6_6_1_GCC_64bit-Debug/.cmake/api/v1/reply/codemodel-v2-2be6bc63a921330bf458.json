@@ -7,7 +7,7 @@
 				{
 					"build" : ".",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-.-Debug-05fd35af87a3d2250ea1.json",
+					"jsonFile" : "directory-.-Debug-9c7bd1dcaa3d06902a92.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.16"
@@ -44,7 +44,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "Chess::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Chess-Debug-aa6477040a0144350aad.json",
+					"jsonFile" : "target-Chess-Debug-481b0e3c5347821d0bf8.json",
 					"name" : "Chess",
 					"projectIndex" : 0
 				},

@@ -21,6 +21,7 @@ private slots:
     void on_btnQuit_clicked();
 
     void on_btnHistory_clicked();
+    void on_btnRegister_clicked();
     void onPasswordTextChanged(const QString &text);
     void onUsernameTextChanged(const QString &text);
 
