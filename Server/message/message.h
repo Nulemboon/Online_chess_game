@@ -22,6 +22,7 @@ enum MessageType : uint8_t {
     LOGOUT, // <username> 
     INVITE, // <username> 
     MOVE, // <source_position> <destination_position>
+    PROMOTE, // <destination_position>
     DELETE_ROOM,
     ACCEPT_INVITE, // <username>
     REJECT_INVITE, // <username>
@@ -125,6 +126,45 @@ class ErrorMessage : public Message {
     
     private:
     std::string error;
+};
+
+class ListMessage : public Message {
+    public:
+    ListMessage(MessageType type, std::vector<std::pair<std::string, int>> list);
+    ListMessage(Message message);
+
+    std::vector<std::pair<std::string, int>> getList() const;
+
+    private:
+    std::vector<std::pair<std::string, int>> list;
+};
+
+class MatchFoundMessage : public Message {
+    public:
+    MatchFoundMessage(MessageType type, char color, std::string name, int ELO);
+    MatchFoundMessage(Message message);
+
+    char getColor() const;
+    std::string getName() const;
+    int getELO() const;
+
+    private:
+    char color;
+    std::string name;
+    int ELO;
+};
+
+class PromoteMessage : public Message {
+    public:
+    PromoteMessage(MessageType type, char piece, std::string destination);
+    PromoteMessage(Message message);
+
+    char getPiece() const;
+    std::string getDest() const;
+
+    private:
+    char piece;
+    std::string destination;
 };
 
 #endif // MESSAGE_H

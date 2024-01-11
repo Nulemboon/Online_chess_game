@@ -26,16 +26,17 @@ struct Client {
     std::chrono::system_clock::time_point start;
 };
 
-std::vector<Client> waitingQueue;
 
-struct Client clients[MAX_CLIENTS];
-std::unordered_map<std::string, int> session; //logged-in users
+
+struct Client clients[MAX_CLIENTS];             //list of clients
+std::vector<Client> waitingQueue;               //matchmaking queue
+std::unordered_map<std::string, int> session;   //logged-in users
 // int client_count = 0;
-std::unordered_map<int, ChessGame*> gameList; //map from gameID to chess game
+std::unordered_map<int, ChessGame*> gameList;   //map from gameID to chess game
 int lastGameID;
 std::unordered_map<int, std::pair<int, int>> playerMap; // map from gameID to client socket
-std::vector<std::pair<std::string, int>> readyList; //ready-to-play players
-std::unordered_map<int, std::string> movesMap; //matches' moves log
+std::vector<std::pair<std::string, int>> readyList;     //ready-to-play players
+std::unordered_map<int, std::string> movesMap;          //matches' moves log
 Database *db;
 
 //Get Random Number
@@ -177,6 +178,7 @@ void createRoom(int index) {
 
     int ELO = clients[index].ELO;
     readyList.push_back({username, ELO});
+    sendMessage(clients[index].sockfd, new ListMessage(OK, readyList));
     // sendMessage(index, new Message(OK));
 }
 
@@ -216,13 +218,13 @@ void accept_invite(int index, Message* msg) {
 
     if (clients[op_index].gameID != 0) {
         if (randm(0, 1)) {
-            sendMessage(clients[index].sockfd, new UserMessage(MATCH_FOUND, "W", ""));
-            sendMessage(clients[op_index].sockfd, new UserMessage(MATCH_FOUND, "B", ""));
+            sendMessage(clients[index].sockfd, new MatchFoundMessage(MATCH_FOUND, 'W', clients[op_index].username, clients[op_index].ELO));
+            sendMessage(clients[op_index].sockfd, new MatchFoundMessage(MATCH_FOUND, 'B', clients[index].username, clients[index].ELO));
 
             newMatch(index, op_index);
         } else {
-            sendMessage(clients[index].sockfd, new UserMessage(MATCH_FOUND, "B", ""));
-            sendMessage(clients[op_index].sockfd, new UserMessage(MATCH_FOUND, "W", ""));
+            sendMessage(clients[index].sockfd, new MatchFoundMessage(MATCH_FOUND, 'B', clients[op_index].username, clients[op_index].ELO));
+            sendMessage(clients[op_index].sockfd, new MatchFoundMessage(MATCH_FOUND, 'W', clients[index].username, clients[index].ELO));
 
             newMatch(op_index, index);
         }
@@ -307,8 +309,8 @@ void move(int index, Message *msg) {
     int endRow = (int)(dest[0] - '0');
     int endCol = (int)(dest[1] - '0');
 
-    bool valid = curGame->validateMove(curGame->chessboard.MainGameBoard, startRow, startCol, endRow, endCol);
-    if (valid) {
+    int valid = curGame->validateMove(curGame->chessboard.MainGameBoard, startRow, startCol, endRow, endCol);
+    if (valid == 1) {
         movesMap[gameID] += src + dest + ",";
         curGame->AlternateTurn();
         if (clients[index].sockfd == playerMap[gameID].first) {
@@ -380,9 +382,84 @@ void move(int index, Message *msg) {
         delete(rep1);
         delete(rep2);
 
+    } else if (valid == 2) {
+        sendMessage(clients[index].sockfd, new Message(PROMOTE));
     } else {
         sendMessage(clients[index].sockfd, new Message(MOVE_NOT_OK));
     }
+}
+
+void promote(int index, Message* msg) {
+    PromoteMessage* promote = new PromoteMessage(*msg);
+    int gameID = clients[index].gameID;
+    ChessGame* game = gameList[gameID];
+    int row = promote->getDest()[0] - '0';
+    int col = promote->getDest()[1] - '0';
+    game->Promote(promote->getPiece(), row, col, game->chessboard.MainGameBoard);
+
+    Message* rep1;
+    Message* rep2;
+    switch(game->IsGameOver()) {
+        case 0: {
+            rep1 = new Message(OK);
+
+            sendMessage(clients[playerMap[gameID].first].sockfd, rep1);
+            sendMessage(clients[playerMap[gameID].second].sockfd, rep2);
+            break;
+        }
+        case 1: {
+            rep1 = new Message(GAME_WIN);
+            rep2 = new Message(GAME_LOSE);
+
+            sendMessage(clients[playerMap[gameID].first].sockfd, rep1);
+            sendMessage(clients[playerMap[gameID].second].sockfd, rep2);
+            
+            afterMatch(gameID, playerMap[gameID].first, playerMap[gameID].second, 1);
+            break;
+        }
+        case 2: {
+            rep1 = new Message(GAME_WIN);
+            rep2 = new Message(GAME_LOSE);
+
+            sendMessage(clients[playerMap[gameID].first].sockfd, rep2);
+            sendMessage(clients[playerMap[gameID].second].sockfd, rep1);
+
+            afterMatch(gameID, playerMap[gameID].first, playerMap[gameID].second, 2);
+            break;
+        }
+        case 3: {
+            rep1 = new Message(STALEMATE);
+
+            sendMessage(clients[playerMap[gameID].first].sockfd, rep1);
+            sendMessage(clients[playerMap[gameID].second].sockfd, rep1);
+
+            afterMatch(gameID, playerMap[gameID].first, playerMap[gameID].second, 0);
+            break;
+        }
+        case 4: {
+            rep1 = new Message(THREE_FOLD);
+
+            sendMessage(clients[playerMap[gameID].first].sockfd, rep1);
+            sendMessage(clients[playerMap[gameID].second].sockfd, rep1);
+
+            afterMatch(gameID, playerMap[gameID].first, playerMap[gameID].second, 0);
+            break;
+        }
+        case 5: {
+            rep1 = new Message(FIFTY);
+
+            sendMessage(clients[playerMap[gameID].first].sockfd, rep1);
+            sendMessage(clients[playerMap[gameID].second].sockfd, rep1);
+
+            afterMatch(gameID, playerMap[gameID].first, playerMap[gameID].second, 0);
+            break;
+        }
+        
+        default: {}
+    }
+
+    delete(rep1);
+    delete(rep2);
 }
 
 void offerDraw(int index) {
@@ -477,6 +554,10 @@ void handleClient(int index) {
                 move(index, msg);
                 break;
 
+            case PROMOTE: // <destination_position>
+                promote(index, msg);
+                break;
+
             case DELETE_ROOM: // <username>
                 deleteRoom(index);
                 break;
@@ -506,7 +587,7 @@ void handleClient(int index) {
     } else if (n == 0) {
         std::cout << "Client disconnected\n";
         close(clients[index].sockfd);
-        clients[index].sockfd = 0;
+        
 
         deleteRoom(index);
         if (clients[index].gameID != 0) {
@@ -523,6 +604,9 @@ void handleClient(int index) {
             sendMessage(clients[op_index].sockfd, new Message(GAME_WIN));
             afterMatch(gameID, playerMap[gameID].first, playerMap[gameID].second, res);
         }
+        clients[index].sockfd = 0; 
+        clients[index].username = "";
+        clients[index].ELO = 0;
     }
 }
 

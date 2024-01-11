@@ -495,13 +495,13 @@ public:
     //     chessboard.Print();
     // }
 
-    bool validateMove(GamePiece* GameBoard[8][8], int startRow, int startCol, int endRow, int endCol) {
+    int validateMove(GamePiece* GameBoard[8][8], int startRow, int startCol, int endRow, int endCol) {
         using namespace std;
         isEnPassant = false; 
         isPromotion = false;
         isCastle = false;  
         bool isCapture = false;
-        bool validMove     = false;
+        int validMove = 0;
 
         // do {
         //     // system ("clear");
@@ -550,7 +550,7 @@ public:
                             GameBoard[startRow][(startCol + endCol)/2] = rook;
                             if (playerTurn == 'W') canCastleW = false;
                             else canCastleB = false;
-                            validMove = true;
+                            validMove = 1;
                             isFiftyMove++;
                         } else {
                             GameBoard[startRow][startCol] = currPiece;
@@ -571,8 +571,9 @@ public:
                                 GameBoard[startRow][endCol] = 0;
                             }
                             if (isPromotion) {
-                                Promote(endRow, endCol, GameBoard);
-                            }
+                                // Promote(endRow, endCol, GameBoard);
+                                validMove = 2;
+                            } else validMove = 1;
                             if (currPiece->GetPiece() == 'R' || currPiece->GetPiece() == 'K') {
                                 if (playerTurn == 'W') canCastleW = false;
                                 else canCastleB = false;
@@ -585,10 +586,9 @@ public:
                             curRow = endRow;
                             prevRow = startRow;
                             delete(temp);
-                            validMove = true;
                         } else { // Undo the last move
                             GameBoard[startRow][startCol] = GameBoard[endRow][endCol];
-                            GameBoard[endRow][endCol]     = temp;
+                            GameBoard[endRow][endCol]  = temp;
                         }
                     }
                 }
@@ -598,34 +598,25 @@ public:
             cout << "Invalid Move!" << endl;
         }
         return validMove;
-        // } while (!validMove);
     }
 
-    void Promote(int row, int col, GamePiece* GameBoard[8][8]) {
+    void Promote(char opt, int row, int col, GamePiece* GameBoard[8][8]) {
         using namespace std;
-        int opt;
-        do {
-            cout << "Promote to? " << endl;
-            cout << "1. Queen\n2.Rook\n3.Bishop\n4.Knight\n";
-            cout << "choose from 1-4" << endl;
-            
-            cin >> opt;
-        } while (opt <= 4 && opt >= 1);
         
         switch(opt) {
-            case 1: {
+            case 'Q': {
                 GameBoard[row][col] = new Queen(playerTurn);
                 break;
             }
-            case 2: {
+            case 'R': {
                 GameBoard[row][col] = new Rook(playerTurn);
                 break;
             }
-            case 3: {
+            case 'B': {
                 GameBoard[row][col] = new Bishop(playerTurn);
                 break;
             }
-            case 4: {
+            case 'N': {
                 GameBoard[row][col] = new Knight(playerTurn);
                 break;
             }
