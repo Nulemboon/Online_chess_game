@@ -3,5 +3,6 @@
 #include "EWIEGA46WW/moc_game.cpp"
 #include "EWIEGA46WW/moc_history.cpp"
 #include "EWIEGA46WW/moc_home.cpp"
-#include "EWIEGA46WW/moc_login.cpp"
 #include "EWIEGA46WW/moc_mainwindow.cpp"
+#include "EWIEGA46WW/moc_match.cpp"
+#include "EWIEGA46WW/moc_play.cpp"

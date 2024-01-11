@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QFrame>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
@@ -28,11 +29,20 @@ public:
     QLabel *lbOpponentName;
     QLabel *lbPlayerName;
     QFrame *frCapturedO;
+    QWidget *horizontalLayoutWidget;
+    QHBoxLayout *hboxOpponent;
     QFrame *frCapturedP;
+    QWidget *horizontalLayoutWidget_2;
+    QHBoxLayout *hboxPlayer;
     QFrame *frame_2;
     QPushButton *btnDraw;
     QPushButton *btnResign;
     QTableWidget *tableWidget;
+    QLabel *lbDim;
+    QFrame *frConfirm;
+    QLabel *lbCfTitle;
+    QPushButton *btnYes;
+    QPushButton *btnNo;
 
     void setupUi(QWidget *game)
     {
@@ -64,13 +74,27 @@ public:
         frCapturedO = new QFrame(frame);
         frCapturedO->setObjectName("frCapturedO");
         frCapturedO->setGeometry(QRect(75, 54, 560, 30));
+        frCapturedO->setStyleSheet(QString::fromUtf8("background-color: #F4DCC5;"));
         frCapturedO->setFrameShape(QFrame::StyledPanel);
         frCapturedO->setFrameShadow(QFrame::Raised);
+        horizontalLayoutWidget = new QWidget(frCapturedO);
+        horizontalLayoutWidget->setObjectName("horizontalLayoutWidget");
+        horizontalLayoutWidget->setGeometry(QRect(0, 0, 561, 31));
+        hboxOpponent = new QHBoxLayout(horizontalLayoutWidget);
+        hboxOpponent->setObjectName("hboxOpponent");
+        hboxOpponent->setContentsMargins(0, 0, 0, 0);
         frCapturedP = new QFrame(frame);
         frCapturedP->setObjectName("frCapturedP");
         frCapturedP->setGeometry(QRect(75, 687, 560, 30));
+        frCapturedP->setStyleSheet(QString::fromUtf8("background-color: #F4DCC5;"));
         frCapturedP->setFrameShape(QFrame::StyledPanel);
         frCapturedP->setFrameShadow(QFrame::Raised);
+        horizontalLayoutWidget_2 = new QWidget(frCapturedP);
+        horizontalLayoutWidget_2->setObjectName("horizontalLayoutWidget_2");
+        horizontalLayoutWidget_2->setGeometry(QRect(0, 0, 561, 31));
+        hboxPlayer = new QHBoxLayout(horizontalLayoutWidget_2);
+        hboxPlayer->setObjectName("hboxPlayer");
+        hboxPlayer->setContentsMargins(0, 0, 0, 0);
         frame_2 = new QFrame(frame);
         frame_2->setObjectName("frame_2");
         frame_2->setGeometry(QRect(700, 94, 225, 560));
@@ -82,14 +106,14 @@ public:
         frame_2->setFrameShadow(QFrame::Raised);
         btnDraw = new QPushButton(frame_2);
         btnDraw->setObjectName("btnDraw");
-        btnDraw->setGeometry(QRect(0, 520, 108, 41));
+        btnDraw->setGeometry(QRect(0, 520, 113, 41));
         QFont font1;
         font1.setFamilies({QString::fromUtf8("Ubuntu")});
         font1.setPointSize(12);
         btnDraw->setFont(font1);
         btnResign = new QPushButton(frame_2);
         btnResign->setObjectName("btnResign");
-        btnResign->setGeometry(QRect(117, 520, 108, 41));
+        btnResign->setGeometry(QRect(113, 520, 112, 41));
         btnResign->setFont(font1);
         tableWidget = new QTableWidget(frame_2);
         if (tableWidget->columnCount() < 3)
@@ -115,6 +139,40 @@ public:
 "QHeaderView::section {\n"
 "background-color: #302E2B;\n"
 "color: white}"));
+        lbDim = new QLabel(frame);
+        lbDim->setObjectName("lbDim");
+        lbDim->setGeometry(QRect(0, 0, 1000, 750));
+        lbDim->setStyleSheet(QString::fromUtf8("background-color: rgba(0,0,0,0.7);"));
+        frConfirm = new QFrame(frame);
+        frConfirm->setObjectName("frConfirm");
+        frConfirm->setGeometry(QRect(350, 225, 300, 200));
+        frConfirm->setStyleSheet(QString::fromUtf8("QFrame{background-color: #F4DCC5;\n"
+" border: 8px solid orange; }\n"
+"\n"
+"QPushButton{ border: none; color:black;background-color:#EF9A09;border-radius:10px\n"
+"}\n"
+"\n"
+"QPushButton:hover{background-color:#d98100}"));
+        frConfirm->setFrameShape(QFrame::StyledPanel);
+        frConfirm->setFrameShadow(QFrame::Raised);
+        lbCfTitle = new QLabel(frConfirm);
+        lbCfTitle->setObjectName("lbCfTitle");
+        lbCfTitle->setGeometry(QRect(30, 45, 240, 50));
+        QFont font3;
+        font3.setPointSize(13);
+        lbCfTitle->setFont(font3);
+        lbCfTitle->setStyleSheet(QString::fromUtf8("border:none; color: black"));
+        lbCfTitle->setAlignment(Qt::AlignCenter);
+        btnYes = new QPushButton(frConfirm);
+        btnYes->setObjectName("btnYes");
+        btnYes->setGeometry(QRect(50, 140, 80, 30));
+        btnYes->setFont(font2);
+        btnNo = new QPushButton(frConfirm);
+        btnNo->setObjectName("btnNo");
+        btnNo->setGeometry(QRect(170, 140, 80, 30));
+        QFont font4;
+        font4.setPointSize(12);
+        btnNo->setFont(font4);
 
         retranslateUi(game);
 
@@ -125,7 +183,7 @@ public:
     {
         game->setWindowTitle(QCoreApplication::translate("game", "Form", nullptr));
         lbOpponentName->setText(QCoreApplication::translate("game", "Opponent", nullptr));
-        lbPlayerName->setText(QCoreApplication::translate("game", "Player", nullptr));
+        lbPlayerName->setText(QCoreApplication::translate("game", "You", nullptr));
         btnDraw->setText(QCoreApplication::translate("game", "Offer Draw", nullptr));
         btnResign->setText(QCoreApplication::translate("game", "Resign", nullptr));
         QTableWidgetItem *___qtablewidgetitem = tableWidget->horizontalHeaderItem(0);
@@ -134,6 +192,10 @@ public:
         ___qtablewidgetitem1->setText(QCoreApplication::translate("game", "White", nullptr));
         QTableWidgetItem *___qtablewidgetitem2 = tableWidget->horizontalHeaderItem(2);
         ___qtablewidgetitem2->setText(QCoreApplication::translate("game", "Black", nullptr));
+        lbDim->setText(QString());
+        lbCfTitle->setText(QCoreApplication::translate("game", "Are you sure to offer draw?", nullptr));
+        btnYes->setText(QCoreApplication::translate("game", "Confirm", nullptr));
+        btnNo->setText(QCoreApplication::translate("game", "Cancel", nullptr));
     } // retranslateUi
 
 };

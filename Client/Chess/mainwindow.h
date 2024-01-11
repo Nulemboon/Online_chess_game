@@ -11,6 +11,14 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
+enum Scene {
+    HOMES,
+    HISTORYS,
+    MATCHS,
+    PLAYS,
+    GAMES,
+};
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -18,14 +26,18 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    Message* sendMessage(int clientSocket, Message *message);
+    void sendMessage(int clientSocket, Message *message);
+    Message* receiveMessage(int clientSocket);
+    void switchScene(Scene sceneType);
 
+    int connfd;
+    QString user;
+    QStackedWidget *stackedWidget;
 private:
     Ui::MainWindow *ui;
-    int connfd;
     void connectServer();
     const int BUFF_SIZE = 1024;
-    char buffer[BUFF_SIZE];
-    QString user;
+    char buffer[1024];
+
 };
 #endif // MAINWINDOW_H

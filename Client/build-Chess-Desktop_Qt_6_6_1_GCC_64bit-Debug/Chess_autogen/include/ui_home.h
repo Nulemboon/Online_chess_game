@@ -39,6 +39,7 @@ public:
     QLabel *label_2;
     QLabel *lbLogo;
     QLabel *lbPassword;
+    QLabel *lbNoti;
     QLabel *lbDim;
 
     void setupUi(QWidget *Home)
@@ -171,6 +172,12 @@ public:
         lbPassword->setStyleSheet(QString::fromUtf8("background-color: rgba(0,0,0,0);\n"
 "border:none;\n"
 "color: black"));
+        lbNoti = new QLabel(frLogin);
+        lbNoti->setObjectName("lbNoti");
+        lbNoti->setGeometry(QRect(46, 430, 409, 46));
+        lbNoti->setFont(font1);
+        lbNoti->setStyleSheet(QString::fromUtf8("border: none;\n"
+"color: red;"));
         lbUsername->raise();
         lbPassword->raise();
         btnLogin->raise();
@@ -179,6 +186,7 @@ public:
         lbLogo->raise();
         txtPassword->raise();
         txtUsername->raise();
+        lbNoti->raise();
         lbDim = new QLabel(frHome);
         lbDim->setObjectName("lbDim");
         lbDim->setGeometry(QRect(0, 0, 1000, 750));
@@ -207,6 +215,7 @@ public:
         label_2->setText(QCoreApplication::translate("Home", "New? Sign up right now!", nullptr));
         lbLogo->setText(QString());
         lbPassword->setText(QCoreApplication::translate("Home", "Password...", nullptr));
+        lbNoti->setText(QString());
         lbDim->setText(QString());
     } // retranslateUi
 

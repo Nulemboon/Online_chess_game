@@ -17,5 +17,10 @@
         <file>assets/queenW.png</file>
         <file>assets/rookB.png</file>
         <file>assets/rookW.png</file>
+        <file>assets/Empty.png</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>assets/back-button.png</file>
+        <file>assets/forward-button.png</file>
     </qresource>
 </RCC>

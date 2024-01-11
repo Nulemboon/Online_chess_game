@@ -30,6 +30,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         game.h game.cpp game.ui
         chesssquare.h chesssquare.cpp chesssquare.ui
         play.h play.cpp play.ui
+        ../message/message.h ../message/message.cpp
+        match.h match.cpp match.ui
+        ../gameplay.h ../gameplay.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET Chess APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

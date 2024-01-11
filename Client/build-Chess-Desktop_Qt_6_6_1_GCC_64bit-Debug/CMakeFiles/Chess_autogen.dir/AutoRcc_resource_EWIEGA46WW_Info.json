@@ -13,6 +13,7 @@
 		"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/assets/kingW.png",
 		"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/assets/rookB.png",
 		"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/assets/queenB.png",
+		"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/assets/Empty.png",
 		"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/assets/queenW.png",
 		"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/assets/horseB.png",
 		"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/assets/kingB.png",
@@ -21,7 +22,9 @@
 		"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/assets/bishopW.png",
 		"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/assets/rookW.png",
 		"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/assets/bishopB.png",
-		"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/assets/pawnB.png"
+		"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/assets/pawnB.png",
+		"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/assets/forward-button.png",
+		"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/assets/back-button.png"
 	],
 	"LOCK_FILE" : "/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/Chess_autogen.dir/AutoRcc_resource_EWIEGA46WW_Lock.lock",
 	"MULTI_CONFIG" : false,
