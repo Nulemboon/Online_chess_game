@@ -382,7 +382,7 @@ int Database::updateELO(const std::string& username, int eloValue) {
     }
 
     // Fetch moves of matchID
-    const char* query = "UPDATE TABLE SET ELO = ELO + ? WHERE NAME = ?;";
+    const char* query = "UPDATE TABLE SET ELO = ? WHERE NAME = ?;";
     sqlite3_stmt* stmt = nullptr;
 
     // Prepare and bind parameters
@@ -392,7 +392,7 @@ int Database::updateELO(const std::string& username, int eloValue) {
 
         // Execute the statement and retrieve the result
         while (sqlite3_step(stmt) == SQLITE_DONE) {
-            elo = sqlite3_column_int(stmt, 0);
+            eloValue = sqlite3_column_int(stmt, 0);
             sqlite3_finalize(stmt);
                 std::cout << "Added successfully" << std::endl;
                 return 1;

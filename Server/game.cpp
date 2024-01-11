@@ -193,7 +193,7 @@ private:
     }
     bool IsLegalSquare(int srcRow, int srcCol, int destRow, int destCol, GamePiece* GameBoard[8][8]) {
         if (srcRow == destRow) {
-            // Make sure that all invervening squares are empty
+            // Make sure intervening squares are empty
             int colOffset = (destCol - srcCol > 0) ? 1 : -1;
             for (int iCheckCol = srcCol + colOffset; iCheckCol !=  destCol; iCheckCol = iCheckCol + colOffset) {
                 if (GameBoard[srcRow][iCheckCol] != 0) {
@@ -202,7 +202,7 @@ private:
             }
             return true;
         } else if (destCol == srcCol) {
-            // Make sure that all invervening squares are empty
+            // Make sure intervening squares are empty
             int rowOffset = (destRow - srcRow > 0) ? 1 : -1;
             for (int iCheckRow = srcRow + rowOffset; iCheckRow !=  destRow; iCheckRow = iCheckRow + rowOffset) {
                 if (GameBoard[iCheckRow][srcCol] != 0) {
@@ -211,7 +211,7 @@ private:
             }
             return true;
         } else if ((destCol - srcCol == destRow - srcRow) || (destCol - srcCol == srcRow - destRow)) {
-            // Make sure that all invervening squares are empty
+            // Make sure intervening squares are empty
             int rowOffset = (destRow - srcRow > 0) ? 1 : -1;
             int colOffset = (destCol - srcCol > 0) ? 1 : -1;
             int iCheckRow;
@@ -559,7 +559,7 @@ public:
 
                     } else {
                         // Make the move
-                        if (GameBoard[endRow][endCol] != 0) isCapture = true;
+                        if (GameBoard[endRow][endCol] != 0 || isEnPassant) isCapture = true;
                         GamePiece* temp                   = GameBoard[endRow][endCol];
                         GameBoard[endRow][endCol]     = GameBoard[startRow][startCol];
                         GameBoard[startRow][startCol] = 0;
@@ -669,7 +669,7 @@ public:
         }
         if (IsThreeFoldRep())
             return 4;
-            
+
         if (isFiftyMove >= 100)
             return 5;
 
@@ -677,6 +677,7 @@ public:
     }
     CBoard chessboard;
     char playerTurn;
+    std::string moves; 
 };
 
 int main() {

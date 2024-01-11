@@ -1,44 +1,60 @@
 #include <bits/stdc++.h>
-
-#include <arpa/inet.h>
 #include <unistd.h>
 #include <sys/socket.h>
+#include <arpa/inet.h>
+#include <sys/types.h>
 #include <netinet/in.h>
+#include <sys/ioctl.h>
+#include <poll.h>
 #include <sys/wait.h>
 
 #include "game.cpp"
 #include "message/message.h"
 #include "database/database.h"
 
-const int PORT = 5500;
-const int BACKLOG = 5;
-const int BUFF_SIZE = 1024;
-const int HEADER_SIZE = 3;
-const int MAX_QUEUE_TIME = 30;
+#define MAX_CLIENTS 100
+#define BUFF_SIZE 1024
+#define MAX_QUEUE_TIME 30
+#define HEADER_SIZE 3
 
 struct Client {
-    int clientSock;
+    int sockfd;
     std::string username;
     int ELO;
-    std::chrono::time_point<std::chrono::system_clock> start;
+    int gameID;
+    int failLogin;
+    std::chrono::system_clock::time_point start;
 };
 
-std::unordered_map<std::string, int> session;
 std::vector<Client> waitingQueue;
-std::unordered_map<int, ChessGame*> gameList; //map fron gameID to chess game
+
+struct Client clients[MAX_CLIENTS];
+std::unordered_map<std::string, int> session; //logged-in users
+// int client_count = 0;
+std::unordered_map<int, ChessGame*> gameList; //map from gameID to chess game
 int lastGameID;
-std::unordered_map<int, int> gameMap; //map from client socket to gameID
 std::unordered_map<int, std::pair<int, int>> playerMap; // map from gameID to client socket
 std::vector<std::pair<std::string, int>> readyList; //ready-to-play players
+std::unordered_map<int, std::string> movesMap; //matches' moves log
+Database *db;
 
-void sendMessage(int clientSocket, Message *message) {
-    int n = send(clientSocket, message->serialize().c_str(), message->getLength() + HEADER_SIZE, 0);
+//Get Random Number
+int randm(int min, int max) {
+    // Seed the random number generator with the current time
+    std::srand(static_cast<unsigned>(std::time(nullptr)));
+
+    // Generate and return a random number
+    return min + std::rand() % (max - min + 1);
+}
+
+void sendMessage(int sockfd, Message *message) {
+    int n = write(sockfd, message->serialize().c_str(), message->getLength() + HEADER_SIZE);
     if (n < 0) {
         std::cerr << "Error sending message" << std::endl;
     }
 }
 
-void registerUser(int clientSocket, Message *message, Database *db) {
+void registerUser(int index, Message *message) {
     // Construct UserMessage from Message
     UserMessage *userMessage = new UserMessage(*message);
 
@@ -60,20 +76,20 @@ void registerUser(int clientSocket, Message *message, Database *db) {
             replyMessage = new ErrorMessage(err);
             break;
     }
-    sendMessage(clientSocket, replyMessage);
+    sendMessage(clients[index].sockfd, replyMessage);
     delete replyMessage;
     delete userMessage;
 }
 
-void login(int clientSocket, Message* msg, std::string *username, int *failLogin, Database* db) {
+void login(int index, Message* msg) {
     // Construct UserMessage from Message
     UserMessage *acc = new UserMessage(*msg);
     Message* replyMessage; // Message for reply
 
     // Check if this user is currently blocked
-    if (*failLogin >= 5) {
+    if (clients[index].failLogin >= 5) {
         replyMessage = new Message(USER_BLOCKED);
-        sendMessage(clientSocket, replyMessage);
+        sendMessage(clients[index].sockfd, replyMessage);
         delete replyMessage;
         delete acc;
     }
@@ -81,7 +97,7 @@ void login(int clientSocket, Message* msg, std::string *username, int *failLogin
     // Check if this user is already logged in
     if (session.find(acc->getUsername()) != session.end()) {
         replyMessage = new Message(USER_LOGGED_IN);
-        sendMessage(clientSocket, replyMessage);
+        sendMessage(clients[index].sockfd, replyMessage);
         delete replyMessage;
         delete acc;
         return;
@@ -91,146 +107,182 @@ void login(int clientSocket, Message* msg, std::string *username, int *failLogin
     int status = db->validateUser(acc->getUsername(), acc->getPassword());
     std::cout << "User '" << acc->getUsername() << "' logging in:" << (status == 1?"Correct credentials":status == 0?"Wrong credentials":"Error occured") << std::endl;
 
+    std::string username = acc->getUsername();
+
     switch (status) {
         case 1:
             // Send login success message
             replyMessage = new Message(LOGIN_SUCCESSFUL);
-            sendMessage(clientSocket, replyMessage);
-            *username = acc->getUsername(); // Assign the username of this session
-            session.insert({*username, clientSocket}); // Add this user to the online list
-            *failLogin = 0; // Clear failed login records
+            sendMessage(clients[index].sockfd, replyMessage);
+            session.insert({username, index}); // Add this user to the online list
+            clients[index].failLogin = 0; // Clear failed login records
+            clients[index].ELO = db->getELO(clients[index].username);
             break;
         case 0:
             // Send login failure message (Wrong password)
-            *failLogin += 1;
+            clients[index].failLogin += 1;
         case 2:
             // Send login failure message (Wrong username)
             replyMessage = new Message(LOGIN_FAIL);
-            sendMessage(clientSocket, replyMessage);
+            sendMessage(clients[index].sockfd, replyMessage);
             break;
         default:
             // Send error message
             std::string err(sqlite3_errmsg(db->getConnection()));
             replyMessage = new ErrorMessage(err);
-            sendMessage(clientSocket, replyMessage);
+            sendMessage(clients[index].sockfd, replyMessage);
             break;
     }
 }
 
-void logout(int clientSocket) {
-    for (auto& p : session) {
-        if (p.second == clientSocket) {
-            session.erase(p.first);
-            sendMessage(clientSocket, new Message(OK));
-            return;
-        }
-    }
+void logout(int index) {
+    std::string username = clients[index].username;
 
-    sendMessage(clientSocket, new Message(NOT_OK));
+    session.erase(username);
+    
+    sendMessage(clients[index].sockfd, new Message(OK));
 }
 
 
-void seeHistory(int clientSocket, std::string username, Database* db) {
+void seeHistory(int index) {
     // Get history
-    std::vector<std::map<std::string, std::string>> matchList = db->getHistory(username);
-    std::cout << "User '" << username << "' see his history" << std::endl;
+    std::vector<std::map<std::string, std::string>> matchList = db->getHistory(clients[index].username);
+    std::cout << "User '" << clients[index].username << "' see his history" << std::endl;
 
     // Send history message
     HistoryMessage* historyMsg = new HistoryMessage(HISTORY, matchList);
-    sendMessage(clientSocket, historyMsg);
+    sendMessage(clients[index].sockfd, historyMsg);
     delete historyMsg;
 }
 
 //Search by ID and send back match log 
-void seeMatch(int clientSocket, std::string username, Message *msg, Database* db) {
+void seeMatch(int index, Message *msg) {
     // Construct MatchMessage from Message
     MatchMessage* matchMsg = new MatchMessage(*msg);
     // Get match
     int match_id = matchMsg->getMatchID();
     std::vector<std::map<std::string, std::string>> match = db->getMatch(match_id);
-    std::cout << "User '" << username << "' see his match " << match_id << std::endl;
+    std::cout << "User '" << clients[index].username << "' see his match " << match_id << std::endl;
 
     // Send match message
     HistoryMessage* historyMsg = new HistoryMessage(MATCH, match);
-    sendMessage(clientSocket, historyMsg);
+    sendMessage(clients[index].sockfd, historyMsg);
     delete historyMsg;
     delete matchMsg;
 }
 
-void createRoom(int clientSocket, Database* db) {
-    std::string username = "";
-    for (auto& p : session) {
-        if (p.second == clientSocket) {
-            username = p.first;
-            break;
-        }
-    }
-    int ELO = db->getELO(username);
+void createRoom(int index) {
+    std::string username = clients[index].username;
+
+
+    int ELO = clients[index].ELO;
     readyList.push_back({username, ELO});
-    // sendMessage(clientSocket, new Message(OK));
+    // sendMessage(index, new Message(OK));
 }
 
-void deleteRoom(int clientSocket) {
-    std::string username = "";
-    for (auto& p : session) {
-        if (p.second == clientSocket) {
-            username = p.first;
+void deleteRoom(int index) {
+    for (int i = 0; i < readyList.size(); i++) {
+        if (readyList[i].first == clients[index].username) {
+            readyList.erase(readyList.begin() + i);
             break;
         }
     }
-    for (int i = 0; i < readyList.size(); i++) {
-        if (readyList[i].first == username) {
-            readyList.erase(readyList.begin() + i);
-        }
-    }
 }
 
-void invite(int clientSocket, Message* msg, Database* db) {
+//Begin new match
+void newMatch(int white, int black) {
+    int gameID = lastGameID++;
+    gameList.insert({gameID, new ChessGame()});
+    playerMap.insert({gameID, {white, black}});
+    clients[white].gameID = gameID;
+    clients[black].gameID = gameID;
+}
+
+void invite(int index, Message* msg) {
     UserMessage* userMsg = new UserMessage(*msg);
     std::string username = userMsg->getUsername();
-    std::string curName = "";
+    std::string curName = clients[index].username;
     
-    for (auto& p : session) {
-        if (p.second == clientSocket) {
-            curName = p.first;
-            break;
-        }
-    }
     char buffer[BUFF_SIZE];
     int receiver = session[username];
     UserMessage* invite = new UserMessage(INVITE, curName, "");
     sendMessage(receiver, invite);
-    int rc = recv(receiver, buffer, BUFF_SIZE, 0);
-    Message* receive = new Message(buffer);
-    if (receive->getType() == ACCEPT_INVITE) {
-        // std::mutex::lock(lastGameID);
-        int gameID = ++lastGameID;
-        gameList.insert({gameID, new ChessGame()});
-        gameMap.insert({clientSocket, gameID});
-        gameMap.insert({receiver, gameID});
-        playerMap.insert({gameID, {clientSocket, receiver}});
-        deleteRoom(clientSocket);
-        deleteRoom(receiver);
-        sendMessage(clientSocket, new Message(MATCH_FOUND));
-        sendMessage(receiver, new Message(MATCH_FOUND));
-    } else {
-        sendMessage(clientSocket, new Message(REJECT_INVITE));
-    }
-
 }
 
-void randomMatch(int clientSocket, std::string username, Database* db) {
-    int ELO = db->getELO(username);
+void accept_invite(int index, Message* msg) {
+    UserMessage* userMsg = new UserMessage(*msg);
+    std::string username = userMsg->getUsername();
+    int op_index = session[username];
+
+    if (clients[op_index].gameID != 0) {
+        if (randm(0, 1)) {
+            sendMessage(clients[index].sockfd, new UserMessage(MATCH_FOUND, "W", ""));
+            sendMessage(clients[op_index].sockfd, new UserMessage(MATCH_FOUND, "B", ""));
+
+            newMatch(index, op_index);
+        } else {
+            sendMessage(clients[index].sockfd, new UserMessage(MATCH_FOUND, "B", ""));
+            sendMessage(clients[op_index].sockfd, new UserMessage(MATCH_FOUND, "W", ""));
+
+            newMatch(op_index, index);
+        }
+    } else {
+        sendMessage(clients[index].sockfd, new Message(NOT_OK));
+    }
+    
+}
+
+
+void afterMatch(int gameID, int white, int black, int res) {
+    //update maps
+    gameList.erase(gameID);
+    playerMap.erase(gameID);
+    clients[white].gameID = 0;
+    clients[black].gameID = 0;
+
+    if (res == 0) {
+        int change = abs(clients[white].ELO - clients[black].ELO) / 10;
+        if (clients[white].ELO > clients[black].ELO) {
+            clients[white].ELO -= change;
+            clients[black].ELO += change;
+        } else {
+            clients[white].ELO += change;
+            clients[black].ELO -= change;
+        }
+    } else {
+        int change = 25 - abs(clients[white].ELO - clients[black].ELO) / 10;
+        if (res == 1) {
+            clients[white].ELO += change;
+            clients[black].ELO -= change;
+        } else {
+            clients[white].ELO -= change;
+            clients[black].ELO += change;
+        }
+    }
+
+    //update database
+    db->addMatch(clients[white].username, clients[black].username, res, movesMap[gameID], gameID);
+    db->updateELO(clients[white].username, clients[white].ELO);
+    db->updateELO(clients[black].username, clients[black].ELO);
+
+    movesMap.erase(gameID);
+}
+
+void randomMatch(int index) {
+
+    int ELO = db->getELO(clients[index].username);
     bool flag = false;
     for (int i = 0; i < waitingQueue.size(); i++) {
         if (abs(waitingQueue[i].ELO - ELO) <= 100) {
-            Message* found = new Message(MATCH_FOUND);
-            sendMessage(clientSocket, found);
-            sendMessage(waitingQueue[i].clientSock, found);
+            UserMessage* found = new UserMessage(MATCH_FOUND, "W", "");
+            sendMessage(clients[index].sockfd, new UserMessage(MATCH_FOUND, "B", ""));
+            sendMessage(waitingQueue[i].sockfd, new UserMessage(MATCH_FOUND, "W", ""));
             
             //update ready list
-            deleteRoom(clientSocket);
-            deleteRoom(waitingQueue[i].clientSock);
+            deleteRoom(index);
+            deleteRoom(waitingQueue[i].sockfd);
+
+            newMatch(session[waitingQueue[i].username], index);
 
             waitingQueue.erase(waitingQueue.begin() + i);
             flag = true;
@@ -239,12 +291,13 @@ void randomMatch(int clientSocket, std::string username, Database* db) {
     }
     //not found match
     if (!flag) {
-        waitingQueue.push_back(Client(clientSocket, username, ELO, std::chrono::system_clock::now()));
+        waitingQueue.push_back(clients[index]);
+        waitingQueue.back().start = std::chrono::system_clock::now();
     }
 }
 
-void move(int clientSock, Message *msg) {
-    int gameID = gameMap[clientSock];
+void move(int index, Message *msg) {
+    int gameID = clients[index].gameID;
     ChessGame* curGame = gameList[gameID];
     MoveMessage* moveMsg = new MoveMessage(*msg);
     std::string src = moveMsg->getSource();
@@ -256,11 +309,12 @@ void move(int clientSock, Message *msg) {
 
     bool valid = curGame->validateMove(curGame->chessboard.MainGameBoard, startRow, startCol, endRow, endCol);
     if (valid) {
+        movesMap[gameID] += src + dest + ",";
         curGame->AlternateTurn();
-        if (clientSock == playerMap[gameID].first) {
-            sendMessage(playerMap[gameID].second, moveMsg);
+        if (clients[index].sockfd == playerMap[gameID].first) {
+            sendMessage(clients[playerMap[gameID].second].sockfd, moveMsg);
         } else {
-            sendMessage(playerMap[gameID].first, moveMsg);
+            sendMessage(clients[playerMap[gameID].first].sockfd, moveMsg);
         }
         Message* rep1;
         Message* rep2;
@@ -268,128 +322,111 @@ void move(int clientSock, Message *msg) {
             case 0: {
                 rep1 = new Message(OK);
 
-                sendMessage(playerMap[gameID].first, rep1);
-                sendMessage(playerMap[gameID].second, rep2);
+                sendMessage(clients[playerMap[gameID].first].sockfd, rep1);
+                sendMessage(clients[playerMap[gameID].second].sockfd, rep2);
                 break;
             }
             case 1: {
                 rep1 = new Message(GAME_WIN);
                 rep2 = new Message(GAME_LOSE);
 
-                sendMessage(playerMap[gameID].first, rep1);
-                sendMessage(playerMap[gameID].second, rep2);
+                sendMessage(clients[playerMap[gameID].first].sockfd, rep1);
+                sendMessage(clients[playerMap[gameID].second].sockfd, rep2);
+                
+                afterMatch(gameID, playerMap[gameID].first, playerMap[gameID].second, 1);
                 break;
             }
             case 2: {
                 rep1 = new Message(GAME_WIN);
                 rep2 = new Message(GAME_LOSE);
 
-                sendMessage(playerMap[gameID].first, rep2);
-                sendMessage(playerMap[gameID].second, rep1);
+                sendMessage(clients[playerMap[gameID].first].sockfd, rep2);
+                sendMessage(clients[playerMap[gameID].second].sockfd, rep1);
+
+                afterMatch(gameID, playerMap[gameID].first, playerMap[gameID].second, 2);
                 break;
             }
             case 3: {
                 rep1 = new Message(STALEMATE);
 
-                sendMessage(playerMap[gameID].first, rep1);
-                sendMessage(playerMap[gameID].second, rep1);
+                sendMessage(clients[playerMap[gameID].first].sockfd, rep1);
+                sendMessage(clients[playerMap[gameID].second].sockfd, rep1);
+
+                afterMatch(gameID, playerMap[gameID].first, playerMap[gameID].second, 0);
                 break;
             }
             case 4: {
                 rep1 = new Message(THREE_FOLD);
 
-                sendMessage(playerMap[gameID].first, rep1);
-                sendMessage(playerMap[gameID].second, rep1);
+                sendMessage(clients[playerMap[gameID].first].sockfd, rep1);
+                sendMessage(clients[playerMap[gameID].second].sockfd, rep1);
+
+                afterMatch(gameID, playerMap[gameID].first, playerMap[gameID].second, 0);
                 break;
             }
             case 5: {
                 rep1 = new Message(FIFTY);
 
-                sendMessage(playerMap[gameID].first, rep1);
-                sendMessage(playerMap[gameID].second, rep1);
+                sendMessage(clients[playerMap[gameID].first].sockfd, rep1);
+                sendMessage(clients[playerMap[gameID].second].sockfd, rep1);
+
+                afterMatch(gameID, playerMap[gameID].first, playerMap[gameID].second, 0);
                 break;
             }
             
             default: {}
         }
 
-        //Update game list
-        if (curGame->IsGameOver() > 0) {
-            gameList.erase(gameID);
-            gameMap.erase(playerMap[gameID].first);
-            gameMap.erase(playerMap[gameID].second);
-            playerMap.erase(gameID);
-        }
         delete(rep1);
         delete(rep2);
 
     } else {
-        MoveMessage* moveErr = new MoveMessage(MOVE_NOT_OK);
-        sendMessage(clientSock, moveErr);
+        sendMessage(clients[index].sockfd, new Message(MOVE_NOT_OK));
     }
 }
 
-void offerDraw(int clientSocket) {
-    int gameID = gameMap[clientSocket];
+void offerDraw(int index) {
+    int gameID = clients[index].gameID;
 
-    int opponent = playerMap[gameID].first == clientSocket ? playerMap[gameID].second : playerMap[gameID].first;
-    sendMessage(opponent, new Message(OFFER_DRAW));
-    char buff[BUFF_SIZE];
-    int rc = recv(opponent, buff, BUFF_SIZE, 0);
-    std::string rcv(buff, rc);
-    Message* msg = new Message(rcv);
-    if (msg->getType() == OK) {
-        sendMessage(clientSocket, new Message(GAME_DRAW));
-        sendMessage(opponent, new Message(GAME_DRAW));
+    int opponent = playerMap[gameID].first == index ? playerMap[gameID].second : playerMap[gameID].first;
+    sendMessage(clients[opponent].sockfd, new Message(OFFER_DRAW));
 
-        //Update game list
-        gameList.erase(gameID);
-        gameMap.erase(playerMap[gameID].first);
-        gameMap.erase(playerMap[gameID].second);
-        playerMap.erase(gameID);
+}
+
+void accept_draw(int index) {
+    int gameID = clients[index].gameID;
+
+    sendMessage(clients[playerMap[gameID].first].sockfd, new Message(GAME_DRAW));
+    sendMessage(clients[playerMap[gameID].second].sockfd, new Message(GAME_DRAW));
+
+    afterMatch(gameID, playerMap[gameID].first, playerMap[gameID].second, 0); 
+}
+
+void resign(int index) {
+    int gameID = clients[index].gameID;
+
+    int opponent;
+    int res;
+    if (playerMap[gameID].first == index) {
+        opponent = playerMap[gameID].second;
+        res = 2;
     } else {
-        sendMessage(clientSocket, new Message(NOT_OK));
+        opponent = playerMap[gameID].first;
+        res = 1;    
     }
 
+    sendMessage(clients[index].sockfd, new Message(GAME_LOSE));
+    sendMessage(clients[opponent].sockfd, new Message(GAME_WIN));
+
+    afterMatch(gameID, playerMap[gameID].first, playerMap[gameID].second, res);
 }
 
-void resign(int clientSocket) {
-    int gameID = gameMap[clientSocket];
 
-    int opponent = playerMap[gameID].first == clientSocket ? playerMap[gameID].second : playerMap[gameID].first;
-
-    sendMessage(clientSocket, new Message(GAME_LOSE));
-    sendMessage(opponent, new Message(GAME_WIN));
-
-    //Update game list
-    gameList.erase(gameID);
-    gameMap.erase(playerMap[gameID].first);
-    gameMap.erase(playerMap[gameID].second);
-    playerMap.erase(gameID);
-}
-
-void checkWaitingQueue() {
-    while (1) {
-        auto curTime = std::chrono::system_clock::now();
-        for (int i = 0; i < waitingQueue.size(); i++) {
-            int clientSock = waitingQueue[i].clientSock;
-            auto queueTime = std::chrono::duration_cast<std::chrono::seconds>(curTime - waitingQueue[i].start).count();
-            if (queueTime >= MAX_QUEUE_TIME) {
-                waitingQueue.erase(waitingQueue.begin() + i);
-                Message* timeout = new Message(MATCHMAKING_TIMEOUT);
-                sendMessage(clientSock, timeout);
-            }
-        }
-        std::this_thread::sleep_for(std::chrono::seconds(1));
-    }
-}
-
-void handleClient(int clientSocket, Database *db) {
+void handleClient(int index) {
     char buff[BUFF_SIZE];
-    int n, failLogin = 0;
-    std::string username;
+    int n;
 
-    while ((n = recv(clientSocket, buff, BUFF_SIZE, 0)) > 0) {
+    while ((n = read(clients[index].sockfd, buff, BUFF_SIZE)) > 0) {
         std::string rcv(buff, n);
         // Construct Message from string of message received
         Message *msg = new Message(rcv);
@@ -401,57 +438,61 @@ void handleClient(int clientSocket, Database *db) {
                 break;
 
             case SEE_HISTORY:
-                seeHistory(clientSocket, username, db);
+                seeHistory(index);
                 break;
 
             case RANDOM_MATCHMAKING:
-                randomMatch(clientSocket, username, db);
+                randomMatch(index);
                 break;
 
             case CREATE_ROOM:
-                createRoom(clientSocket, db);
+                createRoom(index);
                 break;
 
             case OFFER_DRAW:
-                offerDraw(clientSocket);
+                offerDraw(index);
                 break;
 
             case RESIGN:
-                resign(clientSocket);
+                resign(index);
                 break;
 
             case REGISTER: // <username> <password>
-                registerUser(clientSocket, msg, db);
+                registerUser(index, msg);
                 break;
 
             case LOGIN: // <username> <password>
-                login(clientSocket, msg, &username, &failLogin, db);
+                login(index, msg);
                 break;
 
             case LOGOUT: // <username>
-                logout(clientSocket);
+                logout(index);
                 break;
 
             case INVITE: // <username>
-                invite(clientSocket, msg, db);
+                invite(index, msg);
                 break;
 
             case MOVE: // <source_position> <destination_position>
-                move(clientSocket, msg);
+                move(index, msg);
                 break;
 
             case DELETE_ROOM: // <username>
-                deleteRoom(clientSocket);
+                deleteRoom(index);
                 break;
 
-            // case ACCEPT_INVITE: // <username>
-            //     break;
+            case ACCEPT_INVITE: // <username>
+                accept_invite(index, msg);
+                break;
 
+            case ACCEPT_DRAW: 
+                accept_draw(index);
+                break;
             // case REJECT_INVITE: // <username>
             //     break;
 
             case SEE_MATCH: // <match_id>
-                seeMatch(clientSocket, username, msg, db);
+                seeMatch(index, msg);
                 break;
             
             default:
@@ -463,65 +504,141 @@ void handleClient(int clientSocket, Database *db) {
         perror("Read error");
         exit(1);
     } else if (n == 0) {
-        printf("Client disconnected\n");
+        std::cout << "Client disconnected\n";
+        close(clients[index].sockfd);
+        clients[index].sockfd = 0;
+
+        deleteRoom(index);
+        if (clients[index].gameID != 0) {
+            int gameID = clients[index].gameID;
+            int op_index;
+            int res;
+            if (index == playerMap[gameID].first) {
+                res = 2;
+                op_index = playerMap[gameID].second;
+            } else {
+                res = 1;
+                op_index = playerMap[gameID].first;
+            }
+            sendMessage(clients[op_index].sockfd, new Message(GAME_WIN));
+            afterMatch(gameID, playerMap[gameID].first, playerMap[gameID].second, res);
+        }
     }
-    close(clientSocket);
+}
+
+void checkWaitingQueue() {
+    while (1) {
+        auto curTime = std::chrono::system_clock::now();
+        for (int i = 0; i < waitingQueue.size(); i++) {
+            int sockfd = waitingQueue[i].sockfd;
+            auto queueTime = std::chrono::duration_cast<std::chrono::seconds>(curTime - waitingQueue[i].start).count();
+            if (queueTime >= MAX_QUEUE_TIME) {
+                waitingQueue.erase(waitingQueue.begin() + i);
+                Message* timeout = new Message(MATCHMAKING_TIMEOUT);
+                sendMessage(sockfd, timeout);
+            }
+        }
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
 }
 
 int main() {
-    int serverSocket, clientSocket;
-    struct sockaddr_in serverAddr, clientAddr;
-    socklen_t clientAddrLen = sizeof(clientAddr);
+    int server_fd, new_socket, activity, i, valread;
+    int opt = 1;
+    struct sockaddr_in address;
+    int addrlen = sizeof(address);
+    char buffer[BUFF_SIZE];
+
+    // Create a socket
+    if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
+        perror("Socket creation failed");
+        exit(EXIT_FAILURE);
+    }
     
-    // Open database connection
-    Database db("database/chess.db");
-    if (!db.open()) {
-        std::cerr << "Error opening database connection" << std::endl;
-        exit(1);
+    // Set socket options
+    if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) {
+        perror("Setsockopt failed");
+        exit(EXIT_FAILURE);
     }
 
-    // Create socket
-    if ((serverSocket = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
-        perror("Error creating socket");
-        return 1;
+    // Set socket non blocking
+    if (ioctl(server_fd, FIONBIO, (char *)&opt) < 0) {
+        perror("ioctl() failed");
+        close(server_fd);
+        exit(0);
     }
 
-    // Configure server address
-    serverAddr.sin_family = AF_INET;
-    serverAddr.sin_port = htons(PORT);
-    serverAddr.sin_addr.s_addr = INADDR_ANY;
+    address.sin_family = AF_INET;
+    address.sin_addr.s_addr = INADDR_ANY;
+    address.sin_port = htons(8080);
 
     // Bind the socket
-    if (bind(serverSocket, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) == -1) {
-        perror("Error binding socket");
-        return 1;
+    if (bind(server_fd, (struct sockaddr*)&address, sizeof(address)) < 0) {
+        perror("Bind failed");
+        exit(EXIT_FAILURE);
     }
 
     // Listen for incoming connections
-    if (listen(serverSocket, BACKLOG) == -1) {
-        perror("Error listening for connections");
-        return 1;
+    if (listen(server_fd, 3) < 0) {
+        perror("Listen failed");
+        exit(EXIT_FAILURE);
     }
 
-    std::cout << "Chess Server listening on port " << PORT << std::endl;
+    // Initialize the clients array
+    for (i = 0; i < MAX_CLIENTS; i++) {
+        clients[i].sockfd = 0;
+        clients[i].username = "";
+        clients[i].gameID = 0;
+    }
 
-    std::thread(checkWaitingQueue).detach();
-    lastGameID = db.getLastMatchID();
+    while (1) {
+        struct pollfd fds[MAX_CLIENTS + 1];
 
-    while (true) {
-        // Accept a new connection
-        if ((clientSocket = accept(serverSocket, (struct sockaddr *)&clientAddr, &clientAddrLen)) == -1) {
-            perror("Error accepting connection");
-            continue;
+        // Add server socket to the set
+        fds[0].fd = server_fd;
+        fds[0].events = POLLIN;
+
+        // Add client sockets to the set
+        for (i = 0; i < MAX_CLIENTS; i++) {
+            if (clients[i].sockfd > 0) {
+                fds[i + 1].fd = clients[i].sockfd;
+                fds[i + 1].events = POLLIN;
+            } else {
+                fds[i + 1].fd = -1;
+            }
         }
-        std::cout << "Accepted connection from " << inet_ntoa(clientAddr.sin_addr) << std::endl;
 
-        // Threading
-        std::thread(handleClient, static_cast<int>(clientSocket), db).detach();
+        // Use poll to wait for activity on any of the sockets
+        activity = poll(fds, MAX_CLIENTS + 1, -1);
+
+        if (activity < 0) {
+            perror("Poll error");
+            exit(EXIT_FAILURE);
+        }
+        
+        // If server socket is readable, there is a new connection
+        if (fds[0].revents & POLLIN) {
+            if ((new_socket = accept(server_fd, (struct sockaddr*)&address, (socklen_t*)&addrlen)) < 0) {
+                perror("Accept error");
+                exit(EXIT_FAILURE);
+            }
+
+            // Add the new connection to the clients array
+            for (i = 0; i < MAX_CLIENTS; i++) {
+                if (clients[i].sockfd == 0) {
+                    clients[i].sockfd = new_socket;
+                    break;
+                }
+            }
+        }
+
+        // Check each client for activity
+        for (i = 0; i < MAX_CLIENTS; i++) {
+            if (clients[i].sockfd > 0 && fds[i + 1].revents & POLLIN) {
+                handleClient(i);
+            }
+        }
     }
-
-    // Close the server socket
-    close(serverSocket);
 
     return 0;
 }

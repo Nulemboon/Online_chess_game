@@ -12,6 +12,7 @@ enum MessageType : uint8_t {
     OK,
     NOT_OK,
     SEE_HISTORY,
+    SEE_MATCH, // <match_id>
     RANDOM_MATCHMAKING,
     CREATE_ROOM,
     OFFER_DRAW,
@@ -21,10 +22,11 @@ enum MessageType : uint8_t {
     LOGOUT, // <username> 
     INVITE, // <username> 
     MOVE, // <source_position> <destination_position>
-    DELETE_ROOM, // <room_id>
+    DELETE_ROOM,
     ACCEPT_INVITE, // <username>
     REJECT_INVITE, // <username>
-    SEE_MATCH, // <match_id>
+    ACCEPT_DRAW,
+    REJECT_DRAW,
 
     // Server message
     HISTORY, // <matches>
