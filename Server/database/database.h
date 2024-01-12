@@ -30,7 +30,7 @@ class Database {
         /*  This function is used for logging in, checks if a user's password is correct.
             Returns -1 if an error occurs, 0 if the password is incorrect, 1 if the password is correct, and 2 if the user is not registered.
         */
-        int validateUser(const std::string& username, const std::string& password);
+        int validateUser(const std::string username, const std::string password);
 
         // Match history functions
 

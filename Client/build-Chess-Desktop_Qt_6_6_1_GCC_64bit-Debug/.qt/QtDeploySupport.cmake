@@ -31,7 +31,7 @@ endif()
 set(__QT_DEPLOY_SYSTEM_NAME "Linux")
 set(__QT_DEPLOY_IS_SHARED_LIBS_BUILD "ON")
 set(__QT_DEPLOY_TOOL "GRD")
-set(__QT_DEPLOY_IMPL_DIR "/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/.qt")
+set(__QT_DEPLOY_IMPL_DIR "/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/.qt")
 set(__QT_DEPLOY_VERBOSE "")
 set(__QT_CMAKE_EXPORT_NAMESPACE "Qt6")
 set(__QT_DEPLOY_GENERATOR_IS_MULTI_CONFIG "0")
@@ -39,7 +39,7 @@ set(__QT_DEPLOY_ACTIVE_CONFIG "Debug")
 set(__QT_NO_CREATE_VERSIONLESS_FUNCTIONS "")
 set(__QT_DEFAULT_MAJOR_VERSION "6")
 set(__QT_DEPLOY_QT_ADDITIONAL_PACKAGES_PREFIX_PATH "")
-set(__QT_DEPLOY_QT_INSTALL_PREFIX "/home/pert/Qt/6.6.1/gcc_64")
+set(__QT_DEPLOY_QT_INSTALL_PREFIX "/opt/Qt/6.6.1/gcc_64")
 set(__QT_DEPLOY_QT_INSTALL_BINS "bin")
 set(__QT_DEPLOY_QT_INSTALL_PLUGINS "./plugins")
 set(__QT_DEPLOY_QT_INSTALL_TRANSLATIONS "./translations")
@@ -52,7 +52,7 @@ set(__QT_DEPLOY_QT_DEBUG_POSTFIX "")
 
 # Define the CMake commands to be made available during deployment.
 set(__qt_deploy_support_files
-    "/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Core/Qt6CoreDeploySupport.cmake"
+    "/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Core/Qt6CoreDeploySupport.cmake"
 )
 foreach(__qt_deploy_support_file IN LISTS __qt_deploy_support_files)
     include("${__qt_deploy_support_file}")

@@ -12,7 +12,6 @@ enum MessageType : uint8_t {
     OK,
     NOT_OK,
     SEE_HISTORY,
-    SEE_MATCH, // <match_id>
     RANDOM_MATCHMAKING,
     CREATE_ROOM,
     OFFER_DRAW,
@@ -28,6 +27,7 @@ enum MessageType : uint8_t {
     REJECT_INVITE, // <username>
     ACCEPT_DRAW,
     REJECT_DRAW,
+    SEE_MATCH, // <match_id>
 
     // Server message
     HISTORY, // <matches>
@@ -39,6 +39,7 @@ enum MessageType : uint8_t {
     USER_BLOCKED,
     USER_LOGGED_IN,
     LOGIN_SUCCESSFUL,
+    ONLINE_LIST,
     MATCH_FOUND,
     MATCHMAKING_TIMEOUT,
     MOVE_NOT_OK,

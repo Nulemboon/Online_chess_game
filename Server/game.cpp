@@ -671,8 +671,8 @@ public:
     std::string moves; 
 };
 
-int main() {
-    ChessGame Game;
-    // Game.Start();
-    return 0;
-}
+// int main() {
+//     ChessGame Game;
+//     // Game.Start();
+//     return 0;
+// }

@@ -96,7 +96,7 @@ int Database::userExists(const std::string& username) {
     return result;
 }
 
-int Database::validateUser(const std::string& username, const std::string& password) {
+int Database::validateUser(const std::string username, const std::string password) {
     if (!db) {
         // Handle error, database not open
         std::cerr << "Cannot open database" << std::endl;

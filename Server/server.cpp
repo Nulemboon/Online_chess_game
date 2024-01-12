@@ -50,6 +50,7 @@ int randm(int min, int max) {
 
 void sendMessage(int sockfd, Message *message) {
     int n = write(sockfd, message->serialize().c_str(), message->getLength() + HEADER_SIZE);
+    std::cout << n << std::endl;
     if (n < 0) {
         std::cerr << "Error sending message" << std::endl;
     }
@@ -84,7 +85,9 @@ void registerUser(int index, Message *message) {
 
 void login(int index, Message* msg) {
     // Construct UserMessage from Message
+    std::cout << "abc" << std::endl;
     UserMessage *acc = new UserMessage(*msg);
+    std::cout << "abc" << std::endl;
     Message* replyMessage; // Message for reply
 
     // Check if this user is currently blocked
@@ -103,10 +106,12 @@ void login(int index, Message* msg) {
         delete acc;
         return;
     }
-
+    std::cout << "abc" << std::endl;
     // Validate user
+    std::cout << acc->getUsername() << acc->getPassword() << std::endl;
     int status = db->validateUser(acc->getUsername(), acc->getPassword());
-    std::cout << "User '" << acc->getUsername() << "' logging in:" << (status == 1?"Correct credentials":status == 0?"Wrong credentials":"Error occured") << std::endl;
+    std::cout << acc->getUsername() << acc->getPassword() << std::endl;
+    std::cout << "User '" << acc->getUsername() << "' logging in:" << (status == 1?"Correct credentials":status == 0? "Wrong credentials":"Error occured") << std::endl;
 
     std::string username = acc->getUsername();
 
@@ -140,6 +145,9 @@ void logout(int index) {
     std::string username = clients[index].username;
 
     session.erase(username);
+    clients[index].username = "";
+    clients[index].failLogin = 0;
+    clients[index].ELO = 0;
     
     sendMessage(clients[index].sockfd, new Message(OK));
 }
@@ -178,7 +186,7 @@ void createRoom(int index) {
 
     int ELO = clients[index].ELO;
     readyList.push_back({username, ELO});
-    sendMessage(clients[index].sockfd, new ListMessage(OK, readyList));
+    sendMessage(clients[index].sockfd, new ListMessage(ONLINE_LIST, readyList));
     // sendMessage(index, new Message(OK));
 }
 
@@ -383,6 +391,7 @@ void move(int index, Message *msg) {
         delete(rep2);
 
     } else if (valid == 2) {
+        movesMap[gameID] += src + dest;
         sendMessage(clients[index].sockfd, new Message(PROMOTE));
     } else {
         sendMessage(clients[index].sockfd, new Message(MOVE_NOT_OK));
@@ -395,7 +404,10 @@ void promote(int index, Message* msg) {
     ChessGame* game = gameList[gameID];
     int row = promote->getDest()[0] - '0';
     int col = promote->getDest()[1] - '0';
+
+    movesMap[gameID] += promote->getPiece() + ",";
     game->Promote(promote->getPiece(), row, col, game->chessboard.MainGameBoard);
+    game->AlternateTurn();
 
     Message* rep1;
     Message* rep2;
@@ -504,11 +516,13 @@ void handleClient(int index) {
     int n;
 
     while ((n = read(clients[index].sockfd, buff, BUFF_SIZE)) > 0) {
-        std::string rcv(buff, n);
+        std::string rcv(buff,n);
+
         // Construct Message from string of message received
         Message *msg = new Message(rcv);
+        // std::cout << "abc" << (msg->getType()) << std::endl;
         switch (msg->getType()) {
-            case OK:
+            case OK: 
                 break;
 
             case NOT_OK:
@@ -604,9 +618,12 @@ void handleClient(int index) {
             sendMessage(clients[op_index].sockfd, new Message(GAME_WIN));
             afterMatch(gameID, playerMap[gameID].first, playerMap[gameID].second, res);
         }
+
+        session.erase(clients[index].username);
         clients[index].sockfd = 0; 
         clients[index].username = "";
         clients[index].ELO = 0;
+        
     }
 }
 
@@ -633,6 +650,12 @@ int main() {
     int addrlen = sizeof(address);
     char buffer[BUFF_SIZE];
 
+    db = new Database("database/chess.db");
+
+    if (!db->open()) {
+        std::cout << "Cannot open database " << std::endl;
+        exit(1);
+    }
     // Create a socket
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
         perror("Socket creation failed");
@@ -674,7 +697,11 @@ int main() {
         clients[i].username = "";
         clients[i].gameID = 0;
     }
+    lastGameID = db->getLastMatchID();
 
+    std::cout << "Server Online" << std::endl;
+    std::thread(checkWaitingQueue).detach();
+    
     while (1) {
         struct pollfd fds[MAX_CLIENTS + 1];
 
@@ -691,7 +718,7 @@ int main() {
                 fds[i + 1].fd = -1;
             }
         }
-
+        
         // Use poll to wait for activity on any of the sockets
         activity = poll(fds, MAX_CLIENTS + 1, -1);
 
@@ -711,6 +738,7 @@ int main() {
             for (i = 0; i < MAX_CLIENTS; i++) {
                 if (clients[i].sockfd == 0) {
                     clients[i].sockfd = new_socket;
+                    std::cout << "New incoming connection at " << i << std::endl;
                     break;
                 }
             }
@@ -719,6 +747,7 @@ int main() {
         // Check each client for activity
         for (i = 0; i < MAX_CLIENTS; i++) {
             if (clients[i].sockfd > 0 && fds[i + 1].revents & POLLIN) {
+                std::cout << "Client " << i << " is working" << std::endl;
                 handleClient(i);
             }
         }

@@ -1,4 +1,4 @@
-# Install script for directory: /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess
+# Install script for directory: /home/nulemboon/network_programming/Online_Chess_Game/Client/Chess
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -49,12 +49,12 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/Chess"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/Chess" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/Chess")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/Chess"
-         OLD_RPATH "/home/pert/Qt/6.6.1/gcc_64/lib:"
+         OLD_RPATH "/opt/Qt/6.6.1/gcc_64/lib:"
          NEW_RPATH "")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/Chess")
@@ -70,5 +70,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

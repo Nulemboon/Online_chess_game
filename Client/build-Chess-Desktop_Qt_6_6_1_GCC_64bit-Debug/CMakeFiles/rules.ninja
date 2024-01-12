@@ -42,7 +42,7 @@ rule CUSTOM_COMMAND
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /home/pert/Qt/Tools/CMake/bin/cmake --regenerate-during-build -S/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess -B/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug
+  command = /opt/Qt/Tools/CMake/bin/cmake --regenerate-during-build -S/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess -B/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug
   description = Re-running CMake...
   generator = 1
 
@@ -51,7 +51,7 @@ rule RERUN_CMAKE
 # Rule for cleaning additional files.
 
 rule CLEAN_ADDITIONAL
-  command = /home/pert/Qt/Tools/CMake/bin/cmake -DCONFIG=$CONFIG -P CMakeFiles/clean_additional.cmake
+  command = /opt/Qt/Tools/CMake/bin/cmake -DCONFIG=$CONFIG -P CMakeFiles/clean_additional.cmake
   description = Cleaning additional files...
 
 
@@ -59,7 +59,7 @@ rule CLEAN_ADDITIONAL
 # Rule for cleaning all built files.
 
 rule CLEAN
-  command = /home/pert/Qt/Tools/Ninja/ninja $FILE_ARG -t clean $TARGETS
+  command = /opt/Qt/Tools/Ninja/ninja $FILE_ARG -t clean $TARGETS
   description = Cleaning all built files...
 
 
@@ -67,6 +67,6 @@ rule CLEAN
 # Rule for printing all primary targets available.
 
 rule HELP
-  command = /home/pert/Qt/Tools/Ninja/ninja -t targets
+  command = /opt/Qt/Tools/Ninja/ninja -t targets
   description = All primary targets available:
 

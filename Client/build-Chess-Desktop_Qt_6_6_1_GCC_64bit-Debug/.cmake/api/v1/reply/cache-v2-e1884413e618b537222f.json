@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug"
+			"value" : "/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -115,7 +115,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/pert/Qt/Tools/CMake/bin/cmake"
+			"value" : "/opt/Qt/Tools/CMake/bin/cmake"
 		},
 		{
 			"name" : "CMAKE_CPACK_COMMAND",
@@ -127,7 +127,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/pert/Qt/Tools/CMake/bin/cpack"
+			"value" : "/opt/Qt/Tools/CMake/bin/cpack"
 		},
 		{
 			"name" : "CMAKE_CTEST_COMMAND",
@@ -139,7 +139,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/pert/Qt/Tools/CMake/bin/ctest"
+			"value" : "/opt/Qt/Tools/CMake/bin/ctest"
 		},
 		{
 			"name" : "CMAKE_CXX_COMPILER",
@@ -343,7 +343,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/pert/Qt/Tools/CMake/bin/ccmake"
+			"value" : "/opt/Qt/Tools/CMake/bin/ccmake"
 		},
 		{
 			"name" : "CMAKE_EXECUTABLE_FORMAT",
@@ -463,7 +463,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/pkgRedirects"
+			"value" : "/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -535,7 +535,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess"
+			"value" : "/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess"
 		},
 		{
 			"name" : "CMAKE_INSTALL_BINDIR",
@@ -847,7 +847,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/home/pert/Qt/Tools/Ninja/ninja"
+			"value" : "/opt/Qt/Tools/Ninja/ninja"
 		},
 		{
 			"name" : "CMAKE_MODULE_LINKER_FLAGS",
@@ -1011,7 +1011,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "/home/pert/Qt/6.6.1/gcc_64"
+			"value" : "/opt/Qt/6.6.1/gcc_64"
 		},
 		{
 			"name" : "CMAKE_PROJECT_DESCRIPTION",
@@ -1047,7 +1047,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/.qtc/package-manager/auto-setup.cmake"
+			"value" : "/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/.qtc/package-manager/auto-setup.cmake"
 		},
 		{
 			"name" : "CMAKE_PROJECT_NAME",
@@ -1163,7 +1163,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/pert/Qt/Tools/CMake/share/cmake-3.27"
+			"value" : "/opt/Qt/Tools/CMake/share/cmake-3.27"
 		},
 		{
 			"name" : "CMAKE_SHARED_LINKER_FLAGS",
@@ -1427,7 +1427,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug"
+			"value" : "/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug"
 		},
 		{
 			"name" : "Chess_IS_TOP_LEVEL",
@@ -1451,7 +1451,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess"
+			"value" : "/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess"
 		},
 		{
 			"name" : "FIND_PACKAGE_MESSAGE_DETAILS_OpenGL",
@@ -1502,18 +1502,6 @@
 			"value" : "[ON][v()]"
 		},
 		{
-			"name" : "FIND_PACKAGE_MESSAGE_DETAILS_WrapVulkanHeaders",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Details about finding WrapVulkanHeaders"
-				}
-			],
-			"type" : "INTERNAL",
-			"value" : "[/usr/include][v()]"
-		},
-		{
 			"name" : "HAVE_STDATOMIC",
 			"properties" : 
 			[
@@ -1539,7 +1527,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "/usr/include"
+			"value" : "OPENGL_EGL_INCLUDE_DIR-NOTFOUND"
 		},
 		{
 			"name" : "OPENGL_GLES2_INCLUDE_DIR",
@@ -1619,7 +1607,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/lib/x86_64-linux-gnu/libEGL.so"
+			"value" : "OPENGL_egl_LIBRARY-NOTFOUND"
 		},
 		{
 			"name" : "OPENGL_gl_LIBRARY",
@@ -2063,7 +2051,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6"
+			"value" : "/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6"
 		},
 		{
 			"name" : "QT_FEATURE_abstractbutton",
@@ -6443,7 +6431,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/home/pert/Qt/6.6.1/gcc_64/bin/qmake"
+			"value" : "/opt/Qt/6.6.1/gcc_64/bin/qmake"
 		},
 		{
 			"name" : "Qt6CoreTools_DIR",
@@ -6455,7 +6443,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6CoreTools"
+			"value" : "/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6CoreTools"
 		},
 		{
 			"name" : "Qt6Core_DIR",
@@ -6467,7 +6455,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Core"
+			"value" : "/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Core"
 		},
 		{
 			"name" : "Qt6DBusTools_DIR",
@@ -6479,7 +6467,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6DBusTools"
+			"value" : "/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6DBusTools"
 		},
 		{
 			"name" : "Qt6DBus_DIR",
@@ -6491,7 +6479,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6DBus"
+			"value" : "/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6DBus"
 		},
 		{
 			"name" : "Qt6GuiTools_DIR",
@@ -6503,7 +6491,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6GuiTools"
+			"value" : "/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6GuiTools"
 		},
 		{
 			"name" : "Qt6Gui_DIR",
@@ -6515,7 +6503,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Gui"
+			"value" : "/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Gui"
 		},
 		{
 			"name" : "Qt6WidgetsTools_DIR",
@@ -6527,7 +6515,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6WidgetsTools"
+			"value" : "/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6WidgetsTools"
 		},
 		{
 			"name" : "Qt6Widgets_DIR",
@@ -6539,7 +6527,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Widgets"
+			"value" : "/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Widgets"
 		},
 		{
 			"name" : "Qt6_DIR",
@@ -6551,7 +6539,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6"
+			"value" : "/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6"
 		},
 		{
 			"name" : "Vulkan_GLSLANG_VALIDATOR_EXECUTABLE",
@@ -6599,7 +6587,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "/usr/include"
+			"value" : "Vulkan_INCLUDE_DIR-NOTFOUND"
 		},
 		{
 			"name" : "Vulkan_LIBRARY",
@@ -6615,7 +6603,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/usr/lib/x86_64-linux-gnu/libvulkan.so"
+			"value" : "Vulkan_LIBRARY-NOTFOUND"
 		},
 		{
 			"name" : "XKB_INCLUDE_DIR",

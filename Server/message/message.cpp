@@ -1,5 +1,6 @@
 #include "message.h"
 #include <json.hpp>
+#include <iostream>
 
 using json = nlohmann::json;
 
@@ -8,8 +9,10 @@ using json = nlohmann::json;
 */
 Message::Message(MessageType type) : type(type), length(0) {}
 Message::Message(std::string msg) {
+    // std::cout << msg.length() << std::endl;
     type = static_cast<MessageType> (msg[0]); // Type (1B)
     length = static_cast<uint16_t>((msg[1] << 8) | msg[2]); // Length (2B)
+
     payload = msg.substr(3, length); // Payload (lengthB)
 }
         
@@ -27,9 +30,9 @@ std::string Message::getPayload() const {
 
 std::string Message::serialize() const {
     std::string msg;
-    msg[0] = static_cast<char>(type);
-    msg[1] = static_cast<char>(static_cast<uint8_t>(length >> 8)); // High byte of length
-    msg[2] = static_cast<char>(static_cast<uint8_t>(length & 0xFF)); // Low byte of length
+    msg += static_cast<char>(type);
+    msg += static_cast<char>(static_cast<uint8_t>(length >> 8)); // High byte of length
+    msg += static_cast<char>(static_cast<uint8_t>(length & 0xFF)); // Low byte of length
     if (!payload.empty()) msg += payload; 
     return msg;
 }

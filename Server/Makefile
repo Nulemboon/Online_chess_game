@@ -4,7 +4,7 @@ INCLUDE_DIRS := -I/usr/local/include
 LIB_DIRS := -L/usr/local/lib
 LIBS := -l:bcrypt.a -lsqlite3
 
-SRCS := server.cpp database/database.cpp message/message.cpp
+SRCS := server.cpp database/database.cpp message/message.cpp 
 OBJS := $(SRCS:.cpp=.o)
 TARGET := server
 
