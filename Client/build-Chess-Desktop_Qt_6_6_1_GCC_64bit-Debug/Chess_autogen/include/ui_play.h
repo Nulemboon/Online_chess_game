@@ -32,6 +32,7 @@ public:
     QPushButton *btnMM;
     QPushButton *btnInvite;
     QPushButton *btnRefresh;
+    QLabel *lbNoMM;
     QFrame *frHome;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout_2;
@@ -199,6 +200,13 @@ public:
 "color: white;\n"
 "}"));
         btnRefresh->setIconSize(QSize(30, 55));
+        lbNoMM = new QLabel(playFrame);
+        lbNoMM->setObjectName("lbNoMM");
+        lbNoMM->setGeometry(QRect(572, 410, 116, 14));
+        QFont font5;
+        font5.setBold(true);
+        lbNoMM->setFont(font5);
+        lbNoMM->setStyleSheet(QString::fromUtf8("color:white;"));
         frHome = new QFrame(play);
         frHome->setObjectName("frHome");
         frHome->setGeometry(QRect(0, 0, 1000, 750));
@@ -261,14 +269,6 @@ public:
 
         const bool __sortingEnabled = playView->isSortingEnabled();
         playView->setSortingEnabled(false);
-        QTableWidgetItem *___qtablewidgetitem1 = playView->item(0, 0);
-        ___qtablewidgetitem1->setText(QCoreApplication::translate("play", "Khoa", nullptr));
-        QTableWidgetItem *___qtablewidgetitem2 = playView->item(1, 0);
-        ___qtablewidgetitem2->setText(QCoreApplication::translate("play", "Tue", nullptr));
-        QTableWidgetItem *___qtablewidgetitem3 = playView->item(2, 0);
-        ___qtablewidgetitem3->setText(QCoreApplication::translate("play", "Quan", nullptr));
-        QTableWidgetItem *___qtablewidgetitem4 = playView->item(3, 0);
-        ___qtablewidgetitem4->setText(QCoreApplication::translate("play", "Chien", nullptr));
         playView->setSortingEnabled(__sortingEnabled);
 
         label->setText(QCoreApplication::translate("play", "PLAY", nullptr));
@@ -277,10 +277,11 @@ public:
 "MATCHMAKING", nullptr));
         btnInvite->setText(QCoreApplication::translate("play", "INVITE", nullptr));
         btnRefresh->setText(QCoreApplication::translate("play", "REFRESH", nullptr));
+        lbNoMM->setText(QCoreApplication::translate("play", "No match found!", nullptr));
         btnPlay_2->setText(QCoreApplication::translate("play", "Play", nullptr));
         btnHistory_2->setText(QCoreApplication::translate("play", "History", nullptr));
         btnOptions_2->setText(QCoreApplication::translate("play", "Options", nullptr));
-        btnQuit_2->setText(QCoreApplication::translate("play", "Quit", nullptr));
+        btnQuit_2->setText(QCoreApplication::translate("play", "Logout", nullptr));
         lbDim->setText(QString());
     } // retranslateUi
 

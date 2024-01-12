@@ -19,6 +19,8 @@ Chess_autogen/timestamp: \
   /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/match.cpp \
   /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/match.h \
   /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/match.ui \
+  /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/myclient.cpp \
+  /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/myclient.h \
   /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/play.cpp \
   /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/play.h \
   /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/play.ui \
@@ -31,6 +33,9 @@ Chess_autogen/timestamp: \
   /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/gameplay.h \
   /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/message/message.cpp \
   /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/message/message.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtCore/QDebug \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtCore/QObject \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtCore/QSocketNotifier \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/q20functional.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/q20memory.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/q20type_traits.h \
@@ -73,6 +78,7 @@ Chess_autogen/timestamp: \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qglobalstatic.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qhash.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qhashfunctions.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qiodevice.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qiodevicebase.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qiterable.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qiterator.h \
@@ -107,6 +113,7 @@ Chess_autogen/timestamp: \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qsharedpointer.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qsharedpointer_impl.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qsize.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qsocketnotifier.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qstring.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qstringalgorithms.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qstringbuilder.h \
@@ -171,16 +178,26 @@ Chess_autogen/timestamp: \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qtguiglobal.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qtransform.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qwindowdefs.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtNetwork/QTcpSocket \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtNetwork/qabstractsocket.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtNetwork/qhostaddress.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtNetwork/qtcpsocket.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtNetwork/qtnetwork-config.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtNetwork/qtnetworkexports.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtNetwork/qtnetworkglobal.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QFrame \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QGraphicsView \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QMainWindow \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QPushButton \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QStackedWidget \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QWidget \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qabstractbutton.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qframe.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qgraphicsscene.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qgraphicsview.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qmainwindow.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qpushbutton.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qscrollarea.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qsizepolicy.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qstackedwidget.h \
@@ -382,6 +399,31 @@ Chess_autogen/timestamp: \
   /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsTargets-relwithdebinfo.cmake \
   /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsTargets.cmake \
   /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsVersionlessTargets.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkAdditionalTargetInfo.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkConfig.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkConfigVersion.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkConfigVersionImpl.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkDependencies.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkPlugins.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkTargets-relwithdebinfo.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkTargets.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkVersionlessTargets.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QGlibNetworkInformationPluginAdditionalTargetInfo.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QGlibNetworkInformationPluginConfig.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QGlibNetworkInformationPluginTargets-relwithdebinfo.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QGlibNetworkInformationPluginTargets.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QNetworkManagerNetworkInformationPluginAdditionalTargetInfo.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QNetworkManagerNetworkInformationPluginConfig.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QNetworkManagerNetworkInformationPluginTargets-relwithdebinfo.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QNetworkManagerNetworkInformationPluginTargets.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendCertOnlyPluginAdditionalTargetInfo.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendCertOnlyPluginConfig.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendCertOnlyPluginTargets-relwithdebinfo.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendCertOnlyPluginTargets.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginAdditionalTargetInfo.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginConfig.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginTargets-relwithdebinfo.cmake \
+  /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginTargets.cmake \
   /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Widgets/Qt6WidgetsAdditionalTargetInfo.cmake \
   /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake \
   /home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Widgets/Qt6WidgetsConfigVersion.cmake \
@@ -697,6 +739,7 @@ Chess_autogen/timestamp: \
   /usr/include/linux/errno.h \
   /usr/include/linux/limits.h \
   /usr/include/locale.h \
+  /usr/include/poll.h \
   /usr/include/pthread.h \
   /usr/include/sched.h \
   /usr/include/setjmp.h \
@@ -730,6 +773,7 @@ Chess_autogen/timestamp: \
   /usr/include/x86_64-linux-gnu/bits/local_lim.h \
   /usr/include/x86_64-linux-gnu/bits/locale.h \
   /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/poll.h \
   /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
   /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
   /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
@@ -825,6 +869,7 @@ Chess_autogen/timestamp: \
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/include/x86_64-linux-gnu/sys/poll.h \
   /usr/include/x86_64-linux-gnu/sys/select.h \
   /usr/include/x86_64-linux-gnu/sys/types.h \
   /usr/include/x86_64-linux-gnu/sys/ucontext.h \

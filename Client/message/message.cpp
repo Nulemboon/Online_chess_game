@@ -27,9 +27,9 @@ std::string Message::getPayload() const {
 
 std::string Message::serialize() const {
     std::string msg;
-    msg[0] = static_cast<char>(type);
-    msg[1] = static_cast<char>(static_cast<uint8_t>(length >> 8)); // High byte of length
-    msg[2] = static_cast<char>(static_cast<uint8_t>(length & 0xFF)); // Low byte of length
+    msg += static_cast<char>(type);
+    msg += static_cast<char>(static_cast<uint8_t>(length >> 8)); // High byte of length
+    msg += static_cast<char>(static_cast<uint8_t>(length & 0xFF)); // Low byte of length
     if (!payload.empty()) msg += payload; 
     return msg;
 }
@@ -243,4 +243,75 @@ InviteMessage::InviteMessage(Message message) : Message(message){
 
 std::vector<std::pair<std::string, int>> InviteMessage::getPlayerList() const {
     return playerList;
+}
+
+
+ListMessage::ListMessage(MessageType type, std::vector<std::pair<std::string, int>> list) : Message(type), list(list) {
+    json j;
+    j["list"] = list;
+    payload = j.dump();
+    length = static_cast<uint16_t>(payload.length());
+}
+
+ListMessage::ListMessage(Message message) : Message(message) {
+    length = message.getPayload().length();
+    json j = json::parse(message.getPayload());
+    list = std::vector<std::pair<std::string, int>>(j["list"]);
+}
+
+std::vector<std::pair<std::string, int>> ListMessage::getList() const {
+    return list;
+}
+
+MatchFoundMessage::MatchFoundMessage(MessageType type, char color, std::string name, int ELO) : Message(type), name(name), ELO(ELO), color(color) {
+    json j;
+    j["color"] = color;
+    j["name"] = name;
+    j["ELO"] = ELO;
+    payload = j.dump();
+    length = static_cast<uint16_t>(payload.length());
+}
+
+MatchFoundMessage::MatchFoundMessage(Message message) : Message(message) {
+    length = message.getPayload().length();
+    json j = json::parse(message.getPayload());
+    color = char(int(j["color"]));
+    name = std::string(j["name"]);
+    ELO = int(j["ELO"]);
+}
+
+char MatchFoundMessage::getColor() const {
+    return color;
+}
+
+std::string MatchFoundMessage::getName() const {
+    return name;
+}
+
+int MatchFoundMessage::getELO() const {
+    return ELO;
+}
+
+PromoteMessage::PromoteMessage(MessageType type, char piece, std::string destination) : Message(type), piece(piece), destination(destination) {
+    json j;
+    j["piece"] = piece;
+    j["dest"] = destination;
+
+    payload = j.dump();
+    length = static_cast<uint16_t>(payload.length());
+}
+
+PromoteMessage::PromoteMessage(Message message) : Message(message) {
+    length = message.getPayload().length();
+    json j = json::parse(message.getPayload());
+    piece = char(int(j["piece"]));
+    destination = std::string(j["dest"]);
+}
+
+std::string PromoteMessage::getDest() const {
+    return destination;
+}
+
+char PromoteMessage::getPiece() const {
+    return piece;
 }

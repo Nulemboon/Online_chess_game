@@ -29,9 +29,9 @@ public:
     QPushButton *btnPlay;
     QPushButton *btnHistory;
     QPushButton *btnOptions;
-    QPushButton *btnQuit;
+    QPushButton *btnLogout;
     QFrame *frLogin;
-    QPushButton *btnRegister;
+    QPushButton *btnToRegister;
     QLineEdit *txtUsername;
     QLineEdit *txtPassword;
     QLabel *lbUsername;
@@ -40,6 +40,9 @@ public:
     QLabel *lbLogo;
     QLabel *lbPassword;
     QLabel *lbNoti;
+    QPushButton *btnRegister;
+    QPushButton *btnToLogin;
+    QPushButton *btnQuit;
     QLabel *lbDim;
 
     void setupUi(QWidget *Home)
@@ -91,10 +94,10 @@ public:
 
         verticalLayout->addWidget(btnOptions);
 
-        btnQuit = new QPushButton(verticalLayoutWidget);
-        btnQuit->setObjectName("btnQuit");
+        btnLogout = new QPushButton(verticalLayoutWidget);
+        btnLogout->setObjectName("btnLogout");
 
-        verticalLayout->addWidget(btnQuit);
+        verticalLayout->addWidget(btnLogout);
 
         frLogin = new QFrame(frHome);
         frLogin->setObjectName("frLogin");
@@ -108,15 +111,15 @@ public:
 "}"));
         frLogin->setFrameShape(QFrame::StyledPanel);
         frLogin->setFrameShadow(QFrame::Raised);
-        btnRegister = new QPushButton(frLogin);
-        btnRegister->setObjectName("btnRegister");
-        btnRegister->setGeometry(QRect(292, 369, 163, 43));
+        btnToRegister = new QPushButton(frLogin);
+        btnToRegister->setObjectName("btnToRegister");
+        btnToRegister->setGeometry(QRect(292, 369, 163, 43));
         QFont font;
         font.setFamilies({QString::fromUtf8("Ubuntu")});
         font.setBold(true);
         font.setItalic(false);
-        btnRegister->setFont(font);
-        btnRegister->setStyleSheet(QString::fromUtf8("QPushButton{background-color: #EE4612;\n"
+        btnToRegister->setFont(font);
+        btnToRegister->setStyleSheet(QString::fromUtf8("QPushButton{background-color: #EE4612;\n"
 "text-align: center;\n"
 "font-size: 16px;\n"
 "font-weight: bold;}\n"
@@ -156,7 +159,7 @@ public:
 "QPushButton:hover{background-color: rgba(238, 70, 18, 0.7); color:white}"));
         label_2 = new QLabel(frLogin);
         label_2->setObjectName("label_2");
-        label_2->setGeometry(QRect(46, 377, 191, 34));
+        label_2->setGeometry(QRect(46, 377, 230, 34));
         QFont font2;
         font2.setPointSize(11);
         label_2->setFont(font2);
@@ -178,15 +181,40 @@ public:
         lbNoti->setFont(font1);
         lbNoti->setStyleSheet(QString::fromUtf8("border: none;\n"
 "color: red;"));
+        btnRegister = new QPushButton(frLogin);
+        btnRegister->setObjectName("btnRegister");
+        btnRegister->setGeometry(QRect(46, 286, 409, 54));
+        btnRegister->setStyleSheet(QString::fromUtf8("QPushButton{background-color: #EE4612;\n"
+"text-align: center;\n"
+"font-size: 22px;\n"
+"font-weight: bold;}\n"
+"\n"
+"\n"
+"QPushButton:hover{background-color: rgba(238, 70, 18, 0.7);color:white}"));
+        btnToLogin = new QPushButton(frLogin);
+        btnToLogin->setObjectName("btnToLogin");
+        btnToLogin->setGeometry(QRect(292, 369, 163, 43));
+        btnToLogin->setFont(font);
+        btnToLogin->setStyleSheet(QString::fromUtf8("QPushButton{background-color: #F59701;\n"
+"text-align: center;\n"
+"font-size: 16px;\n"
+"font-weight: bold;}\n"
+"QPushButton:hover{background-color: rgba(238, 70, 18, 0.7); color:white}"));
+        btnQuit = new QPushButton(frLogin);
+        btnQuit->setObjectName("btnQuit");
+        btnQuit->setGeometry(QRect(210, 60, 80, 22));
         lbUsername->raise();
         lbPassword->raise();
         btnLogin->raise();
         label_2->raise();
-        btnRegister->raise();
-        lbLogo->raise();
+        btnToRegister->raise();
         txtPassword->raise();
         txtUsername->raise();
         lbNoti->raise();
+        btnRegister->raise();
+        btnToLogin->raise();
+        btnQuit->raise();
+        lbLogo->raise();
         lbDim = new QLabel(frHome);
         lbDim->setObjectName("lbDim");
         lbDim->setGeometry(QRect(0, 0, 1000, 750));
@@ -206,8 +234,8 @@ public:
         btnPlay->setText(QCoreApplication::translate("Home", "Play", nullptr));
         btnHistory->setText(QCoreApplication::translate("Home", "History", nullptr));
         btnOptions->setText(QCoreApplication::translate("Home", "Options", nullptr));
-        btnQuit->setText(QCoreApplication::translate("Home", "Quit", nullptr));
-        btnRegister->setText(QCoreApplication::translate("Home", "Register", nullptr));
+        btnLogout->setText(QCoreApplication::translate("Home", "Logout", nullptr));
+        btnToRegister->setText(QCoreApplication::translate("Home", "Register", nullptr));
         txtUsername->setText(QString());
         txtPassword->setText(QString());
         lbUsername->setText(QCoreApplication::translate("Home", "Username...", nullptr));
@@ -216,6 +244,9 @@ public:
         lbLogo->setText(QString());
         lbPassword->setText(QCoreApplication::translate("Home", "Password...", nullptr));
         lbNoti->setText(QString());
+        btnRegister->setText(QCoreApplication::translate("Home", "Register", nullptr));
+        btnToLogin->setText(QCoreApplication::translate("Home", "Login", nullptr));
+        btnQuit->setText(QString());
         lbDim->setText(QString());
     } // retranslateUi
 

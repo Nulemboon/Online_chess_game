@@ -308,7 +308,7 @@ public:
         btnPlay_2->setText(QCoreApplication::translate("history", "Play", nullptr));
         btnHistory_2->setText(QCoreApplication::translate("history", "History", nullptr));
         btnOptions_2->setText(QCoreApplication::translate("history", "Options", nullptr));
-        btnQuit_2->setText(QCoreApplication::translate("history", "Quit", nullptr));
+        btnQuit_2->setText(QCoreApplication::translate("history", "Logout", nullptr));
         lbDim->setText(QString());
     } // retranslateUi
 

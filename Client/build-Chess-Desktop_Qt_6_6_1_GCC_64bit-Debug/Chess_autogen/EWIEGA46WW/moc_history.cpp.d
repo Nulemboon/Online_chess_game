@@ -1,7 +1,17 @@
 /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen/EWIEGA46WW/moc_history.cpp: /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/history.h \
   /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen/moc_predefs.h \
+  /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/chesssquare.h \
+  /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/game.h \
+  /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/history.h \
+  /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/home.h \
   /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/mainwindow.h \
+  /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/match.h \
+  /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/myclient.h \
+  /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/play.h \
   /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/message/message.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtCore/QDebug \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtCore/QObject \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtCore/QSocketNotifier \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/q20functional.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/q20memory.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/q20type_traits.h \
@@ -44,6 +54,7 @@
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qglobalstatic.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qhash.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qhashfunctions.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qiodevice.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qiodevicebase.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qiterable.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qiterator.h \
@@ -78,6 +89,7 @@
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qsharedpointer.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qsharedpointer_impl.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qsize.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qsocketnotifier.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qstring.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qstringalgorithms.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qstringbuilder.h \
@@ -127,23 +139,42 @@
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qimage.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qkeysequence.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qpaintdevice.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qpainter.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qpalette.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qpen.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qpixelformat.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qpixmap.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qpolygon.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qregion.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qrgb.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qrgba64.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qtextoption.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qtgui-config.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qtguiexports.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qtguiglobal.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qtransform.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qwindowdefs.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtNetwork/QTcpSocket \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtNetwork/qabstractsocket.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtNetwork/qhostaddress.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtNetwork/qtcpsocket.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtNetwork/qtnetwork-config.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtNetwork/qtnetworkexports.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtNetwork/qtnetworkglobal.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QFrame \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QGraphicsView \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QMainWindow \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QPushButton \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QStackedWidget \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QWidget \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qabstractbutton.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qframe.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qgraphicsscene.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qgraphicsview.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qmainwindow.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qpushbutton.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qscrollarea.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qsizepolicy.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qstackedwidget.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qtabwidget.h \
@@ -415,6 +446,7 @@
   /usr/include/linux/errno.h \
   /usr/include/linux/limits.h \
   /usr/include/locale.h \
+  /usr/include/poll.h \
   /usr/include/pthread.h \
   /usr/include/sched.h \
   /usr/include/setjmp.h \
@@ -448,6 +480,7 @@
   /usr/include/x86_64-linux-gnu/bits/local_lim.h \
   /usr/include/x86_64-linux-gnu/bits/locale.h \
   /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/poll.h \
   /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
   /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
   /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
@@ -543,6 +576,7 @@
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/include/x86_64-linux-gnu/sys/poll.h \
   /usr/include/x86_64-linux-gnu/sys/select.h \
   /usr/include/x86_64-linux-gnu/sys/types.h \
   /usr/include/x86_64-linux-gnu/sys/ucontext.h \

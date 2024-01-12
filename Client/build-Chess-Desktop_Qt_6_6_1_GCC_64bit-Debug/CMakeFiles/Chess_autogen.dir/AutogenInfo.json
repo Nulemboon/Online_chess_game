@@ -345,6 +345,36 @@
 		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Widgets/Qt6WidgetsAdditionalTargetInfo.cmake",
 		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Widgets/Qt6WidgetsVersionlessTargets.cmake",
 		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Widgets/Qt6WidgetsMacros.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkConfigVersion.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkConfigVersionImpl.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkConfig.cmake",
+		"/home/pert/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeFindDependencyMacro.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkDependencies.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkTargets.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkTargets-relwithdebinfo.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkAdditionalTargetInfo.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkVersionlessTargets.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkPlugins.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QGlibNetworkInformationPluginConfig.cmake",
+		"/home/pert/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeFindDependencyMacro.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QGlibNetworkInformationPluginTargets.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QGlibNetworkInformationPluginTargets-relwithdebinfo.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QGlibNetworkInformationPluginAdditionalTargetInfo.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QNetworkManagerNetworkInformationPluginConfig.cmake",
+		"/home/pert/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeFindDependencyMacro.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QNetworkManagerNetworkInformationPluginTargets.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QNetworkManagerNetworkInformationPluginTargets-relwithdebinfo.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QNetworkManagerNetworkInformationPluginAdditionalTargetInfo.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendCertOnlyPluginConfig.cmake",
+		"/home/pert/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeFindDependencyMacro.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendCertOnlyPluginTargets.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendCertOnlyPluginTargets-relwithdebinfo.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendCertOnlyPluginAdditionalTargetInfo.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginConfig.cmake",
+		"/home/pert/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeFindDependencyMacro.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginTargets.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginTargets-relwithdebinfo.cmake",
+		"/home/pert/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginAdditionalTargetInfo.cmake",
 		"/home/pert/Qt/Tools/CMake/share/cmake-3.27/Modules/GNUInstallDirs.cmake",
 		"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/resource.qrc"
 	],
@@ -390,6 +420,12 @@
 			null
 		],
 		[
+			"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/myclient.h",
+			"MU",
+			"EWIEGA46WW/moc_myclient.cpp",
+			null
+		],
+		[
 			"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/play.h",
 			"MU",
 			"EWIEGA46WW/moc_play.cpp",
@@ -411,7 +447,7 @@
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
 	"INCLUDE_DIR" : "/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen/include",
 	"MOC_COMPILATION_FILE" : "/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen/mocs_compilation.cpp",
-	"MOC_DEFINITIONS" : [ "QT_CORE_LIB", "QT_GUI_LIB", "QT_WIDGETS_LIB" ],
+	"MOC_DEFINITIONS" : [ "QT_CORE_LIB", "QT_GUI_LIB", "QT_NETWORK_LIB", "QT_WIDGETS_LIB" ],
 	"MOC_DEPEND_FILTERS" : 
 	[
 		[
@@ -426,6 +462,7 @@
 		"/home/pert/Qt/6.6.1/gcc_64/mkspecs/linux-g++",
 		"/home/pert/Qt/6.6.1/gcc_64/include/QtWidgets",
 		"/home/pert/Qt/6.6.1/gcc_64/include/QtGui",
+		"/home/pert/Qt/6.6.1/gcc_64/include/QtNetwork",
 		"/usr/include",
 		"/usr/include/c++/11",
 		"/usr/include/x86_64-linux-gnu/c++/11",
@@ -498,6 +535,11 @@
 		],
 		[
 			"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/match.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/Chess/myclient.cpp",
 			"MU",
 			null
 		],

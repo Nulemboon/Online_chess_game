@@ -184,12 +184,34 @@ void Match::on_btnExit_clicked()
 }
 
 void Match::reset() {
-    setupBoard();
-    for (int i = 2; i < 6; i++) {
-        for (int j = 0; j < 8; j++) {
-            collection[i][j]->placePiece(NONE);
+    // Reset chess board
+    // Clear existing chessSquares
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            if (collection[i][j] != nullptr) {
+                delete collection[i][j];
+                collection[i][j] = nullptr;
+            }
         }
     }
+    drawBoxes();
+
+    // Reset logs
+    ui->tableWidget->clearContents();
+
+    // Reset captured pieces holders
+    while (QLayoutItem *item = ui->hboxPlayer->takeAt(0)) {
+        delete item->widget();
+        delete item;
+    }
+    while (QLayoutItem *item = ui->hboxOpponent->takeAt(0)) {
+        delete item->widget();
+        delete item;
+    }
+
+    // Setup new names
+    ui->lbOpponentName->setText(opponentName);
+    ui->lbPlayerName->setText(mainwindow->user);
 }
 
 void Match::moves(ChessSquare* src, ChessSquare* dst) {

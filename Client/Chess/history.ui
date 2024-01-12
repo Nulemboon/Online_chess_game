@@ -519,7 +519,7 @@ color: white;
      <item>
       <widget class="QPushButton" name="btnQuit_2">
        <property name="text">
-        <string>Quit</string>
+        <string>Logout</string>
        </property>
       </widget>
      </item>

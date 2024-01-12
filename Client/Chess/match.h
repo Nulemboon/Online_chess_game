@@ -5,7 +5,7 @@
 #include <QGraphicsView>
 #include "chesssquare.h"
 #include "mainwindow.h"
-
+class MainWindow;
 namespace Ui {
 class Match;
 }
@@ -28,6 +28,7 @@ public:
     QString opponentName;
     ChessSquare *collection[8][8];
     std::vector<std::pair<int, int>> moveList;
+    Ui::Match *ui;
 
 private slots:
     void on_btnExit_clicked();
@@ -37,7 +38,6 @@ private slots:
     void on_btnBack_clicked();
 
 private:
-    Ui::Match *ui;
     QGraphicsScene *scene;
     QGraphicsView *view;
     MainWindow* mainwindow;

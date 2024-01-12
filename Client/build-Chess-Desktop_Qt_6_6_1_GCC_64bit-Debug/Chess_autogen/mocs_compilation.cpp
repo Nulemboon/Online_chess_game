@@ -5,4 +5,5 @@
 #include "EWIEGA46WW/moc_home.cpp"
 #include "EWIEGA46WW/moc_mainwindow.cpp"
 #include "EWIEGA46WW/moc_match.cpp"
+#include "EWIEGA46WW/moc_myclient.cpp"
 #include "EWIEGA46WW/moc_play.cpp"

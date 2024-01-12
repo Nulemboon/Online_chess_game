@@ -3,9 +3,10 @@
 
 #include <QWidget>
 #include <QGraphicsView>
+#include <QPushButton>
 #include "chesssquare.h"
 #include "mainwindow.h"
-
+class MainWindow;
 namespace Ui {
 class game;
 }
@@ -21,10 +22,19 @@ public:
     void setupBoard();
     void drawBoxes();
     void addDead();
+    void reset();
     QString getPath(ChessPiece piece);
+    void moves(ChessSquare* src, ChessSquare* dst);
+    void handleCastling(ChessSquare* src, ChessSquare* dst);
+    void handleEnPassant(ChessSquare* src, ChessSquare* dst);
 
     ChessSquare *collection[8][8];
     QPair<int, int> squareSelected;
+    QString opponentName;
+    Side side;
+    Ui::game *ui;
+    bool isTurn;
+    int rowClicked, colClicked;
 public slots:
     void chessSquareClicked(int row, int col);
 private slots:
@@ -36,16 +46,24 @@ private slots:
 
     void on_btnResign_clicked();
 
+    void on_btnPrQueen_clicked();
+
+    void on_btnPrKnight_clicked();
+
+    void on_btnPrRook_clicked();
+
+    void on_btnPrBishop_clicked();
+
+    void on_btnBack_clicked();
+
 private:
-    Ui::game *ui;
     QGraphicsScene *scene;
     QGraphicsView *view;
     MainWindow* mainwindow;
     QList <ChessPiece> playerDead;
-    Side side;
-    QString opponentName;
     QList <ChessPiece> opponentDead;
     int choice;
+    int rowPr, colPr;
     // QList <ChessPiece> white;
     // QList <ChessPiece> black;
     // QGraphicsRectItem * deadHolder;
@@ -54,7 +72,9 @@ private:
     // QList <QGraphicsItem *> listG;
     // QGraphicsTextItem * turnDisplay;
 
-    void moves(ChessSquare* src, ChessSquare* dst);
+    void setupPromoteFrame();
+    void setButtonStyleSheet(QPushButton* button, const QString& imagePath);
+    void writeLog(bool isWhite, ChessSquare* src, ChessSquare* dst);
 
 };
 
