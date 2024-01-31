@@ -37,7 +37,7 @@ class Database {
         /*  This function adds a new record to table History.
             Returns -1 if an error occured, 1 if the record was added successfully and 0 if whiteID or blackID not found.
         */
-        int addMatch(const std::string& whiteID, const std::string& blackID, int result, const std::string& moves, const int matchID);
+        int addMatch(const std::string& whiteID, const std::string& blackID, int result, const std::string& moves, const int matchID, const std::string time);
         
         /*  This function returns all matches of the user with username
             Output order: whiteID, blackID, result, moves, time, history, historyID

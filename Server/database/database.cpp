@@ -131,8 +131,7 @@ int Database::validateUser(const std::string username, const std::string passwor
     }
 }
 
-int Database::addMatch(const std::string& whiteID, const std::string& blackID,
-                              int result, const std::string& moves, const int matchID) {
+int Database::addMatch(const std::string& whiteID, const std::string& blackID, int result, const std::string& moves, const int matchID, const std::string time) {
     if (!db) {
         // Handle error, database not open
         std::cerr << "Cannot open database" << std::endl;
