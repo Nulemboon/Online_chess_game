@@ -57,6 +57,8 @@ void play::fetchData(std::vector<std::pair<std::string, int>> newList) {
     // Populate the model with data from the new list
     for (int row = 0; row < newRowCount; ++row) {
         std::pair<std::string, int> player = newList[row];
+        if (QString::fromStdString(player.first) == mainwindow->user) continue;
+
         QTableWidgetItem *item;
 
         item = new QTableWidgetItem(QString::fromStdString(player.first) + " (" + QString::number(player.second) + ")");
@@ -127,6 +129,9 @@ void play::on_btnMM_clicked()
     ui->btnBack->setEnabled(false);
     ui->btnMM->setText("FINDING MATCH...");
     ui->lbNoMM->setVisible(false);
+    ui->btnYes->setEnabled(false);
+    ui->btnNo->setEnabled(false);
+    ui->btnMM->setEnabled(false);
 
     // Send request to random MM to server
     Message* msg = new Message(RANDOM_MATCHMAKING);

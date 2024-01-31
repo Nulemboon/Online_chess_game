@@ -10,7 +10,7 @@ MyClient::MyClient(QObject *parent)
     connect(socket, &QTcpSocket::connected, this, &MyClient::onConnected);
 
     // Connect to the server
-    socket->connectToHost("192.168.1.34", 5500); // Replace with your server's IP and port
+    socket->connectToHost("172.20.144.1", 5500); // Replace with your server's IP and port
 }
 
 void MyClient::onConnected()
@@ -46,7 +46,7 @@ void MyClient::pollSocket()
         if (buff[0] == '\n') continue;
         std::cout << std::endl;
         if (bytesRead > 0) {
-            std::string delimiter = "\n";
+            std::string delimiter = "\n\n";
             std::string token = "";
             size_t pos = 0;
             std::string s(buff, bytesRead);

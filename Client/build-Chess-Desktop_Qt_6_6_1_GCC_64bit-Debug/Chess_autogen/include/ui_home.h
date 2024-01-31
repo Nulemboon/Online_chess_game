@@ -178,7 +178,9 @@ public:
         lbNoti = new QLabel(frLogin);
         lbNoti->setObjectName("lbNoti");
         lbNoti->setGeometry(QRect(46, 430, 409, 46));
-        lbNoti->setFont(font1);
+        QFont font3;
+        font3.setPointSize(12);
+        lbNoti->setFont(font3);
         lbNoti->setStyleSheet(QString::fromUtf8("border: none;\n"
 "color: red;"));
         btnRegister = new QPushButton(frLogin);

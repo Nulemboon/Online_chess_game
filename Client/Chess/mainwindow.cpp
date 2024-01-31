@@ -299,6 +299,9 @@ void MainWindow::handleMatchmakingTimeout(Message *msg) {
     playWid->ui->btnBack->setEnabled(true);
     playWid->ui->btnMM->setText("RANDOM\nMATCHMAKING");
     playWid->ui->lbNoMM->setVisible(true);
+    playWid->ui->btnYes->setEnabled(true);
+    playWid->ui->btnNo->setEnabled(true);
+    playWid->ui->btnMM->setEnabled(true);
 }
 
 void MainWindow::handleMoveNotOk(Message *msg) {
@@ -472,5 +475,40 @@ void MainWindow::handleIsCheck(Message *msg) {
 }
 
 void MainWindow::handlePromote(Message *msg) {
-    gameWid->ui->frPromote->setVisible(true);
+    if (msg->getLength() == 0) {
+        gameWid->ui->frPromote->setVisible(true);
+
+    } else {
+        MoveMessage *rcv = new MoveMessage(*msg);
+        int sRow, sCol, dRow, dCol;
+        sRow = rcv->getSource()[0] - '0'; sCol = rcv->getSource()[1] - '0';
+        dRow = rcv->getDestination()[0] - '0'; dCol = rcv->getDestination()[1] - '0';
+
+        ChessPiece pieceMoved = gameWid->collection[dRow][dCol]->getPiece();
+        Side pieceSide = (pieceMoved == PawnW ? WHITE : BLACK);
+        bool isPlayer = gameWid->side == pieceSide ? true : false;
+        gameWid->moves(gameWid->collection[sRow][sCol], gameWid->collection[dRow][dCol]);
+        switch (rcv->getDestination()[2]) {
+        case 'Q':
+            gameWid->collection[dRow][dCol]->placePiece(isPlayer ? QueenW : QueenB);
+            break;
+
+        case 'N':
+            gameWid->collection[dRow][dCol]->placePiece(isPlayer ? KnightW : KnightB);
+            break;
+
+        case 'R':
+            gameWid->collection[dRow][dCol]->placePiece(isPlayer ? RookW : RookB);
+            break;
+
+        case 'B':
+            gameWid->collection[dRow][dCol]->placePiece(isPlayer ? BishopW : BishopB);
+            break;
+
+        default:
+            break;
+        }
+
+        gameWid->isTurn = true;
+    }
 }
