@@ -1,4 +1,5 @@
 #include "myclient.h"
+#include <iostream>
 
 MyClient::MyClient(QObject *parent)
     : QObject(parent)
@@ -9,7 +10,7 @@ MyClient::MyClient(QObject *parent)
     connect(socket, &QTcpSocket::connected, this, &MyClient::onConnected);
 
     // Connect to the server
-    socket->connectToHost("192.168.197.172", 5500); // Replace with your server's IP and port
+    socket->connectToHost("192.168.1.34", 5500); // Replace with your server's IP and port
 }
 
 void MyClient::onConnected()
@@ -39,17 +40,32 @@ void MyClient::pollSocket()
     qint64 bytesRead = 0;
     do {
         bytesRead = socket->read(buff, bufferSize);
-
+        for (int i = 0; i < bytesRead; i++) {
+            std::cout << static_cast<int>(buff[i]) << " ";
+        }
+        if (buff[0] == '\n') continue;
+        std::cout << std::endl;
         if (bytesRead > 0) {
-            for (int i = 0; i<bytesRead; i++){
-                qDebug() << buff[i];
-            }
-            std::string tmp(buff, bytesRead);
-            QString message = QString::fromStdString(tmp);
-            qDebug() << "Received message:" << message;
+            std::string delimiter = "\n";
+            std::string token = "";
+            size_t pos = 0;
+            std::string s(buff, bytesRead);
+            // qDebug() << QString::fromStdString(s);
+            // for (int i = 0; i < bytesRead; i++) {
+            //     qDebug() << static_cast<int>(buff[i]);
+            // }
+            while ((pos = s.find(delimiter)) != std::string::npos) {
+                if (s.length() <= 1) break;
+                token = s.substr(0, pos);
+                s.erase(0, pos + delimiter.length());
 
-            // Emit the signal with the received message
-            emit messageReceived(message);
+
+                QString message = QString::fromStdString(token);
+                qDebug() << "Received message:" << message;
+
+                // Emit the signal with the received message
+                emit messageReceived(message);
+            }
         }
     } while (bytesRead > 0);
 }
@@ -57,6 +73,7 @@ void MyClient::pollSocket()
 
 void MyClient::sendMessage(const QString message, int length)
 {
+    if (!socket) qDebug() << "DEAD";
     if (socket->state() == QAbstractSocket::ConnectedState) {
         // Convert the QString to a QByteArray before sending
 

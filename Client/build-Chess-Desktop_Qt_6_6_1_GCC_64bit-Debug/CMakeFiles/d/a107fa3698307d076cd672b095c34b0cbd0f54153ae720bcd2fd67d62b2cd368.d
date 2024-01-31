@@ -34,6 +34,7 @@ Chess_autogen/timestamp: \
   /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/message/message.cpp \
   /home/pert/Programming/NetworkProgramming/Final/Online_chess_game/Client/message/message.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/QDebug \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtCore/QList \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/QObject \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/QSocketNotifier \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/q20functional.h \
@@ -187,15 +188,20 @@ Chess_autogen/timestamp: \
   /home/pert/Qt/6.6.1/gcc_64/include/QtNetwork/qtnetworkglobal.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QFrame \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QGraphicsView \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QGridLayout \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QMainWindow \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QPushButton \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QStackedWidget \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QWidget \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qabstractbutton.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qboxlayout.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qframe.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qgraphicsscene.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qgraphicsview.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qgridlayout.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qlayout.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qlayoutitem.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qmainwindow.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qpushbutton.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qscrollarea.h \

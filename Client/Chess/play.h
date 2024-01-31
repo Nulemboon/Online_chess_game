@@ -16,8 +16,9 @@ public:
     explicit play(MainWindow* mainwindow, QWidget *parent = nullptr);
     ~play();
 
-    void fetchData();
+    void fetchData(std::vector<std::pair<std::string, int>> newList);
     void getPlayData();
+    std::vector<std::pair<std::string, int>> inviteList;
 
 
     Ui::play *ui;
@@ -30,6 +31,10 @@ private slots:
     void on_btnInvite_clicked();
 
     void on_btnMM_clicked();
+
+    void on_btnNo_clicked();
+
+    void on_btnYes_clicked();
 
 private:
     MainWindow* mainwindow;

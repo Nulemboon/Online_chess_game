@@ -10,9 +10,7 @@ using json = nlohmann::json;
 enum MessageType : uint8_t {
     // Client message
     OK,
-    NOT_OK,
     SEE_HISTORY,
-    SEE_MATCH, // <match_id>
     RANDOM_MATCHMAKING,
     CREATE_ROOM,
     OFFER_DRAW,
@@ -21,6 +19,7 @@ enum MessageType : uint8_t {
     LOGIN, // <username> <password>
     LOGOUT, // <username> 
     INVITE, // <username> 
+    NOT_OK,
     MOVE, // <source_position> <destination_position>
     PROMOTE, // <destination_position>
     DELETE_ROOM,
@@ -28,6 +27,7 @@ enum MessageType : uint8_t {
     REJECT_INVITE, // <username>
     ACCEPT_DRAW,
     REJECT_DRAW,
+    SEE_MATCH, // <match_id>
 
     // Server message
     HISTORY, // <matches>
@@ -39,6 +39,7 @@ enum MessageType : uint8_t {
     USER_BLOCKED,
     USER_LOGGED_IN,
     LOGIN_SUCCESSFUL,
+    ONLINE_LIST,
     MATCH_FOUND,
     MATCHMAKING_TIMEOUT,
     MOVE_NOT_OK,
@@ -49,6 +50,7 @@ enum MessageType : uint8_t {
     GAME_WIN,
     GAME_LOSE,
     ERROR,
+    IS_CHECK,
 };
 
 class Message {
@@ -83,7 +85,7 @@ class UserMessage : public Message {
 
 class MoveMessage : public Message {
     public:
-        MoveMessage(std::string source, std::string destination);
+        MoveMessage(MessageType type, std::string source, std::string destination);
         MoveMessage(Message message);
 
         std::string getSource() const;
@@ -141,30 +143,30 @@ class ListMessage : public Message {
 
 class MatchFoundMessage : public Message {
     public:
-    MatchFoundMessage(MessageType type, char color, std::string name, int ELO);
+    MatchFoundMessage(MessageType type, int color, std::string name, int ELO);
     MatchFoundMessage(Message message);
 
-    char getColor() const;
+    int getColor() const;
     std::string getName() const;
     int getELO() const;
 
     private:
-    char color;
+    int color;
     std::string name;
     int ELO;
 };
 
-class PromoteMessage : public Message {
-    public:
-    PromoteMessage(MessageType type, char piece, std::string destination);
-    PromoteMessage(Message message);
+// class PromoteMessage : public Message {
+//     public:
+//     PromoteMessage(MessageType type, char piece, std::string destination);
+//     PromoteMessage(Message message);
 
-    char getPiece() const;
-    std::string getDest() const;
+//     char getPiece() const;
+//     std::string getDest() const;
 
-    private:
-    char piece;
-    std::string destination;
-};
+//     private:
+//     char piece;
+//     std::string destination;
+// };
 
 #endif // MESSAGE_H

@@ -15,10 +15,10 @@ class history : public QWidget
     Q_OBJECT
 
 public:
-    explicit history(QWidget *parent = nullptr);
+    explicit history(MainWindow* mainwindow, QWidget *parent = nullptr);
     ~history();
 
-    void fetchData();
+    void fetchData(std::vector<std::map<std::string, std::string>> newHistory);
     void getHistoryData();
 
     std::vector<std::map<std::string, std::string>> matches;

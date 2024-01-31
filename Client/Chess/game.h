@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QGraphicsView>
 #include <QPushButton>
+#include <QGridLayout>
 #include "chesssquare.h"
 #include "mainwindow.h"
 class MainWindow;
@@ -21,7 +22,7 @@ public:
 
     void setupBoard();
     void drawBoxes();
-    void addDead();
+    void addDead(bool isPlayer);
     void reset();
     QString getPath(ChessPiece piece);
     void moves(ChessSquare* src, ChessSquare* dst);
@@ -34,7 +35,8 @@ public:
     Side side;
     Ui::game *ui;
     bool isTurn;
-    int rowClicked, colClicked;
+    int rowPr, colPr;
+    int rowClicked, colClicked, rowCheck, colCheck;
 public slots:
     void chessSquareClicked(int row, int col);
 private slots:
@@ -63,7 +65,7 @@ private:
     QList <ChessPiece> playerDead;
     QList <ChessPiece> opponentDead;
     int choice;
-    int rowPr, colPr;
+    QGridLayout *chessboard;
     // QList <ChessPiece> white;
     // QList <ChessPiece> black;
     // QGraphicsRectItem * deadHolder;
@@ -74,7 +76,9 @@ private:
 
     void setupPromoteFrame();
     void setButtonStyleSheet(QPushButton* button, const QString& imagePath);
-    void writeLog(bool isWhite, ChessSquare* src, ChessSquare* dst);
+    void writeLog(bool isWhite, ChessSquare* src, ChessSquare* dst); // General move
+    void writeLog(bool isWhite, bool isLong); // Castling only
+    void addBoxes();
 
 };
 

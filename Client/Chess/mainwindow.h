@@ -78,6 +78,8 @@ private:
     void handleMove(Message *msg);
     void handleOK(Message *msg);
     void handleInvite(Message *msg);
+    void handleIsCheck(Message *msg);
+    void handlePromote(Message *msg);
 
 
 private slots:

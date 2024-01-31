@@ -43,15 +43,6 @@ Home::~Home()
     delete ui;
 }
 
-void Home::on_btnHistory_clicked()
-{
-    // Setup History scene
-    mainwindow->switchScene(HISTORYS);
-    history* screen = qobject_cast<history*>(mainwindow->stackedWidget->currentWidget());
-    screen->getHistoryData();
-
-}
-
 void Home::onUsernameTextChanged(const QString &text)
 {
     if (!text.isEmpty()) {
@@ -147,5 +138,15 @@ void Home::on_btnPlay_clicked()
     mainwindow->switchScene(PLAYS);
     play* screen = qobject_cast<play*>(mainwindow->stackedWidget->currentWidget());
     screen->getPlayData();
+
+    Message* msg = new Message(CREATE_ROOM);
+    mainwindow->sendMessage(msg);
 }
 
+void Home::on_btnHistory_clicked()
+{
+    // Setup History scene
+    mainwindow->switchScene(HISTORYS);
+    Message* msg = new Message(SEE_HISTORY);
+    mainwindow->sendMessage(msg);
+}

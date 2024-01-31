@@ -9,6 +9,7 @@
 #include <cstring>
 #include <unistd.h>
 #include <arpa/inet.h>
+#include <QGraphicsDropShadowEffect>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -20,9 +21,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Initiate scenes
     homeWid = new Home(this, this);
-    historyWid = new history(this);
+    historyWid = new history(this, this);
     matchWid = new Match(WHITE, "Opponent", this, this);
-    playWid = new play(this);
+    playWid = new play(this, this);
     gameWid = new game(WHITE, "Opponent", this, this);
 
     // Add scenes to a stackedWidget
@@ -38,6 +39,16 @@ MainWindow::MainWindow(QWidget *parent)
     // Show the initial widget (home)
     stackedWidget->setCurrentIndex(HOMES);
 
+    // homeWid->ui->lbDim->setVisible(false);
+    // homeWid->ui->btnPlay->setEnabled(true);
+
+    // MatchFoundMessage* rcv = new MatchFoundMessage(MATCH_FOUND, 1, "test", 100);
+    // switchScene(GAMES);
+
+    // gameWid->side = rcv->getColor() == 1 ? WHITE : BLACK;
+    // gameWid->opponentName = QString::fromStdString(rcv->getName());
+    // gameWid->reset();
+
 }
 
 MainWindow::~MainWindow()
@@ -46,7 +57,7 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::sendMessage(Message *message) {
-    client.sendMessage(QString::fromStdString(message->serialize()), message->getLength());
+    client.sendMessage(QString::fromStdString(message->serialize()) + '\n', message->getLength() + 1);
     qDebug() << "Type: " << message->getType();
     qDebug() << "Length: " << message->getLength();
 }
@@ -151,21 +162,32 @@ void MainWindow::onMessageReceived(const QString &message)
         handleInvite(rcv);
         break;
 
+    case IS_CHECK:
+        handleIsCheck(rcv);
+        break;
+
+    case PROMOTE:
+        handlePromote(rcv);
+
+    default:
+        break;
     }
 }
 
 void MainWindow::handleHistory(Message *msg) {
     HistoryMessage *msgH = new HistoryMessage(*msg);
-    historyWid->matches = msgH->getMatches();
-    historyWid->fetchData();
+    std::vector<std::map<std::string, std::string>> newHistory = msgH->getMatches();
+    historyWid->matches.insert(historyWid->matches.end(), newHistory.begin(), newHistory.end());
+
+    historyWid->fetchData(newHistory);
 }
 
 void MainWindow::handleMatch(Message *msg) {
-    MatchMessage *msgM = new MatchMessage(*msg);
+    HistoryMessage *msgM = new HistoryMessage(*msg);
 
     // Parse move
-    std::vector<std::pair<int, int>> test;
-    std::istringstream iss(msgM->getMatch());
+    std::vector<std::pair<int, std::string>> test;
+    std::istringstream iss(msgM->getMatches()[0]["moves"]);
 
     // Iterate through each move in the input string
     std::string move;
@@ -174,7 +196,8 @@ void MainWindow::handleMatch(Message *msg) {
         std::istringstream moveStream(move);
 
         // Parse the two integers from the move
-        int move1, move2;
+        int move1;
+        std::string move2;
         if (moveStream >> move1 >> move2) {
             // Add the pair to the vector
             test.emplace_back(move1, move2);
@@ -191,7 +214,7 @@ void MainWindow::handleMatch(Message *msg) {
     matchWid->reset();
     std::string sideO;
     int sideMatch = match["whiteID"] == user.toStdString() ? 0 : 1; // 0 for White, 1 for Black
-    QString nameO = sideMatch == 1 ? QString::fromStdString(match["blackID"]) : QString::fromStdString(match["whiteID"]);
+    // QString nameO = sideMatch == 1 ? QString::fromStdString(match["blackID"]) : QString::fromStdString(match["whiteID"]);
     if (sideMatch == 0) {
         sideO = "blackID";
     } else {
@@ -199,7 +222,7 @@ void MainWindow::handleMatch(Message *msg) {
     }
 
     matchWid->opponentName = QString::fromStdString(match[sideO]);
-    matchWid->moveList = test;
+    matchWid->moveList.insert(matchWid->moveList.end(), test.begin(), test.end());
 }
 
 void MainWindow::handleRegisterUsernameExisted(Message *msg) {
@@ -247,18 +270,26 @@ void MainWindow::handleLoginSuccessful(Message *msg) {
 void MainWindow::handleOnlineList(Message *msg) {
 
     ListMessage *rcv = new ListMessage(*msg);
-    playWid->list = rcv->getList();
+    std::vector<std::pair<std::string, int>> newList = rcv->getList();
+    playWid->list.insert(playWid->list.end(), newList.begin(), newList.end());
 
-    playWid->fetchData();
+    playWid->fetchData(newList);
 }
 
 void MainWindow::handleMatchFound(Message *msg) {
+    playWid->ui->btnInvite->setEnabled(true);
+    playWid->ui->btnRefresh->setEnabled(true);
+    playWid->ui->btnBack->setEnabled(true);
+    playWid->ui->btnMM->setText("RANDOM\nMATCHMAKING");
+    playWid->ui->btnMM->setEnabled(true);
+
     MatchFoundMessage* rcv = new MatchFoundMessage(*msg);
     // Setup game scene
     switchScene(GAMES);
-    gameWid->side = rcv->getColor() == 'W' ? WHITE : BLACK;
+    gameWid->side = rcv->getColor() == 1 ? WHITE : BLACK;
     gameWid->opponentName = QString::fromStdString(rcv->getName());
     gameWid->reset();
+
 }
 
 void MainWindow::handleMatchmakingTimeout(Message *msg) {
@@ -271,6 +302,8 @@ void MainWindow::handleMatchmakingTimeout(Message *msg) {
 }
 
 void MainWindow::handleMoveNotOk(Message *msg) {
+    gameWid->squareSelected.first = -1;
+    gameWid->squareSelected.second = -1;
     return;
 }
 
@@ -337,15 +370,41 @@ void MainWindow::handleError(Message *msg) {
 void MainWindow::handleMove(Message *msg) {
     MoveMessage *rcv = new MoveMessage(*msg);
     int sRow, sCol, dRow, dCol;
-    sRow = rcv->getSource()[0]; sCol = rcv->getSource()[1];
-    dRow = rcv->getDestination()[0]; dCol = rcv->getDestination()[1];
-    gameWid->moves(gameWid->collection[sRow][sCol], gameWid->collection[dRow][dCol]);
+    sRow = rcv->getSource()[0] - '0'; sCol = rcv->getSource()[1] - '0';
+    dRow = rcv->getDestination()[0] - '0'; dCol = rcv->getDestination()[1] - '0';
+
+    ChessPiece pieceToMove = gameWid->collection[sRow][sCol]->getPiece();
+    qDebug() << pieceToMove;
+
+    // Check special move
+    if (pieceToMove == KingB || pieceToMove == KingW) {
+        if (std::abs(sCol - dCol) > 1) {
+            // Handle Castling
+            gameWid->handleCastling(gameWid->collection[sRow][sCol], gameWid->collection[dRow][dCol]);
+        } else {
+            gameWid->moves(gameWid->collection[sRow][sCol], gameWid->collection[dRow][dCol]);
+        }
+    } else if (pieceToMove == PawnB || pieceToMove == PawnW) {
+        if ((pieceToMove == PawnW && dRow== 5) || (pieceToMove == PawnB && dRow== 2)) {
+            if (std::abs(sCol - dCol) == 1 && gameWid->collection[dRow][dCol]->piece == NONE) {
+                // Handle En Passant
+                gameWid->handleEnPassant(gameWid->collection[sRow][sCol], gameWid->collection[dRow][dCol]);
+            } else {
+                gameWid->moves(gameWid->collection[sRow][sCol], gameWid->collection[dRow][dCol]);
+            }
+        } else {
+            gameWid->moves(gameWid->collection[sRow][sCol], gameWid->collection[dRow][dCol]);
+        }
+    } else {
+        gameWid->moves(gameWid->collection[sRow][sCol], gameWid->collection[dRow][dCol]);
+    }
 
     gameWid->isTurn = true;
 }
 
 void MainWindow::handleOK(Message* msg) {
-    ChessPiece pieceToMove = gameWid->collection[gameWid->squareSelected.first][gameWid->squareSelected.second]->getPiece();
+
+    ChessPiece pieceToMove = gameWid->collection[gameWid->squareSelected.first][gameWid->squareSelected.second]->piece;
     if (pieceToMove == KingB || pieceToMove == KingW) {
         if (std::abs(gameWid->squareSelected.second - gameWid->colClicked) > 1) {
             // Handle Castling
@@ -364,14 +423,54 @@ void MainWindow::handleOK(Message* msg) {
         } else {
             gameWid->moves(gameWid->collection[gameWid->squareSelected.first][gameWid->squareSelected.second], gameWid->collection[gameWid->rowClicked][gameWid->colClicked]);
         }
-    } else if (pieceToMove == RookB || pieceToMove == RookW) {
-
     } else {
         gameWid->moves(gameWid->collection[gameWid->squareSelected.first][gameWid->squareSelected.second], gameWid->collection[gameWid->rowClicked][gameWid->colClicked]);
     }
     gameWid->isTurn = false;
+
+    if (gameWid->rowCheck != -1) {
+        gameWid->collection[gameWid->rowCheck][gameWid->colCheck]->resetColor();
+        gameWid->rowCheck = -1;
+        gameWid->colCheck = -1;
+    }
+
+    gameWid->squareSelected.first = -1;
+    gameWid->squareSelected.second = -1;
 }
 
 void MainWindow::handleInvite(Message *msg) {
+    UserMessage* rcv = new UserMessage(*msg);
 
+    std::string opponent = rcv->getUsername();
+    int elo = std::stoi(rcv->getPassword());
+    std::pair<std::string, int> oppo;
+    oppo.first = opponent; oppo.second = elo;
+    playWid->inviteList.push_back(oppo);
+
+    if (playWid->inviteList.size() == 1) {
+        playWid->ui->frInvite->setVisible(true);
+        playWid->ui->lbNameInvite->setText(QString::fromStdString(playWid->inviteList.begin()->first) + " (" + QString::number(playWid->inviteList.begin()->second) + ")");
+    } else {
+        QGraphicsDropShadowEffect *g = new QGraphicsDropShadowEffect(this);
+        QColor q(244, 220, 197, 200);
+        g->setColor(q);
+        playWid->ui->frInvite->setGraphicsEffect(g);
+    }
+}
+
+void MainWindow::handleIsCheck(Message *msg) {
+    for (int row = 0; row < 8; row++) {
+        for (int col = 0; col < 8; col++) {
+            if (gameWid->collection[row][col]->getPiece() == (gameWid->side == WHITE? KingW : KingB)) {
+                gameWid->collection[row][col]->setColor("#b83228");
+                gameWid->rowCheck = row;
+                gameWid->colCheck = col;
+                return;
+            }
+        }
+    }
+}
+
+void MainWindow::handlePromote(Message *msg) {
+    gameWid->ui->frPromote->setVisible(true);
 }

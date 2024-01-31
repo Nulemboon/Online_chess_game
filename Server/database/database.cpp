@@ -96,7 +96,7 @@ int Database::userExists(const std::string& username) {
     return result;
 }
 
-int Database::validateUser(const std::string& username, const std::string& password) {
+int Database::validateUser(const std::string username, const std::string password) {
     if (!db) {
         // Handle error, database not open
         std::cerr << "Cannot open database" << std::endl;
@@ -382,7 +382,7 @@ int Database::updateELO(const std::string& username, int eloValue) {
     }
 
     // Fetch moves of matchID
-    const char* query = "UPDATE TABLE SET ELO = ? WHERE NAME = ?;";
+    const char* query = "UPDATE USER SET ELO = ? WHERE NAME = ?;";
     sqlite3_stmt* stmt = nullptr;
 
     // Prepare and bind parameters
@@ -414,7 +414,7 @@ int Database::getLastMatchID() {
     }
 
     // Fetch moves of matchID
-    const char* query = "SELECT HID FROM HISTORY ORDER BY DESC LIMIT;";
+    const char* query = "SELECT HID FROM HISTORY ORDER BY DESC LIMIT 1;";
     sqlite3_stmt* stmt = nullptr;
 
     // Execute the statement and retrieve the result

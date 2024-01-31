@@ -13,9 +13,11 @@
 #include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QFrame>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -41,6 +43,13 @@ public:
     QPushButton *btnOptions_2;
     QPushButton *btnQuit_2;
     QLabel *lbDim;
+    QFrame *frInvite;
+    QWidget *layoutWidget;
+    QHBoxLayout *horizontalLayout;
+    QLabel *lbNameInvite;
+    QPushButton *btnYes;
+    QPushButton *btnNo;
+    QSpacerItem *horizontalSpacer;
 
     void setupUi(QWidget *play)
     {
@@ -49,7 +58,7 @@ public:
         play->resize(1000, 750);
         playFrame = new QFrame(play);
         playFrame->setObjectName("playFrame");
-        playFrame->setGeometry(QRect(125, 125, 750, 500));
+        playFrame->setGeometry(QRect(125, 100, 750, 500));
         playFrame->setAutoFillBackground(false);
         playFrame->setStyleSheet(QString::fromUtf8("QFrame#playFrame {\n"
 "background-color: rgb(46, 47, 48);\n"
@@ -253,6 +262,59 @@ public:
         lbDim->setObjectName("lbDim");
         lbDim->setGeometry(QRect(0, 0, 1000, 750));
         lbDim->setStyleSheet(QString::fromUtf8("background-color: rgba(0,0,0,0.7)"));
+        frInvite = new QFrame(frHome);
+        frInvite->setObjectName("frInvite");
+        frInvite->setGeometry(QRect(570, 630, 400, 70));
+        frInvite->setStyleSheet(QString::fromUtf8("QFrame{background-color: #F4DCC5;}\n"
+"\n"
+"QPushButton{ border: none; color:black;background-color:#EF9A09;border-radius:10px; font-size: 18px;\n"
+"text-align: center\n"
+"}\n"
+"\n"
+"QPushButton:hover{background-color:#d98100}\n"
+"\n"
+"QLabel {border:none; color:black}"));
+        frInvite->setFrameShape(QFrame::StyledPanel);
+        frInvite->setFrameShadow(QFrame::Raised);
+        layoutWidget = new QWidget(frInvite);
+        layoutWidget->setObjectName("layoutWidget");
+        layoutWidget->setGeometry(QRect(0, 0, 401, 71));
+        horizontalLayout = new QHBoxLayout(layoutWidget);
+        horizontalLayout->setObjectName("horizontalLayout");
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        lbNameInvite = new QLabel(layoutWidget);
+        lbNameInvite->setObjectName("lbNameInvite");
+        lbNameInvite->setMinimumSize(QSize(100, 0));
+        lbNameInvite->setBaseSize(QSize(100, 0));
+
+        horizontalLayout->addWidget(lbNameInvite);
+
+        btnYes = new QPushButton(layoutWidget);
+        btnYes->setObjectName("btnYes");
+        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(btnYes->sizePolicy().hasHeightForWidth());
+        btnYes->setSizePolicy(sizePolicy1);
+        btnYes->setMaximumSize(QSize(75, 21));
+        QFont font6;
+        font6.setFamilies({QString::fromUtf8("Ubuntu")});
+        font6.setBold(false);
+        font6.setItalic(false);
+        btnYes->setFont(font6);
+
+        horizontalLayout->addWidget(btnYes);
+
+        btnNo = new QPushButton(layoutWidget);
+        btnNo->setObjectName("btnNo");
+        btnNo->setMaximumSize(QSize(75, 21));
+
+        horizontalLayout->addWidget(btnNo);
+
+        horizontalSpacer = new QSpacerItem(5, 20, QSizePolicy::Preferred, QSizePolicy::Minimum);
+
+        horizontalLayout->addItem(horizontalSpacer);
+
         frHome->raise();
         playFrame->raise();
 
@@ -283,6 +345,9 @@ public:
         btnOptions_2->setText(QCoreApplication::translate("play", "Options", nullptr));
         btnQuit_2->setText(QCoreApplication::translate("play", "Logout", nullptr));
         lbDim->setText(QString());
+        lbNameInvite->setText(QCoreApplication::translate("play", "TextLabel", nullptr));
+        btnYes->setText(QCoreApplication::translate("play", "Yes", nullptr));
+        btnNo->setText(QCoreApplication::translate("play", "No", nullptr));
     } // retranslateUi
 
 };

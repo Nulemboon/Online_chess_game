@@ -1,6 +1,8 @@
 #include "game.h"
 #include "ui_game.h"
 #include "../gameplay.h"
+#include <QPointer>
+#include <QObject>
 
 game::game(Side side, QString opponentName, MainWindow* mainwindow, QWidget *parent)
     : QWidget(parent)
@@ -39,9 +41,19 @@ game::game(Side side, QString opponentName, MainWindow* mainwindow, QWidget *par
     ui->hboxPlayer->setAlignment(Qt::AlignLeft);
     ui->hboxOpponent->setAlignment(Qt::AlignLeft);
 
+    // Create QGridLayout inside frChessBoard
+    chessboard = new QGridLayout(ui->frChessBoard);
+    ui->frChessBoard->setLayout(chessboard);
+    chessboard->setSpacing(0);
+    chessboard->setContentsMargins(0, 0, 0, 0);
+
     drawBoxes();
     setupBoard();
+    // addBoxes();
+    // ui->lbResultPlayer->setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff);
+    // ui->lbResultOpponent->setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff);
     squareSelected.first = -1; squareSelected.second = -1;
+    rowCheck = -1; colCheck = -1;
 }
 
 game::~game()
@@ -54,15 +66,6 @@ void game::drawBoxes()
     int SHIFT = 70;
     QString color;
 
-    // Clear existing chessSquares
-    for (int i = 0; i < 8; ++i) {
-        for (int j = 0; j < 8; ++j) {
-            if (collection[i][j] != nullptr) {
-                collection[i][j] = nullptr;
-            }
-        }
-    }
-
     for(int i = 0; i < 8; i++) {
         for(int j = 0; j < 8; j++)
         {
@@ -71,23 +74,34 @@ void game::drawBoxes()
             else
                 color = "#F4DCC5";
             ChessSquare *box = new ChessSquare(color, ui->frChessBoard);
+            if (!box) qDebug() << "NULL";
             collection[i][j] = box;
             box->rowLoc = i;
             box->colLoc = j;
-
-            if (side == WHITE) {
-                // Player: White side
-                box->setGeometry((SHIFT*j),(SHIFT*(7-i)), 70, 70);
-            } else {
-                // Player: Black side
-                box->setGeometry((SHIFT*(7-j)), (SHIFT*i), 70, 70);
-            }
 
             // Connect the clicked signal to the chessSquareClicked slot
             connect(collection[i][j], &ChessSquare::clicked, this, &game::chessSquareClicked);
         }
     }
+    // addBoxes();
 
+}
+
+void game::addBoxes() {
+    int SHIFT = 70;
+    for(int i=0; i<8;i++) {
+        for (int j=0;j<8;j++) {
+            if (side == WHITE) {
+                // Player: White side
+                chessboard->addWidget(collection[i][j], 7-i, j);
+            } else {
+                // Player: Black side
+                chessboard->addWidget(collection[i][j], i, 7-j);
+            }
+        }
+    }
+
+    ui->frChessBoard->update();
 }
 
 void game::setupBoard() {
@@ -118,6 +132,12 @@ void game::setupBoard() {
     collection[7][6]->placePiece(KnightB);
     collection[7][7]->placePiece(RookB);
 
+    // Empty squares
+    for (int i = 2; i < 5; i++) {
+        for (int j = 0; j < 8; j++) {
+            collection[i][j]->placePiece(NONE);
+        }
+    }
 }
 
 QString game::getPath(ChessPiece piece) {
@@ -167,25 +187,21 @@ QString game::getPath(ChessPiece piece) {
     return path;
 }
 
-void game::addDead() {
-    while (!playerDead.empty()) {
+void game::addDead(bool isPlayer) {
+    if (isPlayer) {
         QLabel* newLabel = new QLabel;
         newLabel->setFixedSize(30, 30);
 
-        QPixmap backgroundImage(getPath(playerDead.first()));
+        QPixmap backgroundImage(getPath(playerDead.last()));
         newLabel->setPixmap(backgroundImage.scaled(newLabel->size(), Qt::KeepAspectRatio));
         ui->hboxPlayer->addWidget(newLabel);
-        playerDead.removeFirst();
-    }
-
-    while (!opponentDead.empty()) {
+    } else {
         QLabel* newLabel = new QLabel;
         newLabel->setFixedSize(30, 30);
 
-        QPixmap backgroundImage(getPath(opponentDead.first()));
+        QPixmap backgroundImage(getPath(opponentDead.last()));
         newLabel->setPixmap(backgroundImage.scaled(newLabel->size(), Qt::KeepAspectRatio));
         ui->hboxOpponent->addWidget(newLabel, Qt::AlignLeft);
-        opponentDead.removeFirst();
     }
 }
 
@@ -195,12 +211,12 @@ void game::moves(ChessSquare* src, ChessSquare* dst) {
 
     if (dst->getPiece() != NONE && src->getPiece() != NONE) {
         Side pieceSide = dst->side;
-        if (pieceSide == side) {
+        if (pieceSide != side) {
             playerDead.append(dst->getPiece());
-            addDead();
+            addDead(true);
         } else {
             opponentDead.append(dst->getPiece());
-            addDead();
+            addDead(false);
         }
     }
 
@@ -210,25 +226,22 @@ void game::moves(ChessSquare* src, ChessSquare* dst) {
     // Handle Promotion
     if (side == WHITE && dst->getPiece() == PawnW) {
         if (dst->rowLoc == 7) {
-            ui->frPromote->setVisible(true);
-            rowPr = dst->rowLoc;
-            colPr = dst->colLoc;
+            rowPr = dst->rowLoc; colPr = dst->colLoc;
+            rowClicked = src->rowLoc; colClicked = src->colLoc;
         }
     } else if (side == BLACK && dst->getPiece() == PawnB) {
         if (dst->rowLoc == 0) {
-            ui->frPromote->setVisible(true);
-            rowPr = dst->rowLoc;
-            colPr = dst->colLoc;
+            rowPr = dst->rowLoc; colPr = dst->colLoc;
+            rowClicked = src->rowLoc; colClicked = src->colLoc;
         }
     }
-
 }
 
 void game::chessSquareClicked(int row, int col)
 {
-    // if (!isTurn){
-    //     return;
-    // }
+    if (!isTurn){
+        return;
+    }
     rowClicked = row;
     colClicked = col;
 
@@ -246,7 +259,7 @@ void game::chessSquareClicked(int row, int col)
         // if (side != collection[row][col]->side) return;
         squareSelected.first = row;
         squareSelected.second = col;
-        collection[row][col]->setColor("#FF0000");
+        collection[row][col]->setColor("#fafa48");
 
     }
 
@@ -255,14 +268,37 @@ void game::chessSquareClicked(int row, int col)
         collection[squareSelected.first][squareSelected.second]->resetColor();
         MoveMessage* msg;
 
-        msg = new MoveMessage(std::to_string(squareSelected.first) + std::to_string(squareSelected.second),
+        msg = new MoveMessage(MOVE, std::to_string(squareSelected.first) + std::to_string(squareSelected.second),
                               std::to_string(row) + std::to_string(col));
 
 
         mainwindow->sendMessage(msg);
-        squareSelected.first = -1;
-        squareSelected.second = -1;
 
+        // int sRow = squareSelected.first, sCol = squareSelected.second, dRow = row, dCol = col;
+        // ChessPiece pieceToMove = collection[sRow][sCol]->getPiece();
+        // if (pieceToMove == KingB || pieceToMove == KingW) {
+        //     if (std::abs(sCol - dCol) > 1) {
+        //         // Handle Castling
+        //         handleCastling(collection[sRow][sCol], collection[dRow][dCol]);
+        //     } else {
+        //         moves(collection[sRow][sCol], collection[dRow][dCol]);
+        //     }
+        // } else if (pieceToMove == PawnB || pieceToMove == PawnW) {
+        //     if ((pieceToMove == PawnW && dRow== 5) || (pieceToMove == PawnB && dRow== 2)) {
+        //         if (std::abs(sCol - dCol) == 1 && collection[dRow][dCol]->piece == NONE) {
+        //             // Handle En Passant
+        //             handleEnPassant(collection[sRow][sCol], collection[dRow][dCol]);
+        //         } else {
+        //             moves(collection[sRow][sCol], collection[dRow][dCol]);
+        //         }
+        //     } else {
+        //         moves(collection[sRow][sCol], collection[dRow][dCol]);
+        //     }
+        // } else {
+        //     moves(collection[sRow][sCol], collection[dRow][dCol]);
+        // }
+        // squareSelected.first = -1;
+        // squareSelected.second = -1;
     }
 
 }
@@ -317,10 +353,25 @@ void game::on_btnResign_clicked()
 
 void game::reset() {
     // Reset chess board
-    drawBoxes();
+    // Loop through the layout items
+    for (int i = chessboard->count() - 1; i >= 0; i--) {
+        // Get the item at the current index
+        QLayoutItem *item = chessboard->itemAt(i);
+
+        // Check if the item is a widget
+        if (item->widget() && item->widget()->isWidgetType()) {
+            // Remove the widget from the layout
+            chessboard->removeWidget(item->widget());
+        }
+    }
+    setupBoard();
+    addBoxes();
+    qDebug() << ((side == WHITE)? "WHITE": "BLACK");
+    if (side == WHITE) isTurn = true;
+    else isTurn = false;
 
     // Reset logs
-    ui->tableWidget->clearContents();
+    ui->tableWidget->setRowCount(0);;
 
     // Reset captured pieces holders
     while (QLayoutItem *item = ui->hboxPlayer->takeAt(0)) {
@@ -335,6 +386,9 @@ void game::reset() {
     // Setup new names
     ui->lbOpponentName->setText(opponentName);
     ui->lbPlayerName->setText(mainwindow->user);
+
+    // Reset result frame
+    ui->frResult->setVisible(false);
 }
 
 void game::setupPromoteFrame() {
@@ -368,11 +422,13 @@ void game::on_btnPrQueen_clicked()
 {
     ui->frPromote->setVisible(false);
     // Send message to server
-    PromoteMessage* msg = new PromoteMessage(PROMOTE, 'Q', std::to_string(rowPr) + std::to_string(colPr));
+    MoveMessage* msg = new MoveMessage(PROMOTE, std::to_string(rowClicked) + std::to_string(colClicked), std::to_string(rowPr) + std::to_string(colPr) + 'Q');
     mainwindow->sendMessage(msg);
 
     // Change Pawn into Queen
     collection[rowPr][colPr]->placePiece(side == WHITE ? QueenW : QueenB);
+    rowClicked = -1; colClicked = -1;
+    rowPr = -1; colPr = -1;
 }
 
 
@@ -380,11 +436,13 @@ void game::on_btnPrKnight_clicked()
 {
     ui->frPromote->setVisible(false);
     // Send message to server
-    PromoteMessage* msg = new PromoteMessage(PROMOTE, 'N', std::to_string(rowPr) + std::to_string(colPr));
+    MoveMessage* msg = new MoveMessage(PROMOTE, std::to_string(rowClicked) + std::to_string(colClicked), std::to_string(rowPr) + std::to_string(colPr) + 'N');
     mainwindow->sendMessage(msg);
 
     // Change Pawn into Knight
     collection[rowPr][colPr]->placePiece(side == WHITE ? KnightW : KnightB);
+    rowClicked = -1; colClicked = -1;
+    rowPr = -1; colPr = -1;
 }
 
 
@@ -392,11 +450,13 @@ void game::on_btnPrRook_clicked()
 {
     ui->frPromote->setVisible(false);
     // Send message to server
-    PromoteMessage* msg = new PromoteMessage(PROMOTE, 'R', std::to_string(rowPr) + std::to_string(colPr));
+    MoveMessage* msg = new MoveMessage(PROMOTE, std::to_string(rowClicked) + std::to_string(colClicked), std::to_string(rowPr) + std::to_string(colPr) + 'R');
     mainwindow->sendMessage(msg);
 
     // Change Pawn into Rook
     collection[rowPr][colPr]->placePiece(side == WHITE ? RookW : RookB);
+    rowClicked = -1; colClicked = -1;
+    rowPr = -1; colPr = -1;
 }
 
 
@@ -404,39 +464,73 @@ void game::on_btnPrBishop_clicked()
 {
     ui->frPromote->setVisible(false);
     // Send message to server
-    PromoteMessage* msg = new PromoteMessage(PROMOTE, 'B', std::to_string(rowPr) + std::to_string(colPr));
+    MoveMessage* msg = new MoveMessage(PROMOTE, std::to_string(rowClicked) + std::to_string(colClicked), std::to_string(rowPr) + std::to_string(colPr) + 'B');
     mainwindow->sendMessage(msg);
 
     // Change Pawn into Bishop
     collection[rowPr][colPr]->placePiece(side == WHITE ? BishopW : BishopB);
+    rowClicked = -1; colClicked = -1;
+    rowPr = -1; colPr = -1;
 }
 
+void game::writeLog(bool isWhite, bool isLong) {
+    // Create a new row
+    int rowIdx = ui->tableWidget->rowCount();
+    QTableWidgetItem* moveItem = new QTableWidgetItem;
+
+    if (isLong) {
+        moveItem->setText("O-O-O");
+    } else {
+        moveItem->setText("O-O");
+    }
+    moveItem->setFlags(moveItem->flags() & ~Qt::ItemIsSelectable);
+
+    if (isWhite) {
+        ui->tableWidget->insertRow(rowIdx);
+
+        // Populate the Turn, White, and Black columns
+        QTableWidgetItem* turnItem = new QTableWidgetItem(QString::number(rowIdx + 1));
+        QTableWidgetItem* tmpItem = new QTableWidgetItem("");
+
+
+
+        // Set items in the respective columns
+        turnItem->setFlags(turnItem->flags() & ~Qt::ItemIsSelectable);
+
+        ui->tableWidget->setItem(rowIdx, 0, turnItem);
+        ui->tableWidget->setItem(rowIdx, 1, moveItem);
+        ui->tableWidget->setItem(rowIdx, 2, tmpItem);
+    } else {
+        ui->tableWidget->setItem(rowIdx - 1, 2, moveItem);
+    }
+}
 
 void game::handleCastling(ChessSquare* src, ChessSquare* dst) {
-    moves(src, dst);
+
+    // Move King
+    dst->placePiece(src->getPiece());
+    src->placePiece(NONE);
+
+    // Move Rook
     if (dst->colLoc == 2) {
         if (dst->rowLoc == 0) {
-            moves(collection[0][0], collection[0][3]);
+            collection[0][3]->placePiece(collection[0][0]->getPiece());
+            collection[0][0]->placePiece(NONE);
+            writeLog(true, true);
         } else {
-            moves(collection[7][0], collection[7][3]);
+            collection[7][3]->placePiece(collection[7][0]->getPiece());
+            collection[7][0]->placePiece(NONE);
+            writeLog(false, true);
         }
     } else if (dst->colLoc == 6) {
         if (dst->rowLoc == 0) {
-            moves(collection[0][7], collection[0][5]);
+            collection[0][5]->placePiece(collection[0][7]->getPiece());
+            collection[0][7]->placePiece(NONE);
+            writeLog(true, false);
         } else {
-            moves(collection[7][7], collection[7][5]);
-        }
-    } else if (dst->colLoc == 3) {
-        if (dst->rowLoc == 0) {
-            moves(collection[0][4], collection[0][2]);
-        } else {
-            moves(collection[7][4], collection[7][2]);
-        }
-    } else {
-        if (dst->rowLoc == 5) {
-            moves(collection[0][4], collection[0][6]);
-        } else {
-            moves(collection[7][4], collection[7][6]);
+            collection[7][5]->placePiece(collection[7][7]->getPiece());
+            collection[7][7]->placePiece(NONE);
+            writeLog(false, false);
         }
     }
 }
@@ -461,18 +555,21 @@ void game::handleEnPassant(ChessSquare* src, ChessSquare* dst) {
     switch (isPlayer) {
     case 0:
         playerDead.append(PawnB);
+        addDead(true);
         break;
     case 1:
         opponentDead.append(PawnB);
+        addDead(false);
         break;
     case 2:
         opponentDead.append(PawnW);
+        addDead(false);
         break;
     case 3:
         playerDead.append(PawnW);
+        addDead(true);
         break;
     }
-    addDead();
 
     moves(src, dst);
 }
@@ -482,16 +579,17 @@ void game::writeLog(bool isWhite, ChessSquare* src, ChessSquare* dst) {
     int rowIdx = ui->tableWidget->rowCount();
     QTableWidgetItem* moveItem = new QTableWidgetItem;
 
-    moveItem->setText(QString::number(src->rowLoc + 1) +
-                      static_cast<char>(src->colLoc + 'A') + "-" +
-                      QString::number(dst->rowLoc + 1) +
-                      static_cast<char>(dst->colLoc + 'A'));
+    moveItem->setText(static_cast<char>(src->colLoc + 'A') +
+                      QString::number(src->rowLoc + 1) + "-" +
+                      static_cast<char>(dst->colLoc + 'A') +
+                          QString::number(dst->rowLoc + 1));
     moveItem->setFlags(moveItem->flags() & ~Qt::ItemIsSelectable);
     if (isWhite) {
         ui->tableWidget->insertRow(rowIdx);
 
         // Populate the Turn, White, and Black columns
         QTableWidgetItem* turnItem = new QTableWidgetItem(QString::number(rowIdx + 1));
+        QTableWidgetItem* tmpItem = new QTableWidgetItem("");
 
 
 
@@ -500,6 +598,7 @@ void game::writeLog(bool isWhite, ChessSquare* src, ChessSquare* dst) {
 
         ui->tableWidget->setItem(rowIdx, 0, turnItem);
         ui->tableWidget->setItem(rowIdx, 1, moveItem);
+        ui->tableWidget->setItem(rowIdx, 2, tmpItem);
     } else {
         ui->tableWidget->setItem(rowIdx - 1, 2, moveItem);
     }

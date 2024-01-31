@@ -271,7 +271,7 @@ build Chess_autogen/EWIEGA46WW/qrc_resource.cpp | ${cmake_ninja_workdir}Chess_au
 #############################################
 # Phony custom command for CMakeFiles/Chess_autogen_timestamp_deps
 
-build CMakeFiles/Chess_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/Chess_autogen_timestamp_deps: phony /home/pert/Qt/6.6.1/gcc_64/lib/libQt6Network.so.6.6.1 /home/pert/Qt/6.6.1/gcc_64/lib/libQt6Widgets.so.6.6.1 /home/pert/Qt/6.6.1/gcc_64/lib/libQt6Core.so.6.6.1 /home/pert/Qt/6.6.1/gcc_64/./libexec/moc /home/pert/Qt/6.6.1/gcc_64/./libexec/uic
+build CMakeFiles/Chess_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/Chess_autogen_timestamp_deps: phony /home/pert/Qt/6.6.1/gcc_64/lib/libQt6Network.so.6.6.1 /home/pert/Qt/6.6.1/gcc_64/lib/libQt6Core.so.6.6.1 /home/pert/Qt/6.6.1/gcc_64/./libexec/moc /home/pert/Qt/6.6.1/gcc_64/./libexec/uic /home/pert/Qt/6.6.1/gcc_64/lib/libQt6Widgets.so.6.6.1
 
 
 #############################################
