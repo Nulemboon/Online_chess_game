@@ -1,5 +1,6 @@
 #include "message.h"
 #include <json.hpp>
+#include <iostream>
 
 using json = nlohmann::json;
 
@@ -8,8 +9,10 @@ using json = nlohmann::json;
 */
 Message::Message(MessageType type) : type(type), length(0) {}
 Message::Message(std::string msg) {
+    // std::cout << msg.length() << std::endl;
     type = static_cast<MessageType> (msg[0]); // Type (1B)
     length = static_cast<uint16_t>((msg[1] << 8) | msg[2]); // Length (2B)
+
     payload = msg.substr(3, length); // Payload (lengthB)
 }
         
@@ -27,9 +30,9 @@ std::string Message::getPayload() const {
 
 std::string Message::serialize() const {
     std::string msg;
-    msg[0] = static_cast<char>(type);
-    msg[1] = static_cast<char>(static_cast<uint8_t>(length >> 8)); // High byte of length
-    msg[2] = static_cast<char>(static_cast<uint8_t>(length & 0xFF)); // Low byte of length
+    msg += static_cast<char>(type);
+    msg += static_cast<char>(static_cast<uint8_t>(length >> 8)); // High byte of length
+    msg += static_cast<char>(static_cast<uint8_t>(length & 0xFF)); // Low byte of length
     if (!payload.empty()) msg += payload; 
     return msg;
 }
@@ -64,12 +67,13 @@ std::string UserMessage::getPassword() const {
 /* 
     MoveMessage methods
 */
-MoveMessage::MoveMessage(std::string source, std::string destination) : 
-    Message(MOVE), source(source), destination(destination) {
+MoveMessage::MoveMessage(MessageType type, std::string source, std::string destination) : 
+    Message(type), source(source), destination(destination) {
         json j;
         j["source"] = source;
         j["destination"] = destination;
         payload = j.dump();
+        length = static_cast<uint16_t>(payload.length());
     }
 
 MoveMessage::MoveMessage(Message message) : Message(message) {
@@ -94,7 +98,7 @@ HistoryMessage::HistoryMessage(MessageType type, std::vector<std::map<std::strin
     Message(type), matches(matches) {
         // Convert matches to string then assign it to payload
         std::string result;
-        std::map<std::string, std::string> match;
+        // std::map<std::string, std::string> match;
         for (auto &element : matches) {
             json j(element);
             result += j.dump();
@@ -173,23 +177,11 @@ MatchMessage::MatchMessage(int matchID) : Message(SEE_MATCH), matchID(matchID) {
 MatchMessage::MatchMessage(Message msg) : Message(msg) {
     length = msg.getPayload().length();
     json j = json::parse(msg.getPayload());
-    if (type == SEE_MATCH) matchID = std::stoi(j["matchID"].get<std::string>());
-    else match = j["moves"];
-}
-
-MatchMessage::MatchMessage(std::string match) : Message(MATCH), match(match) {
-    json j;
-    j["moves"] = match;
-    payload = j.dump();
-    length = static_cast<uint16_t>(payload.length());
+    matchID = std::stoi(j["matchID"].get<std::string>());
 }
 
 int MatchMessage::getMatchID() const {
     return matchID;
-}
-
-std::string MatchMessage::getMatch() const {
-    return match;
 }
 
 /*
@@ -209,38 +201,82 @@ std::string ErrorMessage::getError() const {
     return error;
 }
 
-/*
-    InviteMessage methods
-*/
-InviteMessage::InviteMessage(std::vector<std::pair<std::string, int>> playerList) : Message(ONLINE_LIST), playerList(playerList) {
-    // Convert player to string then assign it to payload
-        std::string result;
-        std::pair<std::string, int> player;
-        for (auto &element : playerList) {
-            json j;
-            j["username"] = element.first;
-            j["elo"] = element.second;
-            result += j.dump();
-        }
-        payload = result;
-        length = static_cast<uint16_t>(payload.length());
+ListMessage::ListMessage(MessageType type, std::vector<std::pair<std::string, int>> list) : Message(type), list(list) {
+    std::string res = "";
+    for (auto& player : list) {
+        json j;
+        j["name"] = player.first;
+        j["ELO"] = player.second;
+        res += j.dump();
+    }
+    payload = res;
+    length = static_cast<uint16_t>(payload.length());
 }
 
-InviteMessage::InviteMessage(Message message) : Message(message){
+ListMessage::ListMessage(Message message) : Message(message) {
     length = message.getPayload().length();
 
-    // Split the payload into substring of player
     std::vector<std::string> substrings = splitString(message.getPayload());
     for (auto &element : substrings) {
         // Convert back to map type
         json j = json::parse(element);
-        std::pair<std::string, int> player;
-        player.first = j["username"];
-        player.second = j["elo"];
-        playerList.push_back(player);
+        list.push_back({j["name"], j["ELO"]});
     }
 }
 
-std::vector<std::pair<std::string, int>> InviteMessage::getPlayerList() const {
-    return playerList;
+std::vector<std::pair<std::string, int>> ListMessage::getList() const {
+    return list;
+}
+
+MatchFoundMessage::MatchFoundMessage(MessageType type, int color, std::string name, int ELO) : Message(type), name(name), ELO(ELO), color(color) {
+    json j;
+    j["color"] = int(color);
+    j["name"] = name;
+    j["ELO"] = ELO;
+    payload = j.dump();
+    length = static_cast<uint16_t>(payload.length());
+}
+
+MatchFoundMessage::MatchFoundMessage(Message message) : Message(message) {
+    length = message.getPayload().length();
+    json j = json::parse(message.getPayload());
+    color = int(j["color"]);
+    name = j["name"].get<std::string>();
+    ELO = int(j["ELO"]);
+}
+
+int MatchFoundMessage::getColor() const {
+    return color;
+}
+
+std::string MatchFoundMessage::getName() const {
+    return name;
+}
+
+int MatchFoundMessage::getELO() const {
+    return ELO;
+}
+
+PromoteMessage::PromoteMessage(MessageType type, char piece, std::string destination) : Message(type), piece(piece), destination(destination) {
+    json j;
+    j["piece"] = piece;
+    j["dest"] = destination;
+
+    payload = j.dump();
+    length = static_cast<uint16_t>(payload.length());
+}
+
+PromoteMessage::PromoteMessage(Message message) : Message(message) {
+    length = message.getPayload().length();
+    json j = json::parse(message.getPayload());
+    piece = char(int(j["piece"]));
+    destination = std::string(j["dest"]);
+}
+
+std::string PromoteMessage::getDest() const {
+    return destination;
+}
+
+char PromoteMessage::getPiece() const {
+    return piece;
 }

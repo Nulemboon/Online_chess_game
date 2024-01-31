@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
 	"BUILD_DIR" : "/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen",
 	"CMAKE_BINARY_DIR" : "/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug",
 	"CMAKE_CURRENT_BINARY_DIR" : "/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug",
@@ -27,13 +28,48 @@
 		"/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/assets/back-button.png"
 	],
 	"LOCK_FILE" : "/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/Chess_autogen.dir/AutoRcc_resource_EWIEGA46WW_Lock.lock",
+=======
+	"BUILD_DIR" : "/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen",
+	"CMAKE_BINARY_DIR" : "/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/nulemboon/network_programming/Final/Client/Chess",
+	"CMAKE_SOURCE_DIR" : "/home/nulemboon/network_programming/Final/Client/Chess",
+	"INCLUDE_DIR" : "/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen/include",
+	"INPUTS" : 
+	[
+		"/home/nulemboon/network_programming/Final/Client/Chess/assets/arrow-left.png",
+		"/home/nulemboon/network_programming/Final/Client/Chess/assets/home.jpg",
+		"/home/nulemboon/network_programming/Final/Client/Chess/assets/logo.png",
+		"/home/nulemboon/network_programming/Final/Client/Chess/assets/kingW.png",
+		"/home/nulemboon/network_programming/Final/Client/Chess/assets/rookB.png",
+		"/home/nulemboon/network_programming/Final/Client/Chess/assets/queenB.png",
+		"/home/nulemboon/network_programming/Final/Client/Chess/assets/Empty.png",
+		"/home/nulemboon/network_programming/Final/Client/Chess/assets/queenW.png",
+		"/home/nulemboon/network_programming/Final/Client/Chess/assets/horseB.png",
+		"/home/nulemboon/network_programming/Final/Client/Chess/assets/kingB.png",
+		"/home/nulemboon/network_programming/Final/Client/Chess/assets/horseW.png",
+		"/home/nulemboon/network_programming/Final/Client/Chess/assets/pawnW.png",
+		"/home/nulemboon/network_programming/Final/Client/Chess/assets/bishopW.png",
+		"/home/nulemboon/network_programming/Final/Client/Chess/assets/rookW.png",
+		"/home/nulemboon/network_programming/Final/Client/Chess/assets/bishopB.png",
+		"/home/nulemboon/network_programming/Final/Client/Chess/assets/pawnB.png",
+		"/home/nulemboon/network_programming/Final/Client/Chess/assets/forward-button.png",
+		"/home/nulemboon/network_programming/Final/Client/Chess/assets/back-button.png"
+	],
+	"LOCK_FILE" : "/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/Chess_autogen.dir/AutoRcc_resource_EWIEGA46WW_Lock.lock",
+>>>>>>> Final-update
 	"MULTI_CONFIG" : false,
 	"OPTIONS" : [ "-name", "resource" ],
 	"OUTPUT_CHECKSUM" : "EWIEGA46WW",
 	"OUTPUT_NAME" : "qrc_resource.cpp",
 	"RCC_EXECUTABLE" : "/opt/Qt/6.6.1/gcc_64/./libexec/rcc",
 	"RCC_LIST_OPTIONS" : [ "--list" ],
+<<<<<<< HEAD
 	"SETTINGS_FILE" : "/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/Chess_autogen.dir/AutoRcc_resource_EWIEGA46WW_Used.txt",
 	"SOURCE" : "/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/resource.qrc",
+=======
+	"SETTINGS_FILE" : "/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/Chess_autogen.dir/AutoRcc_resource_EWIEGA46WW_Used.txt",
+	"SOURCE" : "/home/nulemboon/network_programming/Final/Client/Chess/resource.qrc",
+>>>>>>> Final-update
 	"VERBOSITY" : 0
 }

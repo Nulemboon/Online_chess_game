@@ -3,7 +3,13 @@
 
 #include <QWidget>
 #include "mainwindow.h"
+#include "ui_game.h"
+#include "ui_home.h"
+#include "ui_play.h"
+#include "ui_history.h"
+#include "ui_match.h"
 
+class MainWindow;
 namespace Ui {
 class Home;
 }
@@ -15,6 +21,7 @@ class Home : public QWidget
 public:
     explicit Home(MainWindow *mainwindow, QWidget *parent = nullptr);
     ~Home();
+    Ui::Home*ui;
 
 
 private slots:
@@ -27,8 +34,15 @@ private slots:
 
     void on_btnLogin_clicked();
 
+    void on_btnLogout_clicked();
+
+    void on_btnToRegister_clicked();
+
+    void on_btnToLogin_clicked();
+
+    void on_btnPlay_clicked();
+
 private:
-    Ui::Home*ui;
     MainWindow *mainwindow;
 };
 

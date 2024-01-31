@@ -10,6 +10,7 @@
 #define UI_GAME_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QHBoxLayout>
@@ -38,11 +39,23 @@ public:
     QPushButton *btnDraw;
     QPushButton *btnResign;
     QTableWidget *tableWidget;
-    QLabel *lbDim;
     QFrame *frConfirm;
     QLabel *lbCfTitle;
     QPushButton *btnYes;
     QPushButton *btnNo;
+    QFrame *frPromote;
+    QPushButton *btnPrQueen;
+    QPushButton *btnPrBishop;
+    QPushButton *btnPrRook;
+    QPushButton *btnPrKnight;
+    QLabel *lbDim;
+    QFrame *frResult;
+    QLabel *lbResult;
+    QLabel *lbResultsub;
+    QLabel *lbResultPlayer;
+    QLabel *lbResultOpponent;
+    QLabel *label_4;
+    QPushButton *btnBack;
 
     void setupUi(QWidget *game)
     {
@@ -139,10 +152,6 @@ public:
 "QHeaderView::section {\n"
 "background-color: #302E2B;\n"
 "color: white}"));
-        lbDim = new QLabel(frame);
-        lbDim->setObjectName("lbDim");
-        lbDim->setGeometry(QRect(0, 0, 1000, 750));
-        lbDim->setStyleSheet(QString::fromUtf8("background-color: rgba(0,0,0,0.7);"));
         frConfirm = new QFrame(frame);
         frConfirm->setObjectName("frConfirm");
         frConfirm->setGeometry(QRect(350, 225, 300, 200));
@@ -173,6 +182,95 @@ public:
         QFont font4;
         font4.setPointSize(12);
         btnNo->setFont(font4);
+        frPromote = new QFrame(frame);
+        frPromote->setObjectName("frPromote");
+        frPromote->setGeometry(QRect(635, 34, 240, 60));
+        frPromote->setStyleSheet(QString::fromUtf8("QPushButton{background-color:#F4DCC5;}\n"
+""));
+        frPromote->setFrameShape(QFrame::StyledPanel);
+        frPromote->setFrameShadow(QFrame::Raised);
+        btnPrQueen = new QPushButton(frPromote);
+        btnPrQueen->setObjectName("btnPrQueen");
+        btnPrQueen->setGeometry(QRect(0, 0, 60, 60));
+        btnPrBishop = new QPushButton(frPromote);
+        btnPrBishop->setObjectName("btnPrBishop");
+        btnPrBishop->setGeometry(QRect(120, 0, 60, 60));
+        btnPrRook = new QPushButton(frPromote);
+        btnPrRook->setObjectName("btnPrRook");
+        btnPrRook->setGeometry(QRect(60, 0, 60, 60));
+        btnPrKnight = new QPushButton(frPromote);
+        btnPrKnight->setObjectName("btnPrKnight");
+        btnPrKnight->setGeometry(QRect(180, 0, 60, 60));
+        lbDim = new QLabel(frame);
+        lbDim->setObjectName("lbDim");
+        lbDim->setGeometry(QRect(0, 0, 1000, 750));
+        lbDim->setStyleSheet(QString::fromUtf8("background-color: rgba(0,0,0,0.7);"));
+        frResult = new QFrame(frame);
+        frResult->setObjectName("frResult");
+        frResult->setGeometry(QRect(300, 75, 400, 600));
+        frResult->setStyleSheet(QString::fromUtf8("QFrame{background-color: #F4DCC5;\n"
+" border: 8px solid orange; }\n"
+"\n"
+"QPushButton{ border: none; color:black;background-color:#EF9A09;border-radius:10px\n"
+"}\n"
+"\n"
+"QPushButton:hover{background-color:#d98100}\n"
+"\n"
+"QLabel {border:none; color:black}"));
+        frResult->setFrameShape(QFrame::StyledPanel);
+        frResult->setFrameShadow(QFrame::Raised);
+        lbResult = new QLabel(frResult);
+        lbResult->setObjectName("lbResult");
+        lbResult->setGeometry(QRect(75, 70, 250, 100));
+        QFont font5;
+        font5.setPointSize(49);
+        lbResult->setFont(font5);
+        lbResult->setStyleSheet(QString::fromUtf8("border: none; color: black"));
+        lbResult->setAlignment(Qt::AlignCenter);
+        lbResultsub = new QLabel(frResult);
+        lbResultsub->setObjectName("lbResultsub");
+        lbResultsub->setGeometry(QRect(75, 170, 250, 20));
+        lbResultsub->setFont(font4);
+        lbResultsub->setStyleSheet(QString::fromUtf8("border:none;color:black"));
+        lbResultsub->setAlignment(Qt::AlignCenter);
+        lbResultPlayer = new QLabel(frResult);
+        lbResultPlayer->setObjectName("lbResultPlayer");
+        lbResultPlayer->setGeometry(QRect(70, 300, 275, 14));
+        lbResultPlayer->setFont(font2);
+        lbResultOpponent = new QLabel(frResult);
+        lbResultOpponent->setObjectName("lbResultOpponent");
+        lbResultOpponent->setGeometry(QRect(70, 410, 275, 14));
+        lbResultOpponent->setFont(font2);
+        lbResultOpponent->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+        label_4 = new QLabel(frResult);
+        label_4->setObjectName("label_4");
+        label_4->setGeometry(QRect(170, 350, 57, 14));
+        QFont font6;
+        font6.setPointSize(11);
+        font6.setBold(true);
+        label_4->setFont(font6);
+        label_4->setAlignment(Qt::AlignCenter);
+        btnBack = new QPushButton(frResult);
+        btnBack->setObjectName("btnBack");
+        btnBack->setGeometry(QRect(174, 510, 51, 51));
+        btnBack->setCursor(QCursor(Qt::PointingHandCursor));
+        btnBack->setStyleSheet(QString::fromUtf8("QPushButton { \n"
+"background-color: orange; border-radius: 25px; \n"
+"}"));
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(":/home/assets/arrow-left.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btnBack->setIcon(icon);
+        btnBack->setIconSize(QSize(30, 55));
+        frPromote->raise();
+        frChessBoard->raise();
+        lbOpponentName->raise();
+        lbPlayerName->raise();
+        frCapturedO->raise();
+        frCapturedP->raise();
+        frame_2->raise();
+        lbDim->raise();
+        frConfirm->raise();
+        frResult->raise();
 
         retranslateUi(game);
 
@@ -192,10 +290,20 @@ public:
         ___qtablewidgetitem1->setText(QCoreApplication::translate("game", "White", nullptr));
         QTableWidgetItem *___qtablewidgetitem2 = tableWidget->horizontalHeaderItem(2);
         ___qtablewidgetitem2->setText(QCoreApplication::translate("game", "Black", nullptr));
-        lbDim->setText(QString());
         lbCfTitle->setText(QCoreApplication::translate("game", "Are you sure to offer draw?", nullptr));
         btnYes->setText(QCoreApplication::translate("game", "Confirm", nullptr));
         btnNo->setText(QCoreApplication::translate("game", "Cancel", nullptr));
+        btnPrQueen->setText(QString());
+        btnPrBishop->setText(QString());
+        btnPrRook->setText(QString());
+        btnPrKnight->setText(QString());
+        lbDim->setText(QString());
+        lbResult->setText(QCoreApplication::translate("game", "WIN", nullptr));
+        lbResultsub->setText(QCoreApplication::translate("game", "By resign", nullptr));
+        lbResultPlayer->setText(QCoreApplication::translate("game", "TextLabel", nullptr));
+        lbResultOpponent->setText(QCoreApplication::translate("game", "TextLabel", nullptr));
+        label_4->setText(QCoreApplication::translate("game", "VS", nullptr));
+        btnBack->setText(QString());
     } // retranslateUi
 
 };

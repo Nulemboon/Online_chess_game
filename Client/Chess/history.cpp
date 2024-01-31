@@ -4,11 +4,12 @@
 #include <QStandardItemModel>
 #include <QStandardItem>
 
-history::history(QWidget *parent)
+history::history(MainWindow* mainwindow, QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::history)
+    , ui(new Ui::history), mainwindow(mainwindow)
 {
     ui->setupUi(this);
+    ui->historyView->setRowCount(0);
     //ui->historyView->resizeColumnsToContents();
     // Disable resizing for columns
     for (int col = 0; col < ui->historyView->columnCount(); ++col) {
@@ -51,15 +52,15 @@ history::history(QWidget *parent)
     QModelIndex defaultIndex = ui->historyView->model()->index(0, 0);
     selectionModel->setCurrentIndex(defaultIndex, QItemSelectionModel::Select);
 
-    // Fetch data into the table
-    std::map<std::string, std::string> match;
-    match["whiteID"] = "Tue";
-    match["blackID"] = "Tri";
-    match["result"] = "0";
-    match["time"] = "3/10/22";
-    match["matchID"] = "13";
-    matches.push_back(match);
-    getHistoryData();
+    // // Fetch data into the table
+    // std::map<std::string, std::string> match;
+    // match["whiteID"] = "Tue";
+    // match["blackID"] = "Tri";
+    // match["result"] = "0";
+    // match["time"] = "3/10/22";
+    // match["matchID"] = "13";
+    // matches.push_back(match);
+    // fetchData();
 
 
 }
@@ -71,31 +72,39 @@ history::~history()
 
 void history::getHistoryData() {
     // Send request for History data to server
-    // Message *msg = new Message(SEE_HISTORY);
-    // mainwindow->sendMessage(mainwindow->connfd, msg);
+    Message *msg = new Message(SEE_HISTORY);
+    mainwindow->sendMessage(msg);
+}
 
-    // // Receive result
-    // msg = mainwindow->receiveMessage(mainwindow->connfd);
-    // HistoryMessage *rcv = new HistoryMessage(*msg);
-    // matches = rcv->getMatches();
+void history::on_historyView_cellDoubleClicked(int row, int column)
+{
+    rowClicked = row;
+    // Send request for History data to server
+    MatchMessage *msg = new MatchMessage(matches[row]["matchID"]);
+    mainwindow->sendMessage(msg);
+    ui->historyView->setRowCount(0);
+}
 
+void history::fetchData(std::vector<std::map<std::string, std::string>> newHistory) {
     // Fetch new data to the history table
     // Set the number of rows and columns
-    int numberOfRow = matches.size();
     int numberOfColumn = 3;
-    ui->historyView->setRowCount(numberOfRow);
+    int existingRowCount = ui->historyView->rowCount();
+    int newRowCount = newHistory.size();
+    ui->historyView->setRowCount(existingRowCount + newRowCount);
     ui->historyView->setColumnCount(numberOfColumn);
+    int count = existingRowCount;  // Start from the last inserted row index
 
-    // Populate the model with data
-    for (int row = 0; row < numberOfRow; ++row) {
-        std::map<std::string, std::string> match = matches[row];
+    // Populate the model with data from the new history
+    for (int row = 0; row < newRowCount; ++row) {
+        std::map<std::string, std::string> match = newHistory[row];
         QTableWidgetItem *item;
 
         // Get opponent name
         int sideMatch = match["whiteID"] == mainwindow->user.toStdString() ? 0 : 1; // 0 for White, 1 for Black
         QString nameO = sideMatch == 1 ? QString::fromStdString(match["blackID"]) : QString::fromStdString(match["whiteID"]);
         item = new QTableWidgetItem(nameO);
-        ui->historyView->setItem(row, 0, item);
+        ui->historyView->setItem(count, 0, item);
 
         QString result;
         // Get result of the match
@@ -109,52 +118,18 @@ void history::getHistoryData() {
             else result = "Lose";
         }
         item = new QTableWidgetItem(result);
-        ui->historyView->setItem(row, 1, item);
+        ui->historyView->setItem(count, 1, item);
 
         // Get time
         item = new QTableWidgetItem(QString::fromStdString(match["time"]));
-        ui->historyView->setItem(row, 2, item);
+        ui->historyView->setItem(count++, 2, item);
     }
 }
 
-void history::on_historyView_cellDoubleClicked(int row, int column)
+
+void history::on_btnBack_clicked()
 {
-    // Send request for History data to server
-    MatchMessage *msg = new MatchMessage(matches[row]["matchID"]);
-    mainwindow->sendMessage(mainwindow->connfd, msg);
-
-    Message *tmp;
-    // Receive result
-    tmp = mainwindow->receiveMessage(mainwindow->connfd);
-    msg = new MatchMessage(*tmp);
-
-    // Parse move
-    std::vector<std::pair<int, int>> test;
-    std::istringstream iss(msg->getMatch());
-
-    int move1, move2;
-
-    // Read pairs of integers from the stringstream
-    while (iss >> move1 >> move2) {
-        test.push_back(std::make_pair(move1, move2));
-    }
-
-
-    // Switch scene to game
-    mainwindow->switchScene(GAMES);
-
-    // Match* screen = qobject_cast<Match*>(mainwindow->stackedWidget->currentWidget());
-    // screen->reset();
-    // std::string sideO;
-    // int sideMatch = match["whiteID"] == mainwindow->user.toStdString() ? 0 : 1; // 0 for White, 1 for Black
-    // QString nameO = sideMatch == 1 ? QString::fromStdString(match["blackID"]) : QString::fromStdString(match["whiteID"]);
-    // if (side == WHITE) {
-    //     sideO = "blackID";
-    // } else {
-    //     sideO = "whiteID";
-    // }
-
-    // screen->opponentName = matches[row][sideO];
-    // screen->moveList = test;
+    mainwindow->switchScene(HOMES);
+    ui->historyView->setRowCount(0);
 }
 

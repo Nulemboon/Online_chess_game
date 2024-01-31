@@ -31,7 +31,11 @@ endif()
 set(__QT_DEPLOY_SYSTEM_NAME "Linux")
 set(__QT_DEPLOY_IS_SHARED_LIBS_BUILD "ON")
 set(__QT_DEPLOY_TOOL "GRD")
+<<<<<<< HEAD
 set(__QT_DEPLOY_IMPL_DIR "/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/.qt")
+=======
+set(__QT_DEPLOY_IMPL_DIR "/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/.qt")
+>>>>>>> Final-update
 set(__QT_DEPLOY_VERBOSE "")
 set(__QT_CMAKE_EXPORT_NAMESPACE "Qt6")
 set(__QT_DEPLOY_GENERATOR_IS_MULTI_CONFIG "0")

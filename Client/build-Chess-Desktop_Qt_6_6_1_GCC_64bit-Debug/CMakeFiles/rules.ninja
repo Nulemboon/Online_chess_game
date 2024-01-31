@@ -42,7 +42,11 @@ rule CUSTOM_COMMAND
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
+<<<<<<< HEAD
   command = /opt/Qt/Tools/CMake/bin/cmake --regenerate-during-build -S/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess -B/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug
+=======
+  command = /opt/Qt/Tools/CMake/bin/cmake --regenerate-during-build -S/home/nulemboon/network_programming/Final/Client/Chess -B/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug
+>>>>>>> Final-update
   description = Re-running CMake...
   generator = 1
 

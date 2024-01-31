@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
 	"BUILD_DIR" : "/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen",
 	"CMAKE_BINARY_DIR" : "/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug",
 	"CMAKE_CURRENT_BINARY_DIR" : "/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug",
@@ -12,6 +13,72 @@
 		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeSystemSpecificInitialize.cmake",
 		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Platform/Linux-Initialize.cmake",
 		"/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/3.27.7/CMakeCXXCompiler.cmake",
+=======
+	"BUILD_DIR" : "/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen",
+	"CMAKE_BINARY_DIR" : "/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/nulemboon/network_programming/Final/Client/Chess",
+	"CMAKE_EXECUTABLE" : "/opt/Qt/Tools/CMake/bin/cmake",
+	"CMAKE_LIST_FILES" : 
+	[
+		"/home/nulemboon/network_programming/Final/Client/Chess/CMakeLists.txt",
+		"/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/.qtc/package-manager/auto-setup.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeDetermineSystem.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeSystem.cmake.in",
+		"/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/3.27.7/CMakeSystem.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeNinjaFindMake.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeSystemSpecificInitialize.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Platform/Linux-Initialize.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeDetermineCXXCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeDetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Platform/Linux-Determine-CXX.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeDetermineCompilerId.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeCompilerIdDetection.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/ADSP-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/ARMCC-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/ARMClang-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/AppleClang-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/Clang-DetermineCompilerInternal.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/Borland-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/Clang-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/Clang-DetermineCompilerInternal.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/Comeau-CXX-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/Cray-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/Embarcadero-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/Fujitsu-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/GHS-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/HP-CXX-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/IAR-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/Intel-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/MSVC-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/NVHPC-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/NVIDIA-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/PGI-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/PathScale-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/SCO-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/TI-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/Tasking-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/Watcom-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/XL-CXX-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeFindBinUtils.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/GNU-FindBinUtils.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeCXXCompiler.cmake.in",
+		"/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/3.27.7/CMakeCXXCompiler.cmake",
+>>>>>>> Final-update
 		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeSystemSpecificInformation.cmake",
 		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeGenericSystem.cmake",
 		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeInitializeConfigs.cmake",
@@ -25,6 +92,21 @@
 		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Platform/Linux-GNU-CXX.cmake",
 		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Platform/Linux-GNU.cmake",
 		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeCommonLanguageInclude.cmake",
+<<<<<<< HEAD
+=======
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeTestCXXCompiler.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeTestCompilerCommon.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeDetermineCompilerABI.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeParseImplicitIncludeInfo.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeParseImplicitLinkInfo.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeParseLibraryArchitecture.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeTestCompilerCommon.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeCXXCompilerABI.cpp",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeDetermineCompileFeatures.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Internal/FeatureTesting.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeCXXCompiler.cmake.in",
+		"/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/3.27.7/CMakeCXXCompiler.cmake",
+>>>>>>> Final-update
 		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6/Qt6ConfigVersion.cmake",
 		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6/Qt6ConfigVersionImpl.cmake",
 		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6/Qt6Config.cmake",
@@ -345,57 +427,130 @@
 		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Widgets/Qt6WidgetsAdditionalTargetInfo.cmake",
 		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Widgets/Qt6WidgetsVersionlessTargets.cmake",
 		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Widgets/Qt6WidgetsMacros.cmake",
+<<<<<<< HEAD
 		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/GNUInstallDirs.cmake",
 		"/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/resource.qrc"
 	],
 	"CMAKE_SOURCE_DIR" : "/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess",
 	"DEP_FILE" : "/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen/deps",
+=======
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkConfigVersion.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkConfigVersionImpl.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkConfig.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeFindDependencyMacro.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkDependencies.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkTargets.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkTargets-relwithdebinfo.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkAdditionalTargetInfo.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkVersionlessTargets.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkPlugins.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QGlibNetworkInformationPluginConfig.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeFindDependencyMacro.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QGlibNetworkInformationPluginTargets.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QGlibNetworkInformationPluginTargets-relwithdebinfo.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QGlibNetworkInformationPluginAdditionalTargetInfo.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QNetworkManagerNetworkInformationPluginConfig.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeFindDependencyMacro.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QNetworkManagerNetworkInformationPluginTargets.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QNetworkManagerNetworkInformationPluginTargets-relwithdebinfo.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QNetworkManagerNetworkInformationPluginAdditionalTargetInfo.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendCertOnlyPluginConfig.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeFindDependencyMacro.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendCertOnlyPluginTargets.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendCertOnlyPluginTargets-relwithdebinfo.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendCertOnlyPluginAdditionalTargetInfo.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginConfig.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeFindDependencyMacro.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginTargets.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginTargets-relwithdebinfo.cmake",
+		"/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginAdditionalTargetInfo.cmake",
+		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/GNUInstallDirs.cmake",
+		"/home/nulemboon/network_programming/Final/Client/Chess/resource.qrc"
+	],
+	"CMAKE_SOURCE_DIR" : "/home/nulemboon/network_programming/Final/Client/Chess",
+	"DEP_FILE" : "/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen/deps",
+>>>>>>> Final-update
 	"DEP_FILE_RULE_NAME" : "Chess_autogen/timestamp",
 	"HEADERS" : 
 	[
 		[
+<<<<<<< HEAD
 			"/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/chesssquare.h",
+=======
+			"/home/nulemboon/network_programming/Final/Client/Chess/chesssquare.h",
+>>>>>>> Final-update
 			"MU",
 			"EWIEGA46WW/moc_chesssquare.cpp",
 			null
 		],
 		[
+<<<<<<< HEAD
 			"/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/game.h",
+=======
+			"/home/nulemboon/network_programming/Final/Client/Chess/game.h",
+>>>>>>> Final-update
 			"MU",
 			"EWIEGA46WW/moc_game.cpp",
 			null
 		],
 		[
+<<<<<<< HEAD
 			"/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/history.h",
+=======
+			"/home/nulemboon/network_programming/Final/Client/Chess/history.h",
+>>>>>>> Final-update
 			"MU",
 			"EWIEGA46WW/moc_history.cpp",
 			null
 		],
 		[
+<<<<<<< HEAD
 			"/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/home.h",
+=======
+			"/home/nulemboon/network_programming/Final/Client/Chess/home.h",
+>>>>>>> Final-update
 			"MU",
 			"EWIEGA46WW/moc_home.cpp",
 			null
 		],
 		[
+<<<<<<< HEAD
 			"/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/mainwindow.h",
+=======
+			"/home/nulemboon/network_programming/Final/Client/Chess/mainwindow.h",
+>>>>>>> Final-update
 			"MU",
 			"EWIEGA46WW/moc_mainwindow.cpp",
 			null
 		],
 		[
+<<<<<<< HEAD
 			"/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/match.h",
+=======
+			"/home/nulemboon/network_programming/Final/Client/Chess/match.h",
+>>>>>>> Final-update
 			"MU",
 			"EWIEGA46WW/moc_match.cpp",
 			null
 		],
 		[
+<<<<<<< HEAD
 			"/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/play.h",
+=======
+			"/home/nulemboon/network_programming/Final/Client/Chess/myclient.h",
+			"MU",
+			"EWIEGA46WW/moc_myclient.cpp",
+			null
+		],
+		[
+			"/home/nulemboon/network_programming/Final/Client/Chess/play.h",
+>>>>>>> Final-update
 			"MU",
 			"EWIEGA46WW/moc_play.cpp",
 			null
 		],
 		[
+<<<<<<< HEAD
 			"/home/nulemboon/network_programming/Online_Chess_Game/Client/gameplay.h",
 			"MU",
 			"BWXFCEDN7Z/moc_gameplay.cpp",
@@ -405,13 +560,30 @@
 			"/home/nulemboon/network_programming/Online_Chess_Game/Client/message/message.h",
 			"MU",
 			"75NBNYRSBG/moc_message.cpp",
+=======
+			"/home/nulemboon/network_programming/Final/Client/gameplay.h",
+			"MU",
+			"UDEWMZAX5O/moc_gameplay.cpp",
+			null
+		],
+		[
+			"/home/nulemboon/network_programming/Final/Client/message/message.h",
+			"MU",
+			"ZVEGGT6RK5/moc_message.cpp",
+>>>>>>> Final-update
 			null
 		]
 	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+<<<<<<< HEAD
 	"INCLUDE_DIR" : "/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen/include",
 	"MOC_COMPILATION_FILE" : "/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen/mocs_compilation.cpp",
 	"MOC_DEFINITIONS" : [ "QT_CORE_LIB", "QT_GUI_LIB", "QT_WIDGETS_LIB" ],
+=======
+	"INCLUDE_DIR" : "/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : [ "QT_CORE_LIB", "QT_GUI_LIB", "QT_NETWORK_LIB", "QT_WIDGETS_LIB" ],
+>>>>>>> Final-update
 	"MOC_DEPEND_FILTERS" : 
 	[
 		[
@@ -426,6 +598,10 @@
 		"/opt/Qt/6.6.1/gcc_64/mkspecs/linux-g++",
 		"/opt/Qt/6.6.1/gcc_64/include/QtWidgets",
 		"/opt/Qt/6.6.1/gcc_64/include/QtGui",
+<<<<<<< HEAD
+=======
+		"/opt/Qt/6.6.1/gcc_64/include/QtNetwork",
+>>>>>>> Final-update
 		"/usr/include",
 		"/usr/include/c++/11",
 		"/usr/include/x86_64-linux-gnu/c++/11",
@@ -453,71 +629,127 @@
 		"-c",
 		"/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeCXXCompilerABI.cpp"
 	],
+<<<<<<< HEAD
 	"MOC_PREDEFS_FILE" : "/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen/moc_predefs.h",
+=======
+	"MOC_PREDEFS_FILE" : "/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen/moc_predefs.h",
+>>>>>>> Final-update
 	"MOC_RELAXED_MODE" : false,
 	"MOC_SKIP" : [],
 	"MULTI_CONFIG" : false,
 	"PARALLEL" : 8,
+<<<<<<< HEAD
 	"PARSE_CACHE_FILE" : "/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/Chess_autogen.dir/ParseCache.txt",
+=======
+	"PARSE_CACHE_FILE" : "/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/Chess_autogen.dir/ParseCache.txt",
+>>>>>>> Final-update
 	"QT_MOC_EXECUTABLE" : "/opt/Qt/6.6.1/gcc_64/./libexec/moc",
 	"QT_UIC_EXECUTABLE" : "/opt/Qt/6.6.1/gcc_64/./libexec/uic",
 	"QT_VERSION_MAJOR" : 6,
 	"QT_VERSION_MINOR" : 6,
+<<<<<<< HEAD
 	"SETTINGS_FILE" : "/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/Chess_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
 		[
 			"/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/chesssquare.cpp",
+=======
+	"SETTINGS_FILE" : "/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/Chess_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/home/nulemboon/network_programming/Final/Client/Chess/chesssquare.cpp",
+>>>>>>> Final-update
 			"MU",
 			null
 		],
 		[
+<<<<<<< HEAD
 			"/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/game.cpp",
+=======
+			"/home/nulemboon/network_programming/Final/Client/Chess/game.cpp",
+>>>>>>> Final-update
 			"MU",
 			null
 		],
 		[
+<<<<<<< HEAD
 			"/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/gamerules.cpp",
+=======
+			"/home/nulemboon/network_programming/Final/Client/Chess/history.cpp",
+>>>>>>> Final-update
 			"MU",
 			null
 		],
 		[
+<<<<<<< HEAD
 			"/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/history.cpp",
+=======
+			"/home/nulemboon/network_programming/Final/Client/Chess/home.cpp",
+>>>>>>> Final-update
 			"MU",
 			null
 		],
 		[
+<<<<<<< HEAD
 			"/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/home.cpp",
+=======
+			"/home/nulemboon/network_programming/Final/Client/Chess/main.cpp",
+>>>>>>> Final-update
 			"MU",
 			null
 		],
 		[
+<<<<<<< HEAD
 			"/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/main.cpp",
+=======
+			"/home/nulemboon/network_programming/Final/Client/Chess/mainwindow.cpp",
+>>>>>>> Final-update
 			"MU",
 			null
 		],
 		[
+<<<<<<< HEAD
 			"/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/mainwindow.cpp",
+=======
+			"/home/nulemboon/network_programming/Final/Client/Chess/match.cpp",
+>>>>>>> Final-update
 			"MU",
 			null
 		],
 		[
+<<<<<<< HEAD
 			"/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/match.cpp",
+=======
+			"/home/nulemboon/network_programming/Final/Client/Chess/myclient.cpp",
+>>>>>>> Final-update
 			"MU",
 			null
 		],
 		[
+<<<<<<< HEAD
 			"/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/play.cpp",
+=======
+			"/home/nulemboon/network_programming/Final/Client/Chess/play.cpp",
+>>>>>>> Final-update
 			"MU",
 			null
 		],
 		[
+<<<<<<< HEAD
 			"/home/nulemboon/network_programming/Online_Chess_Game/Client/gameplay.cpp",
+=======
+			"/home/nulemboon/network_programming/Final/Client/gameplay.cpp",
+>>>>>>> Final-update
 			"MU",
 			null
 		],
 		[
+<<<<<<< HEAD
 			"/home/nulemboon/network_programming/Online_Chess_Game/Client/message/message.cpp",
+=======
+			"/home/nulemboon/network_programming/Final/Client/message/message.cpp",
+>>>>>>> Final-update
 			"MU",
 			null
 		]

@@ -1,4 +1,5 @@
 Chess_autogen/timestamp: \
+<<<<<<< HEAD
 	/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/CMakeLists.txt \
 	/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/chesssquare.cpp \
 	/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/chesssquare.h \
@@ -24,6 +25,39 @@ Chess_autogen/timestamp: \
 	/home/nulemboon/network_programming/Online_Chess_Game/Client/gameplay.h \
 	/home/nulemboon/network_programming/Online_Chess_Game/Client/message/message.cpp \
 	/home/nulemboon/network_programming/Online_Chess_Game/Client/message/message.h \
+=======
+	/home/nulemboon/network_programming/Final/Client/Chess/CMakeLists.txt \
+	/home/nulemboon/network_programming/Final/Client/Chess/chesssquare.cpp \
+	/home/nulemboon/network_programming/Final/Client/Chess/chesssquare.h \
+	/home/nulemboon/network_programming/Final/Client/Chess/game.cpp \
+	/home/nulemboon/network_programming/Final/Client/Chess/game.h \
+	/home/nulemboon/network_programming/Final/Client/Chess/history.cpp \
+	/home/nulemboon/network_programming/Final/Client/Chess/history.h \
+	/home/nulemboon/network_programming/Final/Client/Chess/home.cpp \
+	/home/nulemboon/network_programming/Final/Client/Chess/home.h \
+	/home/nulemboon/network_programming/Final/Client/Chess/main.cpp \
+	/home/nulemboon/network_programming/Final/Client/Chess/mainwindow.cpp \
+	/home/nulemboon/network_programming/Final/Client/Chess/mainwindow.h \
+	/home/nulemboon/network_programming/Final/Client/Chess/match.cpp \
+	/home/nulemboon/network_programming/Final/Client/Chess/match.h \
+	/home/nulemboon/network_programming/Final/Client/Chess/myclient.cpp \
+	/home/nulemboon/network_programming/Final/Client/Chess/myclient.h \
+	/home/nulemboon/network_programming/Final/Client/Chess/play.cpp \
+	/home/nulemboon/network_programming/Final/Client/Chess/play.h \
+	/home/nulemboon/network_programming/Final/Client/Chess/resource.qrc \
+	/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/.qtc/package-manager/auto-setup.cmake \
+	/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/3.27.7/CMakeCXXCompiler.cmake \
+	/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/3.27.7/CMakeSystem.cmake \
+	/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen/moc_predefs.h \
+	/home/nulemboon/network_programming/Final/Client/gameplay.cpp \
+	/home/nulemboon/network_programming/Final/Client/gameplay.h \
+	/home/nulemboon/network_programming/Final/Client/message/message.cpp \
+	/home/nulemboon/network_programming/Final/Client/message/message.h \
+	/opt/Qt/6.6.1/gcc_64/include/QtCore/QDebug \
+	/opt/Qt/6.6.1/gcc_64/include/QtCore/QList \
+	/opt/Qt/6.6.1/gcc_64/include/QtCore/QObject \
+	/opt/Qt/6.6.1/gcc_64/include/QtCore/QSocketNotifier \
+>>>>>>> Final-update
 	/opt/Qt/6.6.1/gcc_64/include/QtCore/q20functional.h \
 	/opt/Qt/6.6.1/gcc_64/include/QtCore/q20memory.h \
 	/opt/Qt/6.6.1/gcc_64/include/QtCore/q20type_traits.h \
@@ -66,6 +100,10 @@ Chess_autogen/timestamp: \
 	/opt/Qt/6.6.1/gcc_64/include/QtCore/qglobalstatic.h \
 	/opt/Qt/6.6.1/gcc_64/include/QtCore/qhash.h \
 	/opt/Qt/6.6.1/gcc_64/include/QtCore/qhashfunctions.h \
+<<<<<<< HEAD
+=======
+	/opt/Qt/6.6.1/gcc_64/include/QtCore/qiodevice.h \
+>>>>>>> Final-update
 	/opt/Qt/6.6.1/gcc_64/include/QtCore/qiodevicebase.h \
 	/opt/Qt/6.6.1/gcc_64/include/QtCore/qiterable.h \
 	/opt/Qt/6.6.1/gcc_64/include/QtCore/qiterator.h \
@@ -100,6 +138,10 @@ Chess_autogen/timestamp: \
 	/opt/Qt/6.6.1/gcc_64/include/QtCore/qsharedpointer.h \
 	/opt/Qt/6.6.1/gcc_64/include/QtCore/qsharedpointer_impl.h \
 	/opt/Qt/6.6.1/gcc_64/include/QtCore/qsize.h \
+<<<<<<< HEAD
+=======
+	/opt/Qt/6.6.1/gcc_64/include/QtCore/qsocketnotifier.h \
+>>>>>>> Final-update
 	/opt/Qt/6.6.1/gcc_64/include/QtCore/qstring.h \
 	/opt/Qt/6.6.1/gcc_64/include/QtCore/qstringalgorithms.h \
 	/opt/Qt/6.6.1/gcc_64/include/QtCore/qstringbuilder.h \
@@ -164,6 +206,7 @@ Chess_autogen/timestamp: \
 	/opt/Qt/6.6.1/gcc_64/include/QtGui/qtguiglobal.h \
 	/opt/Qt/6.6.1/gcc_64/include/QtGui/qtransform.h \
 	/opt/Qt/6.6.1/gcc_64/include/QtGui/qwindowdefs.h \
+<<<<<<< HEAD
 	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/QFrame \
 	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/QGraphicsView \
 	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/QMainWindow \
@@ -174,6 +217,33 @@ Chess_autogen/timestamp: \
 	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/qgraphicsscene.h \
 	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/qgraphicsview.h \
 	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/qmainwindow.h \
+=======
+	/opt/Qt/6.6.1/gcc_64/include/QtNetwork/QTcpSocket \
+	/opt/Qt/6.6.1/gcc_64/include/QtNetwork/qabstractsocket.h \
+	/opt/Qt/6.6.1/gcc_64/include/QtNetwork/qhostaddress.h \
+	/opt/Qt/6.6.1/gcc_64/include/QtNetwork/qtcpsocket.h \
+	/opt/Qt/6.6.1/gcc_64/include/QtNetwork/qtnetwork-config.h \
+	/opt/Qt/6.6.1/gcc_64/include/QtNetwork/qtnetworkexports.h \
+	/opt/Qt/6.6.1/gcc_64/include/QtNetwork/qtnetworkglobal.h \
+	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/QFrame \
+	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/QGraphicsView \
+	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/QGridLayout \
+	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/QMainWindow \
+	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/QPushButton \
+	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/QStackedWidget \
+	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/QWidget \
+	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/qabstractbutton.h \
+	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/qboxlayout.h \
+	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/qframe.h \
+	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/qgraphicsscene.h \
+	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/qgraphicsview.h \
+	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/qgridlayout.h \
+	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/qlayout.h \
+	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/qlayoutitem.h \
+	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/qmainwindow.h \
+	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/qpushbutton.h \
+>>>>>>> Final-update
 	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/qscrollarea.h \
 	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/qsizepolicy.h \
 	/opt/Qt/6.6.1/gcc_64/include/QtWidgets/qstackedwidget.h \
@@ -375,6 +445,34 @@ Chess_autogen/timestamp: \
 	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsTargets-relwithdebinfo.cmake \
 	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsTargets.cmake \
 	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsVersionlessTargets.cmake \
+<<<<<<< HEAD
+=======
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkAdditionalTargetInfo.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkConfig.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkConfigVersion.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkConfigVersionImpl.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkDependencies.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkPlugins.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkTargets-relwithdebinfo.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkTargets.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6NetworkVersionlessTargets.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QGlibNetworkInformationPluginAdditionalTargetInfo.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QGlibNetworkInformationPluginConfig.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QGlibNetworkInformationPluginTargets-relwithdebinfo.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QGlibNetworkInformationPluginTargets.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QNetworkManagerNetworkInformationPluginAdditionalTargetInfo.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QNetworkManagerNetworkInformationPluginConfig.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QNetworkManagerNetworkInformationPluginTargets-relwithdebinfo.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QNetworkManagerNetworkInformationPluginTargets.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendCertOnlyPluginAdditionalTargetInfo.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendCertOnlyPluginConfig.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendCertOnlyPluginTargets-relwithdebinfo.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendCertOnlyPluginTargets.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginAdditionalTargetInfo.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginConfig.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginTargets-relwithdebinfo.cmake \
+	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Network/Qt6QTlsBackendOpenSSLPluginTargets.cmake \
+>>>>>>> Final-update
 	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Widgets/Qt6WidgetsAdditionalTargetInfo.cmake \
 	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake \
 	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6Widgets/Qt6WidgetsConfigVersion.cmake \
@@ -392,22 +490,94 @@ Chess_autogen/timestamp: \
 	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6WidgetsTools/Qt6WidgetsToolsTargets-relwithdebinfo.cmake \
 	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6WidgetsTools/Qt6WidgetsToolsTargets.cmake \
 	/opt/Qt/6.6.1/gcc_64/lib/cmake/Qt6WidgetsTools/Qt6WidgetsToolsVersionlessTargets.cmake \
+<<<<<<< HEAD
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeCXXInformation.cmake \
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake \
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeCommonLanguageInclude.cmake \
+=======
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeCXXCompiler.cmake.in \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeCXXCompilerABI.cpp \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeCXXInformation.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeCommonLanguageInclude.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeCompilerIdDetection.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeDetermineCXXCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeDetermineCompileFeatures.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeDetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeDetermineCompilerABI.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeDetermineCompilerId.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeDetermineSystem.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeFindBinUtils.cmake \
+>>>>>>> Final-update
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeFindDependencyMacro.cmake \
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeGenericSystem.cmake \
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeInitializeConfigs.cmake \
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeLanguageInformation.cmake \
+<<<<<<< HEAD
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeSystemSpecificInformation.cmake \
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeSystemSpecificInitialize.cmake \
+=======
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeNinjaFindMake.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeParseImplicitIncludeInfo.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeParseImplicitLinkInfo.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeParseLibraryArchitecture.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeSystem.cmake.in \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeSystemSpecificInformation.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeSystemSpecificInitialize.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeTestCXXCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CMakeTestCompilerCommon.cmake \
+>>>>>>> Final-update
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CheckCXXCompilerFlag.cmake \
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CheckCXXSourceCompiles.cmake \
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CheckIncludeFileCXX.cmake \
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/CheckLibraryExists.cmake \
+<<<<<<< HEAD
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/CMakeCommonCompilerMacros.cmake \
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/GNU-CXX.cmake \
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/GNU.cmake \
+=======
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/ADSP-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/ARMCC-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/ARMClang-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/AppleClang-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/Borland-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/CMakeCommonCompilerMacros.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/Clang-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/Clang-DetermineCompilerInternal.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/Comeau-CXX-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/Cray-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/Embarcadero-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/Fujitsu-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/GHS-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/GNU-CXX.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/GNU-FindBinUtils.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/GNU.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/HP-CXX-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/IAR-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/Intel-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/MSVC-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/NVHPC-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/NVIDIA-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/PGI-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/PathScale-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/SCO-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/TI-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/Tasking-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/Watcom-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/XL-CXX-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake \
+>>>>>>> Final-update
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/FeatureSummary.cmake \
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/FindOpenGL.cmake \
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/FindPackageHandleStandardArgs.cmake \
@@ -419,7 +589,13 @@ Chess_autogen/timestamp: \
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Internal/CheckCompilerFlag.cmake \
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Internal/CheckFlagCommonConfig.cmake \
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Internal/CheckSourceCompiles.cmake \
+<<<<<<< HEAD
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/MacroAddFileDependencies.cmake \
+=======
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Internal/FeatureTesting.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/MacroAddFileDependencies.cmake \
+	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Platform/Linux-Determine-CXX.cmake \
+>>>>>>> Final-update
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Platform/Linux-GNU-CXX.cmake \
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Platform/Linux-GNU.cmake \
 	/opt/Qt/Tools/CMake/share/cmake-3.27/Modules/Platform/Linux-Initialize.cmake \
@@ -689,6 +865,7 @@ Chess_autogen/timestamp: \
 	/usr/include/linux/errno.h \
 	/usr/include/linux/limits.h \
 	/usr/include/locale.h \
+	/usr/include/poll.h \
 	/usr/include/pthread.h \
 	/usr/include/sched.h \
 	/usr/include/setjmp.h \
@@ -722,6 +899,7 @@ Chess_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/bits/local_lim.h \
 	/usr/include/x86_64-linux-gnu/bits/locale.h \
 	/usr/include/x86_64-linux-gnu/bits/long-double.h \
+	/usr/include/x86_64-linux-gnu/bits/poll.h \
 	/usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
 	/usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
 	/usr/include/x86_64-linux-gnu/bits/posix_opt.h \
@@ -817,6 +995,7 @@ Chess_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
 	/usr/include/x86_64-linux-gnu/gnu/stubs.h \
 	/usr/include/x86_64-linux-gnu/sys/cdefs.h \
+	/usr/include/x86_64-linux-gnu/sys/poll.h \
 	/usr/include/x86_64-linux-gnu/sys/select.h \
 	/usr/include/x86_64-linux-gnu/sys/types.h \
 	/usr/include/x86_64-linux-gnu/sys/ucontext.h \
@@ -826,6 +1005,7 @@ Chess_autogen/timestamp: \
 	/usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h \
 	/usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
 	/usr/local/include/json.hpp \
+<<<<<<< HEAD
 	/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/chesssquare.ui \
 	/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/game.ui \
 	/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/history.ui \
@@ -833,4 +1013,13 @@ Chess_autogen/timestamp: \
 	/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/mainwindow.ui \
 	/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/match.ui \
 	/home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/play.ui \
+=======
+	/home/nulemboon/network_programming/Final/Client/Chess/chesssquare.ui \
+	/home/nulemboon/network_programming/Final/Client/Chess/game.ui \
+	/home/nulemboon/network_programming/Final/Client/Chess/history.ui \
+	/home/nulemboon/network_programming/Final/Client/Chess/home.ui \
+	/home/nulemboon/network_programming/Final/Client/Chess/mainwindow.ui \
+	/home/nulemboon/network_programming/Final/Client/Chess/match.ui \
+	/home/nulemboon/network_programming/Final/Client/Chess/play.ui \
+>>>>>>> Final-update
 	/opt/Qt/Tools/CMake/bin/cmake

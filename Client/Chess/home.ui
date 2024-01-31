@@ -104,9 +104,9 @@ color: orange
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="btnQuit">
+      <widget class="QPushButton" name="btnLogout">
        <property name="text">
-        <string>Quit</string>
+        <string>Logout</string>
        </property>
       </widget>
      </item>
@@ -141,7 +141,7 @@ text-decoration: none;
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QPushButton" name="btnRegister">
+    <widget class="QPushButton" name="btnToRegister">
      <property name="geometry">
       <rect>
        <x>292</x>
@@ -265,7 +265,7 @@ QPushButton:hover{background-color: rgba(238, 70, 18, 0.7); color:white}</string
       <rect>
        <x>46</x>
        <y>377</y>
-       <width>191</width>
+       <width>230</width>
        <height>34</height>
       </rect>
      </property>
@@ -331,7 +331,7 @@ color: black</string>
      </property>
      <property name="font">
       <font>
-       <pointsize>16</pointsize>
+       <pointsize>12</pointsize>
       </font>
      </property>
      <property name="styleSheet">
@@ -342,15 +342,81 @@ color: red;</string>
       <string/>
      </property>
     </widget>
+    <widget class="QPushButton" name="btnRegister">
+     <property name="geometry">
+      <rect>
+       <x>46</x>
+       <y>286</y>
+       <width>409</width>
+       <height>54</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton{background-color: #EE4612;
+text-align: center;
+font-size: 22px;
+font-weight: bold;}
+
+
+QPushButton:hover{background-color: rgba(238, 70, 18, 0.7);color:white}</string>
+     </property>
+     <property name="text">
+      <string>Register</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnToLogin">
+     <property name="geometry">
+      <rect>
+       <x>292</x>
+       <y>369</y>
+       <width>163</width>
+       <height>43</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Ubuntu</family>
+       <pointsize>-1</pointsize>
+       <italic>false</italic>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton{background-color: #F59701;
+text-align: center;
+font-size: 16px;
+font-weight: bold;}
+QPushButton:hover{background-color: rgba(238, 70, 18, 0.7); color:white}</string>
+     </property>
+     <property name="text">
+      <string>Login</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnQuit">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>60</y>
+       <width>80</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
     <zorder>lbUsername</zorder>
     <zorder>lbPassword</zorder>
     <zorder>btnLogin</zorder>
     <zorder>label_2</zorder>
-    <zorder>btnRegister</zorder>
-    <zorder>lbLogo</zorder>
+    <zorder>btnToRegister</zorder>
     <zorder>txtPassword</zorder>
     <zorder>txtUsername</zorder>
     <zorder>lbNoti</zorder>
+    <zorder>btnRegister</zorder>
+    <zorder>btnToLogin</zorder>
+    <zorder>btnQuit</zorder>
+    <zorder>lbLogo</zorder>
    </widget>
    <widget class="QLabel" name="lbDim">
     <property name="geometry">

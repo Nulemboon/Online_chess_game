@@ -14,7 +14,7 @@ int isFiftyMove = 0;
 class GamePiece
 {
 public:
-    GamePiece(char PieceColor) : pieceColor(PieceColor) {}
+    GamePiece(char pieceColor) : pieceColor(pieceColor) {}
     ~GamePiece() {}
     virtual char GetPiece() const = 0;
     char GetColor() const {
@@ -41,7 +41,7 @@ private:
 class Pawn : public GamePiece
 {
 public:
-    Pawn(char PieceColor) : GamePiece(PieceColor) {}
+    Pawn(char pieceColor) : GamePiece(pieceColor) {}
     ~Pawn() {}
 private:
     virtual char GetPiece() const {
@@ -97,7 +97,7 @@ private:
 class Knight : public GamePiece
 {
 public:
-    Knight(char PieceColor) : GamePiece(PieceColor) {}
+    Knight(char pieceColor) : GamePiece(pieceColor) {}
     ~Knight() {}
 private:
     virtual char GetPiece() const {
@@ -122,7 +122,7 @@ private:
 class Bishop : public GamePiece
 {
 public:
-    Bishop(char PieceColor) : GamePiece(PieceColor) {}
+    Bishop(char pieceColor) : GamePiece(pieceColor) {}
     ~Bishop() {}
 private:
     virtual char GetPiece() const {
@@ -133,13 +133,13 @@ private:
             // Make sure that all invervening squares are empty
             int rowOffset = (destRow - srcRow > 0) ? 1 : -1;
             int colOffset = (destCol - srcCol > 0) ? 1 : -1;
-            int iCheckRow;
-            int iCheckCol;
-            for (iCheckRow = srcRow + rowOffset, iCheckCol = srcCol + colOffset;
-                iCheckRow !=  destRow;
-                iCheckRow = iCheckRow + rowOffset, iCheckCol = iCheckCol + colOffset)
+            int checkRow;
+            int checkCol;
+            for (checkRow = srcRow + rowOffset, checkCol = srcCol + colOffset;
+                checkRow !=  destRow;
+                checkRow = checkRow + rowOffset, checkCol = checkCol + colOffset)
             {
-                if (GameBoard[iCheckRow][iCheckCol] != 0) {
+                if (GameBoard[checkRow][checkCol] != 0) {
                     return false;
                 }
             }
@@ -152,7 +152,7 @@ private:
 class Rook : public GamePiece
 {
 public:
-    Rook(char PieceColor) : GamePiece(PieceColor) {}
+    Rook(char pieceColor) : GamePiece(pieceColor) {}
     ~Rook() {}
 private:
     virtual char GetPiece() const {
@@ -162,8 +162,8 @@ private:
         if (srcRow == destRow) {
             // Make sure that all invervening squares are empty
             int colOffset = (destCol - srcCol > 0) ? 1 : -1;
-            for (int iCheckCol = srcCol + colOffset; iCheckCol !=  destCol; iCheckCol = iCheckCol + colOffset) {
-                if (GameBoard[srcRow][iCheckCol] != 0) {
+            for (int checkCol = srcCol + colOffset; checkCol !=  destCol; checkCol = checkCol + colOffset) {
+                if (GameBoard[srcRow][checkCol] != 0) {
                     return false;
                 }
             }
@@ -171,8 +171,8 @@ private:
         } else if (destCol == srcCol) {
             // Make sure that all invervening squares are empty
             int rowOffset = (destRow - srcRow > 0) ? 1 : -1;
-            for (int iCheckRow = srcRow + rowOffset; iCheckRow !=  destRow; iCheckRow = iCheckRow + rowOffset) {
-                if (GameBoard[iCheckRow][srcCol] != 0) {
+            for (int checkRow = srcRow + rowOffset; checkRow !=  destRow; checkRow = checkRow + rowOffset) {
+                if (GameBoard[checkRow][srcCol] != 0) {
                     return false;
                 }
             }
@@ -185,7 +185,7 @@ private:
 class Queen : public GamePiece
 {
 public:
-    Queen(char PieceColor) : GamePiece(PieceColor) {}
+    Queen(char pieceColor) : GamePiece(pieceColor) {}
     ~Queen() {}
 private:
     virtual char GetPiece() const {
@@ -195,8 +195,8 @@ private:
         if (srcRow == destRow) {
             // Make sure intervening squares are empty
             int colOffset = (destCol - srcCol > 0) ? 1 : -1;
-            for (int iCheckCol = srcCol + colOffset; iCheckCol !=  destCol; iCheckCol = iCheckCol + colOffset) {
-                if (GameBoard[srcRow][iCheckCol] != 0) {
+            for (int checkCol = srcCol + colOffset; checkCol !=  destCol; checkCol = checkCol + colOffset) {
+                if (GameBoard[srcRow][checkCol] != 0) {
                     return false;
                 }
             }
@@ -204,8 +204,8 @@ private:
         } else if (destCol == srcCol) {
             // Make sure intervening squares are empty
             int rowOffset = (destRow - srcRow > 0) ? 1 : -1;
-            for (int iCheckRow = srcRow + rowOffset; iCheckRow !=  destRow; iCheckRow = iCheckRow + rowOffset) {
-                if (GameBoard[iCheckRow][srcCol] != 0) {
+            for (int checkRow = srcRow + rowOffset; checkRow !=  destRow; checkRow = checkRow + rowOffset) {
+                if (GameBoard[checkRow][srcCol] != 0) {
                     return false;
                 }
             }
@@ -214,13 +214,13 @@ private:
             // Make sure intervening squares are empty
             int rowOffset = (destRow - srcRow > 0) ? 1 : -1;
             int colOffset = (destCol - srcCol > 0) ? 1 : -1;
-            int iCheckRow;
-            int iCheckCol;
-            for (iCheckRow = srcRow + rowOffset, iCheckCol = srcCol + colOffset;
-                iCheckRow !=  destRow;
-                iCheckRow = iCheckRow + rowOffset, iCheckCol = iCheckCol + colOffset)
+            int checkRow;
+            int checkCol;
+            for (checkRow = srcRow + rowOffset, checkCol = srcCol + colOffset;
+                checkRow !=  destRow;
+                checkRow = checkRow + rowOffset, checkCol = checkCol + colOffset)
             {
-                if (GameBoard[iCheckRow][iCheckCol] != 0) {
+                if (GameBoard[checkRow][checkCol] != 0) {
                     return false;
                 }
             }
@@ -233,7 +233,7 @@ private:
 class King : public GamePiece
 {
 public:
-    King(char PieceColor) : GamePiece(PieceColor) {}
+    King(char pieceColor) : GamePiece(pieceColor) {}
     ~King() {}
 private:
     virtual char GetPiece() const {
@@ -326,27 +326,27 @@ public:
 
     void Print() {
         using namespace std;
-        const int kiSquareWidth = 4;
-        const int kiSquareHeight = 3;
-        for (int row = 0; row < 8*kiSquareHeight; ++row) {
-            int iSquareRow = row/kiSquareHeight;
+        const int squareWidth = 4;
+        const int squareHeight = 3;
+        for (int row = 0; row < 8*squareHeight; ++row) {
+            int squareRow = row/squareHeight;
             // Print side border with numbering
             if (row % 3 == 1) {
-                cout << '-' << (char)('1' + 7 - iSquareRow) << '-';
+                cout << '-' << (char)('1' + 7 - squareRow) << '-';
             } else {
                 cout << "---";
             }
             // Print the chess board
-            for (int col = 0; col < 8*kiSquareWidth; ++col) {
-                int iSquareCol = col/kiSquareWidth;
-                if (((row % 3) == 1) && ((col % 4) == 1 || (col % 4) == 2) && MainGameBoard[7-iSquareRow][iSquareCol] != 0) {
+            for (int col = 0; col < 8*squareWidth; ++col) {
+                int squareCol = col/squareWidth;
+                if (((row % 3) == 1) && ((col % 4) == 1 || (col % 4) == 2) && MainGameBoard[7-squareRow][squareCol] != 0) {
                     if ((col % 4) == 1) {
-                        cout << MainGameBoard[7-iSquareRow][iSquareCol]->GetColor();
+                        cout << MainGameBoard[7-squareRow][squareCol]->GetColor();
                     } else {
-                        cout << MainGameBoard[7-iSquareRow][iSquareCol]->GetPiece();
+                        cout << MainGameBoard[7-squareRow][squareCol]->GetPiece();
                     }
                 } else {
-                    if ((iSquareRow + iSquareCol) % 2 == 1) {
+                    if ((squareRow + squareCol) % 2 == 1) {
                         cout << '*';
                     } else {
                         cout << ' ';
@@ -356,20 +356,20 @@ public:
             cout << endl;
         }
         // Print the bottom border with numbers
-        for (int row = 0; row < kiSquareHeight; ++row) {
+        for (int row = 0; row < squareHeight; ++row) {
             if (row % 3 == 1) {
                 cout << "---";
-                for (int col = 0; col < 8*kiSquareWidth; ++col) {
-                    int iSquareCol = col/kiSquareWidth;
+                for (int col = 0; col < 8*squareWidth; ++col) {
+                    int squareCol = col/squareWidth;
                     if ((col % 4) == 1) {
-                        cout << (iSquareCol + 1);
+                        cout << (squareCol + 1);
                     } else {
                         cout << '-';
                     }
                 }
                 cout << endl;
             } else {
-                for (int col = 1; col < 9*kiSquareWidth; ++col) {
+                for (int col = 1; col < 9*squareWidth; ++col) {
                     cout << '-';
                 }
                 cout << endl;
@@ -377,17 +377,17 @@ public:
         }
     }
 
-    bool IsInCheck(char PieceColor) {
+    bool IsInCheck(char pieceColor) {
         // Find the king
-        int iKingRow;
-        int iKingCol;
+        int kingRow;
+        int kingCol;
         for (int row = 0; row < 8; ++row) {
             for (int col = 0; col < 8; ++col) {
                 if (MainGameBoard[row][col] != 0) {
-                    if (MainGameBoard[row][col]->GetColor() == PieceColor) {
+                    if (MainGameBoard[row][col]->GetColor() == pieceColor) {
                         if (MainGameBoard[row][col]->GetPiece() == 'K') {
-                            iKingRow = row;
-                            iKingCol = col;
+                            kingRow = row;
+                            kingCol = col;
                         }
                     }
                 }
@@ -397,8 +397,9 @@ public:
         for (int row = 0; row < 8; ++row) {
             for (int col = 0; col < 8; ++col) {
                 if (MainGameBoard[row][col] != 0) {
-                    if (MainGameBoard[row][col]->GetColor() != PieceColor) {
-                        if (MainGameBoard[row][col]->IsLegalMove(row, col, iKingRow, iKingCol, MainGameBoard)) {
+                    if (MainGameBoard[row][col]->GetColor() != pieceColor) {
+                        if (MainGameBoard[row][col]->IsLegalMove(row, col, kingRow, kingCol, MainGameBoard)) {
+                            isPromotion = false;
                             return true;
                         }
                     }
@@ -409,24 +410,29 @@ public:
         return false;
     }
 
-    bool CanMove(char PieceColor) {
+    bool CanMove(char pieceColor) {
         // Run through all pieces
         for (int row = 0; row < 8; ++row) {
             for (int col = 0; col < 8; ++col) {
                 if (MainGameBoard[row][col] != 0) {
                     // If it is a piece of the current player, see if it has a legal move
-                    if (MainGameBoard[row][col]->GetColor() == PieceColor) {
-                        for (int iMoveRow = 0; iMoveRow < 8; ++iMoveRow) {
-                            for (int iMoveCol = 0; iMoveCol < 8; ++iMoveCol) {
-                                if (MainGameBoard[row][col]->IsLegalMove(row, col, iMoveRow, iMoveCol, MainGameBoard)) {
+                    if (MainGameBoard[row][col]->GetColor() == pieceColor) {
+                        for (int moveRow = 0; moveRow < 8; ++moveRow) {
+                            for (int moveCol = 0; moveCol < 8; ++moveCol) {
+                                isCastle = false;
+                                if (MainGameBoard[row][col]->IsLegalMove(row, col, moveRow, moveCol, MainGameBoard)) {
+                                    isPromotion = false;
+                                    if (isCastle && IsInCheck(pieceColor)) {
+                                        continue;
+                                    }
                                     // Make move and check whether king is in check
-                                    GamePiece* temp                   = MainGameBoard[iMoveRow][iMoveCol];
-                                    MainGameBoard[iMoveRow][iMoveCol]   = MainGameBoard[row][col];
+                                    GamePiece* temp                   = MainGameBoard[moveRow][moveCol];
+                                    MainGameBoard[moveRow][moveCol]   = MainGameBoard[row][col];
                                     MainGameBoard[row][col]           = 0;
-                                    bool bCanMove = !IsInCheck(PieceColor);
+                                    bool bCanMove = !IsInCheck(pieceColor);
                                     // Undo the move
-                                    MainGameBoard[row][col]           = MainGameBoard[iMoveRow][iMoveCol];
-                                    MainGameBoard[iMoveRow][iMoveCol]   = temp;
+                                    MainGameBoard[row][col]           = MainGameBoard[moveRow][moveCol];
+                                    MainGameBoard[moveRow][moveCol]   = temp;
                                     if (bCanMove) {
                                         return true;
                                     }
@@ -594,7 +600,7 @@ public:
                 }
             }
         }
-        if (!validMove) {
+        if (validMove == 0) {
             cout << "Invalid Move!" << endl;
         }
         return validMove;
@@ -675,4 +681,8 @@ public:
 //     ChessGame Game;
 //     // Game.Start();
 //     return 0;
+<<<<<<< HEAD
 // }
+=======
+// }
+>>>>>>> Final-update

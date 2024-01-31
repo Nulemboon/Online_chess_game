@@ -10,7 +10,6 @@ using json = nlohmann::json;
 enum MessageType : uint8_t {
     // Client message
     OK,
-    NOT_OK,
     SEE_HISTORY,
     RANDOM_MATCHMAKING,
     CREATE_ROOM,
@@ -20,10 +19,14 @@ enum MessageType : uint8_t {
     LOGIN, // <username> <password>
     LOGOUT, // <username> 
     INVITE, // <username> 
+    NOT_OK,
     MOVE, // <source_position> <destination_position>
-    DELETE_ROOM, // <room_id>
+    PROMOTE, // <destination_position>
+    DELETE_ROOM,
     ACCEPT_INVITE, // <username>
     REJECT_INVITE, // <username>
+    ACCEPT_DRAW,
+    REJECT_DRAW,
     SEE_MATCH, // <match_id>
 
     // Server message
@@ -47,6 +50,7 @@ enum MessageType : uint8_t {
     GAME_WIN,
     GAME_LOSE,
     ERROR,
+    IS_CHECK,
 };
 
 class Message {
@@ -81,7 +85,7 @@ class UserMessage : public Message {
 
 class MoveMessage : public Message {
     public:
-        MoveMessage(std::string source, std::string destination);
+        MoveMessage(MessageType type, std::string source, std::string destination);
         MoveMessage(Message message);
 
         std::string getSource() const;
@@ -108,14 +112,11 @@ class MatchMessage : public Message {
     public:
     MatchMessage(int matchID);
     MatchMessage(Message message);
-    MatchMessage(std::string match);
 
     int getMatchID() const;
-    std::string getMatch() const;
     
     private:
     int matchID;
-    std::string match;
 };
 
 class ErrorMessage : public Message {
@@ -129,15 +130,43 @@ class ErrorMessage : public Message {
     std::string error;
 };
 
-class InviteMessage : public Message {
+class ListMessage : public Message {
     public:
-    InviteMessage(std::vector<std::pair<std::string, int>> playerList);
-    InviteMessage(Message message);
+    ListMessage(MessageType type, std::vector<std::pair<std::string, int>> list);
+    ListMessage(Message message);
 
-    std::vector<std::pair<std::string, int>> getPlayerList() const;
+    std::vector<std::pair<std::string, int>> getList() const;
 
     private:
-    std::vector<std::pair<std::string, int>> playerList;
+    std::vector<std::pair<std::string, int>> list;
+};
+
+class MatchFoundMessage : public Message {
+    public:
+    MatchFoundMessage(MessageType type, int color, std::string name, int ELO);
+    MatchFoundMessage(Message message);
+
+    int getColor() const;
+    std::string getName() const;
+    int getELO() const;
+
+    private:
+    int color;
+    std::string name;
+    int ELO;
+};
+
+class PromoteMessage : public Message {
+    public:
+    PromoteMessage(MessageType type, char piece, std::string destination);
+    PromoteMessage(Message message);
+
+    char getPiece() const;
+    std::string getDest() const;
+
+    private:
+    char piece;
+    std::string destination;
 };
 
 #endif // MESSAGE_H

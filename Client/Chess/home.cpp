@@ -1,6 +1,7 @@
 #include "home.h"
 #include "ui_home.h"
 #include "../message/message.h"
+#include "history.h"
 
 Home::Home(MainWindow *mainwindow, QWidget *parent)
     : QWidget(parent)
@@ -11,10 +12,16 @@ Home::Home(MainWindow *mainwindow, QWidget *parent)
     // Display the login screen
     ui->frLogin->setVisible(true);
     ui->lbDim->setVisible(true);
+    ui->btnRegister->setVisible(false);
+    ui->btnToLogin->setVisible(false);
+    ui->btnQuit->setVisible(false);
     ui->btnPlay->setEnabled(false);
     ui->btnHistory->setEnabled(false);
     ui->btnOptions->setEnabled(false);
-    ui->btnQuit->setEnabled(false);
+    ui->btnLogout->setEnabled(false);
+
+    ui->txtPassword->setEchoMode(QLineEdit::Password);
+
 
     // Set placeholder text for the credentials text
     connect(ui->txtUsername, &QLineEdit::textChanged, this, &Home::onUsernameTextChanged);
@@ -34,17 +41,6 @@ Home::Home(MainWindow *mainwindow, QWidget *parent)
 Home::~Home()
 {
     delete ui;
-}
-
-void Home::on_btnQuit_clicked()
-{
-    exit(0);
-}
-
-
-void Home::on_btnHistory_clicked()
-{
-
 }
 
 void Home::onUsernameTextChanged(const QString &text)
@@ -72,38 +68,13 @@ void Home::on_btnLogin_clicked()
     QString userName = ui->txtUsername->text();
     QString passWord = ui->txtPassword->text();
 
-    UserMessage* msg = new UserMessage(LOGIN, userName.toStdString(), passWord.toStdString());
-    mainwindow->sendMessage(mainwindow->connfd, msg);
-    Message *rcv = mainwindow->receiveMessage(mainwindow->connfd);
-
-    switch (rcv->getType()) {
-    case LOGIN_SUCCESSFUL:
-        mainwindow->user = userName; // Set the username for this session
-        // Remove the login layer
-        ui->lbDim->setVisible(false);
-        ui->frLogin->setVisible(false);
-        ui->btnPlay->setEnabled(true);
-        ui->btnHistory->setEnabled(true);
-        ui->btnOptions->setEnabled(true);
-        ui->btnQuit->setEnabled(true);
-        break;
-
-    case LOGIN_FAIL:
-        ui->lbNoti->setText("Wrong username or password. Try again.");
-        break;
-
-    case USER_BLOCKED:
-        ui->lbNoti->setText("Too many fail attempts. This account is blocked.");
-        break;
-
-    case USER_LOGGED_IN:
-        ui->lbNoti->setText("This account is logged in another device.");
-        break;
-
-    default:
-        ui->lbNoti->setText("Error!");
-        break;
+    if (userName == "" || passWord == "") {
+        ui->lbNoti->setText("Enter your account information.");
+        return;
     }
+
+    UserMessage* msg = new UserMessage(LOGIN, userName.toStdString(), passWord.toStdString());
+    mainwindow->sendMessage(msg);
 }
 
 void Home::on_btnRegister_clicked()
@@ -112,34 +83,70 @@ void Home::on_btnRegister_clicked()
     QString userName = ui->txtUsername->text();
     QString passWord = ui->txtPassword->text();
 
+    if (userName == "" || passWord == "") {
+        ui->lbNoti->setText("Enter your account information.");
+        return;
+    }
+
     // Prepare and send message to server
     UserMessage* msg = new UserMessage(REGISTER, userName.toStdString(), passWord.toStdString());
-    mainwindow->sendMessage(mainwindow->connfd, msg);
-    // Receive message from server
-    Message *rcv = mainwindow->receiveMessage(mainwindow->connfd);
-
-    switch (rcv->getType()) {
-    case REGISTER_USERNAME_EXISTED:
-        ui->lbNoti->setText("Username already existed");
-        break;
-
-    case REGISTER_PASSWORD_FAIL:
-        break;
-
-    case REGISTER_SUCCESSFUL:
-        mainwindow->user = userName; // Set the username for this session
-        // Remove the login layer
-        ui->lbDim->setVisible(false);
-        ui->frLogin->setVisible(false);
-        ui->btnPlay->setEnabled(true);
-        ui->btnHistory->setEnabled(true);
-        ui->btnOptions->setEnabled(true);
-        ui->btnQuit->setEnabled(true);
-        break;
-
-    default:
-        ui->lbNoti->setText("Error!");
-        break;
-    }
+    mainwindow->sendMessage(msg);
 }
 
+void Home::on_btnLogout_clicked()
+{
+    Message* msg = new Message(LOGOUT);
+    mainwindow->sendMessage(msg);
+
+    ui->lbDim->setVisible(true);
+    ui->frLogin->setVisible(true);
+    mainwindow->user = NULL;
+}
+
+
+void Home::on_btnToRegister_clicked()
+{
+    ui->btnLogin->setVisible(false);
+    ui->btnToRegister->setVisible(false);
+    ui->label_2->setText("Already have an account?");
+    ui->btnRegister->setVisible(true);
+    ui->btnToLogin->setVisible(true);
+    ui->lbNoti->setText("");
+}
+
+
+
+void Home::on_btnQuit_clicked()
+{
+
+}
+
+
+void Home::on_btnToLogin_clicked()
+{
+    ui->btnLogin->setVisible(true);
+    ui->btnToRegister->setVisible(true);
+    ui->label_2->setText("New? Sign up right now!");
+    ui->btnRegister->setVisible(false);
+    ui->btnToLogin->setVisible(false);
+    ui->lbNoti->setText("");
+}
+
+
+void Home::on_btnPlay_clicked()
+{
+    mainwindow->switchScene(PLAYS);
+    play* screen = qobject_cast<play*>(mainwindow->stackedWidget->currentWidget());
+    screen->getPlayData();
+
+    Message* msg = new Message(CREATE_ROOM);
+    mainwindow->sendMessage(msg);
+}
+
+void Home::on_btnHistory_clicked()
+{
+    // Setup History scene
+    mainwindow->switchScene(HISTORYS);
+    Message* msg = new Message(SEE_HISTORY);
+    mainwindow->sendMessage(msg);
+}

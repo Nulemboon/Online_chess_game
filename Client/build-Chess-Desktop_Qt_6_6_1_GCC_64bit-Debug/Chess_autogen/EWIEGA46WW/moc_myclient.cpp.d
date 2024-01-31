@@ -1,10 +1,8 @@
-<<<<<<< HEAD
-/home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen/EWIEGA46WW/moc_chesssquare.cpp: /home/nulemboon/network_programming/Online_Chess_Game/Client/Chess/chesssquare.h \
-  /home/nulemboon/network_programming/Online_Chess_Game/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen/moc_predefs.h \
-=======
-/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen/EWIEGA46WW/moc_chesssquare.cpp: /home/nulemboon/network_programming/Final/Client/Chess/chesssquare.h \
+/home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen/EWIEGA46WW/moc_myclient.cpp: /home/nulemboon/network_programming/Final/Client/Chess/myclient.h \
   /home/nulemboon/network_programming/Final/Client/build-Chess-Desktop_Qt_6_6_1_GCC_64bit-Debug/Chess_autogen/moc_predefs.h \
->>>>>>> Final-update
+  /opt/Qt/6.6.1/gcc_64/include/QtCore/QDebug \
+  /opt/Qt/6.6.1/gcc_64/include/QtCore/QObject \
+  /opt/Qt/6.6.1/gcc_64/include/QtCore/QSocketNotifier \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/q20functional.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/q20memory.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/q20type_traits.h \
@@ -47,16 +45,15 @@
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qglobalstatic.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qhash.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qhashfunctions.h \
+  /opt/Qt/6.6.1/gcc_64/include/QtCore/qiodevice.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qiodevicebase.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qiterable.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qiterator.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qlatin1stringview.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtCore/qline.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qlist.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qlogging.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qmalloc.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qmap.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtCore/qmargins.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qmath.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qmetacontainer.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qmetatype.h \
@@ -69,9 +66,7 @@
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qobjectdefs_impl.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qoverload.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qpair.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtCore/qpoint.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qprocessordetection.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtCore/qrect.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qrefcount.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qscopedpointer.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qscopeguard.h \
@@ -80,7 +75,7 @@
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qshareddata_impl.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qsharedpointer.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qsharedpointer_impl.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtCore/qsize.h \
+  /opt/Qt/6.6.1/gcc_64/include/QtCore/qsocketnotifier.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qstring.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qstringalgorithms.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qstringbuilder.h \
@@ -118,37 +113,13 @@
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qvarlengtharray.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qversiontagging.h \
   /opt/Qt/6.6.1/gcc_64/include/QtCore/qxptype_traits.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qaction.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qbitmap.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qbrush.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qcolor.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qcursor.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qfont.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qfontinfo.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qfontmetrics.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qicon.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qimage.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qkeysequence.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qpaintdevice.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qpalette.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qpixelformat.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qpixmap.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qpolygon.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qregion.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qrgb.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qrgba64.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qtgui-config.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qtguiexports.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qtguiglobal.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qtransform.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtGui/qwindowdefs.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtWidgets/QFrame \
-  /opt/Qt/6.6.1/gcc_64/include/QtWidgets/qframe.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtWidgets/qsizepolicy.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtWidgets/qtwidgets-config.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtWidgets/qtwidgetsexports.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-  /opt/Qt/6.6.1/gcc_64/include/QtWidgets/qwidget.h \
+  /opt/Qt/6.6.1/gcc_64/include/QtNetwork/QTcpSocket \
+  /opt/Qt/6.6.1/gcc_64/include/QtNetwork/qabstractsocket.h \
+  /opt/Qt/6.6.1/gcc_64/include/QtNetwork/qhostaddress.h \
+  /opt/Qt/6.6.1/gcc_64/include/QtNetwork/qtcpsocket.h \
+  /opt/Qt/6.6.1/gcc_64/include/QtNetwork/qtnetwork-config.h \
+  /opt/Qt/6.6.1/gcc_64/include/QtNetwork/qtnetworkexports.h \
+  /opt/Qt/6.6.1/gcc_64/include/QtNetwork/qtnetworkglobal.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
@@ -310,6 +281,7 @@
   /usr/include/linux/errno.h \
   /usr/include/linux/limits.h \
   /usr/include/locale.h \
+  /usr/include/poll.h \
   /usr/include/pthread.h \
   /usr/include/sched.h \
   /usr/include/stdc-predef.h \
@@ -333,6 +305,7 @@
   /usr/include/x86_64-linux-gnu/bits/local_lim.h \
   /usr/include/x86_64-linux-gnu/bits/locale.h \
   /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/poll.h \
   /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
   /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
   /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
@@ -397,6 +370,7 @@
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/include/x86_64-linux-gnu/sys/poll.h \
   /usr/include/x86_64-linux-gnu/sys/select.h \
   /usr/include/x86_64-linux-gnu/sys/types.h \
   /usr/lib/gcc/x86_64-linux-gnu/11/include/stdarg.h \

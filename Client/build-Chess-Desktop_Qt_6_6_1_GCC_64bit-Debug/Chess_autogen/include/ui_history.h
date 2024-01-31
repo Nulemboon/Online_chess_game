@@ -31,11 +31,11 @@ public:
     QPushButton *btnBack;
     QFrame *frHome;
     QWidget *verticalLayoutWidget;
-    QVBoxLayout *verticalLayout_2;
-    QPushButton *btnPlay_2;
-    QPushButton *btnHistory_2;
-    QPushButton *btnOptions_2;
-    QPushButton *btnQuit_2;
+    QVBoxLayout *verticalLayout;
+    QPushButton *btnPlay;
+    QPushButton *btnHistory;
+    QPushButton *btnOptions;
+    QPushButton *btnQuit;
     QLabel *lbDim;
 
     void setupUi(QWidget *history)
@@ -228,30 +228,30 @@ public:
         verticalLayoutWidget = new QWidget(frHome);
         verticalLayoutWidget->setObjectName("verticalLayoutWidget");
         verticalLayoutWidget->setGeometry(QRect(70, 320, 201, 351));
-        verticalLayout_2 = new QVBoxLayout(verticalLayoutWidget);
-        verticalLayout_2->setObjectName("verticalLayout_2");
-        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
-        btnPlay_2 = new QPushButton(verticalLayoutWidget);
-        btnPlay_2->setObjectName("btnPlay_2");
-        btnPlay_2->setMinimumSize(QSize(0, 50));
-        btnPlay_2->setStyleSheet(QString::fromUtf8("border: none"));
+        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
+        verticalLayout->setObjectName("verticalLayout");
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        btnPlay = new QPushButton(verticalLayoutWidget);
+        btnPlay->setObjectName("btnPlay");
+        btnPlay->setMinimumSize(QSize(0, 50));
+        btnPlay->setStyleSheet(QString::fromUtf8("border: none"));
 
-        verticalLayout_2->addWidget(btnPlay_2);
+        verticalLayout->addWidget(btnPlay);
 
-        btnHistory_2 = new QPushButton(verticalLayoutWidget);
-        btnHistory_2->setObjectName("btnHistory_2");
+        btnHistory = new QPushButton(verticalLayoutWidget);
+        btnHistory->setObjectName("btnHistory");
 
-        verticalLayout_2->addWidget(btnHistory_2);
+        verticalLayout->addWidget(btnHistory);
 
-        btnOptions_2 = new QPushButton(verticalLayoutWidget);
-        btnOptions_2->setObjectName("btnOptions_2");
+        btnOptions = new QPushButton(verticalLayoutWidget);
+        btnOptions->setObjectName("btnOptions");
 
-        verticalLayout_2->addWidget(btnOptions_2);
+        verticalLayout->addWidget(btnOptions);
 
-        btnQuit_2 = new QPushButton(verticalLayoutWidget);
-        btnQuit_2->setObjectName("btnQuit_2");
+        btnQuit = new QPushButton(verticalLayoutWidget);
+        btnQuit->setObjectName("btnQuit");
 
-        verticalLayout_2->addWidget(btnQuit_2);
+        verticalLayout->addWidget(btnQuit);
 
         lbDim = new QLabel(frHome);
         lbDim->setObjectName("lbDim");
@@ -305,10 +305,10 @@ public:
 
         label->setText(QCoreApplication::translate("history", "HISTORY", nullptr));
         btnBack->setText(QString());
-        btnPlay_2->setText(QCoreApplication::translate("history", "Play", nullptr));
-        btnHistory_2->setText(QCoreApplication::translate("history", "History", nullptr));
-        btnOptions_2->setText(QCoreApplication::translate("history", "Options", nullptr));
-        btnQuit_2->setText(QCoreApplication::translate("history", "Quit", nullptr));
+        btnPlay->setText(QCoreApplication::translate("history", "Play", nullptr));
+        btnHistory->setText(QCoreApplication::translate("history", "History", nullptr));
+        btnOptions->setText(QCoreApplication::translate("history", "Options", nullptr));
+        btnQuit->setText(QCoreApplication::translate("history", "Logout", nullptr));
         lbDim->setText(QString());
     } // retranslateUi
 
