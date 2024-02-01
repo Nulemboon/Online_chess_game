@@ -190,7 +190,7 @@ std::vector<std::map<std::string, std::string>> Database::getHistory(const std::
 
     // Fetch matches where the user is either the white or black player
     const char* query = "SELECT U1.NAME, U2.NAME, RESULT, TIME, HID FROM HISTORY H JOIN "
-        "USER U1 ON H.WID = U1.UID JOIN USER U2 ON H.BID = U2.UID WHERE WID = ? OR BID = ? ORDER "
+        "USER U1 ON H.WID = U1.UID JOIN USER U2 ON H.BID = U2.UID WHERE WID = (SELECT UID FROM USER WHERE NAME = ?) OR BID = (SELECT UID FROM USER WHERE NAME = ?) ORDER "
         "BY H.HID DESC;";
     sqlite3_stmt* stmt = nullptr;
 
@@ -288,34 +288,28 @@ std::vector<std::map<std::string, std::string>> Database::getMatch(const int mat
         std::cerr << "Cannot open database" << std::endl;
         return matchList;
     }
+            std::cout <<"abc"<<std::endl;
 
     // Fetch moves of matchID
-    const char* query = "SELECT U1.NAME, U2.NAME, RESULT, MOVES, TIME, HID FROM HISTORY H JOIN "
-        "USER U1 ON H.WID = U1.UID JOIN USER U2 ON H.BID = U2.UID WHERE HID = ?;";
+    const char* query = "SELECT MOVES FROM HISTORY WHERE HID = ?;";
     sqlite3_stmt* stmt = nullptr;
+            std::cout <<"abc"<<std::endl;
 
     // Prepare and bind parameters
     if (sqlite3_prepare_v2(db, query, -1, &stmt, nullptr) == SQLITE_OK) {
         sqlite3_bind_int(stmt, 1, matchID);
 
         // Execute the statement and retrieve the result
-        while (sqlite3_step(stmt) == SQLITE_ROW) {
+        if (sqlite3_step(stmt) == SQLITE_ROW) {
             // Retrieve values from columns
             std::map<std::string, std::string> match;
-            std::string whiteID = (const char*)sqlite3_column_text(stmt, 0);
-            std::string blackID = (const char*)sqlite3_column_text(stmt, 1);
-            int result = sqlite3_column_int(stmt, 2);
-            std::string moves = (const char*)sqlite3_column_text(stmt, 3);
-            std::string time = (const char*)sqlite3_column_text(stmt, 4);
-            int hID = sqlite3_column_int(stmt, 5);
+            std::cout <<"abc"<<std::endl;
+            std::string moves = (const char*)sqlite3_column_text(stmt, 0);
+            std::cout << "Moves: " << moves << std::endl;
 
             // Pushing column values into the matrix
-            match["whiteID"] = whiteID;
-            match["blackID"] = blackID;
-            match["result"] = std::to_string(result);
             match["moves"] = moves;
-            match["time"] = time;
-            match["matchID"] = std::to_string(hID);
+            matchList.push_back(match);
         }
     } else {
         // Handle error

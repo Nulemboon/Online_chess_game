@@ -564,6 +564,7 @@ public:
                         }
 
                     } else {
+                        if (isCastle) return 0;
                         // Make the move
                         if (GameBoard[endRow][endCol] != 0 || isEnPassant) isCapture = true;
                         GamePiece* temp                   = GameBoard[endRow][endCol];

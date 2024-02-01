@@ -80,7 +80,7 @@ void history::on_historyView_cellDoubleClicked(int row, int column)
 {
     rowClicked = row;
     // Send request for History data to server
-    MatchMessage *msg = new MatchMessage(matches[row]["matchID"]);
+    MatchMessage *msg = new MatchMessage(std::stoi(matches[row]["matchID"]));
     mainwindow->sendMessage(msg);
     ui->historyView->setRowCount(0);
 }

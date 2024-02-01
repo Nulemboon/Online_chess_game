@@ -150,15 +150,18 @@ HistoryMessage::HistoryMessage(Message message) : Message(message) {
     }
 }
 
-std::string HistoryMessage::serialize() const {
-    std::string result;
+// std::string HistoryMessage::serialize() const {
+//     std::string result;
+//     result += static_cast<char>(type);
+//     result += static_cast<char>(static_cast<uint8_t>(length >> 8)); // High byte of length
+//     result += static_cast<char>(static_cast<uint8_t>(length & 0xFF)); // Low byte of length
 
-    for (auto & element : matches) {
-        json j_map(element);
-        result += j_map.dump();
-    }
-    return result;
-}
+//     for (auto & element : matches) {
+//         json j_map(element);
+//         result += j_map.dump();
+//     }
+//     return result;
+// }
 
 /*
     MatchMessage methods

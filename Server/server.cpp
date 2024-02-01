@@ -52,7 +52,7 @@ void sendMessage(int sockfd, Message *message) {
     std::string delim = "\n\n";
     int n = write(sockfd, (message->serialize() + delim).c_str(), message->getLength() + HEADER_SIZE + 2);
     std::cout << n << std::endl;
-    std::cout << static_cast<int>(message->getType()) << " " << static_cast<int>(message->getLength()) << " " << message->serialize() << "\n" << std::endl;
+    std::cout << static_cast<int>(message->getType()) << "\n" << std::endl;
     if (n < 0) {
         std::cerr << "Error sending message" << std::endl;
     }
@@ -175,6 +175,7 @@ void seeMatch(int index, Message *msg) {
     int match_id = matchMsg->getMatchID();
     std::vector<std::map<std::string, std::string>> match = db->getMatch(match_id);
     std::cout << "User '" << clients[index].username << "' see his match " << match_id << std::endl;
+    std::cout << db->getMatch(match_id).size() << std::endl;
 
     // Send match message
     HistoryMessage* historyMsg = new HistoryMessage(MATCH, match);
@@ -191,7 +192,7 @@ void createRoom(int index) {
     std::string username = clients[index].username;
     int ELO = clients[index].ELO;
     readyList.push_back({username, ELO});
-    onlineList(index);
+    // onlineList(index);
 }
 
 void deleteRoom(int index) {
@@ -266,14 +267,12 @@ void afterMatch(int gameID, int white, int black, int res) {
             clients[black].ELO -= change;
         }
     } else {
-        int change = 50 - abs(clients[white].ELO - clients[black].ELO) / 10;
-        if (res == 1) {
-            clients[white].ELO += change;
-            clients[black].ELO -= change;
-        } else {
-            clients[white].ELO -= change;
-            clients[black].ELO += change;
-        }
+        int winner = res == 1 ? white : black;
+        int loser = res == 2 ? white : black;
+        int change = std::min(5, 20 + (clients[loser].ELO - clients[winner].ELO) / 10);
+
+        clients[loser].ELO -= change;
+        clients[winner].ELO += change;
     }
 
     auto t = std::time(nullptr);
@@ -282,7 +281,6 @@ void afterMatch(int gameID, int white, int black, int res) {
     ss << std::put_time(&tm, "%Y-%m-%d");
     //update database
     std::cout << "gameID " << gameID << std::endl;
-    std::cout << ss.str() << std::endl;
     db->addMatch(clients[white].username, clients[black].username, res, movesMap[gameID], gameID, ss.str());
     db->updateELO(clients[white].username, clients[white].ELO);
     db->updateELO(clients[black].username, clients[black].ELO);

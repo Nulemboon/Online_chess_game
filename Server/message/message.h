@@ -102,7 +102,7 @@ class HistoryMessage : public Message {
         HistoryMessage(Message message);
 
         std::vector<std::map<std::string, std::string>> getMatches() const;
-        std::string serialize() const override;
+        // std::string serialize() const override;
 
     private:
         std::vector<std::map<std::string, std::string>> matches;
