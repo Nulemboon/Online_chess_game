@@ -16,7 +16,7 @@ public:
     explicit play(MainWindow* mainwindow, QWidget *parent = nullptr);
     ~play();
 
-    void fetchData(std::vector<std::pair<std::string, int>> newList);
+    void fetchData();
     void getPlayData();
     std::vector<std::pair<std::string, int>> inviteList;
 

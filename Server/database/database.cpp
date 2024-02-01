@@ -131,8 +131,7 @@ int Database::validateUser(const std::string username, const std::string passwor
     }
 }
 
-int Database::addMatch(const std::string& whiteID, const std::string& blackID,
-                              int result, const std::string& moves, const int matchID) {
+int Database::addMatch(const std::string& whiteID, const std::string& blackID, int result, const std::string& moves, const int matchID, const std::string& time) {
     if (!db) {
         // Handle error, database not open
         std::cerr << "Cannot open database" << std::endl;
@@ -143,9 +142,11 @@ int Database::addMatch(const std::string& whiteID, const std::string& blackID,
         return checkW < 1 ? checkW : checkB;
     }
 
-    const char* query = "INSERT INTO HISTORY (HID, WID, BID, RESULT, MOVES) VALUES "
-        "(?, (SELECT UID FROM USER WHERE NAME = ?), (SELECT UID FROM USER WHERE NAME = ?), ?, ?)";
+    const char* query = "INSERT INTO HISTORY (HID, WID, BID, RESULT, MOVES, TIME) VALUES "
+        "(?, (SELECT UID FROM USER WHERE NAME = ?), (SELECT UID FROM USER WHERE NAME = ?), ?, ?, ?)";
     sqlite3_stmt* stmt = nullptr;
+
+    std::cout << time << std::endl;
 
     // Prepare and bind statement
     if (sqlite3_prepare_v2(db, query, -1, &stmt, nullptr) == SQLITE_OK) {
@@ -154,6 +155,7 @@ int Database::addMatch(const std::string& whiteID, const std::string& blackID,
         sqlite3_bind_text(stmt, 3, blackID.c_str(), -1, SQLITE_TRANSIENT);
         sqlite3_bind_int(stmt, 4, result);
         sqlite3_bind_text(stmt, 5, moves.c_str(), -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(stmt, 6, time.c_str(), -1, SQLITE_TRANSIENT);
 
         if (sqlite3_step(stmt) == SQLITE_DONE) {
             sqlite3_finalize(stmt);
@@ -407,20 +409,32 @@ int Database::updateELO(const std::string& username, int eloValue) {
 
 int Database::getLastMatchID() {
     int matchID = 0;
+
     if (!db) {
         // Handle error, database not open
         std::cerr << "Cannot open database" << std::endl;
         return matchID;
     }
 
-    // Fetch moves of matchID
-    const char* query = "SELECT HID FROM HISTORY ORDER BY DESC LIMIT 1;";
+    const char* query = "SELECT HID FROM HISTORY ORDER BY HID DESC LIMIT 1;";
     sqlite3_stmt* stmt = nullptr;
 
-    // Execute the statement and retrieve the result
-    while (sqlite3_step(stmt) == SQLITE_ROW) {
-        matchID = sqlite3_column_int(stmt, 0);
+    // Prepare the statement
+    if (sqlite3_prepare_v2(db, query, -1, &stmt, nullptr) != SQLITE_OK) {
+        std::cerr << "Error preparing statement: " << sqlite3_errmsg(db) << std::endl;
+        return matchID;
     }
-    
+
+    // Execute the statement
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        // Retrieve the result
+        matchID = sqlite3_column_int(stmt, 0);
+    } else {
+        std::cerr << "No rows returned by the query" << std::endl;
+    }
+
+    // Finalize the statement
+    sqlite3_finalize(stmt);
+
     return matchID;
 }

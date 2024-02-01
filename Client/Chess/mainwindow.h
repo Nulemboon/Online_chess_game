@@ -80,6 +80,7 @@ private:
     void handleInvite(Message *msg);
     void handleIsCheck(Message *msg);
     void handlePromote(Message *msg);
+    void handleOfferDraw(Message *msg);
 
 
 private slots:

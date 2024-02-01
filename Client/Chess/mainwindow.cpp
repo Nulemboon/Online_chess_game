@@ -57,7 +57,7 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::sendMessage(Message *message) {
-    client.sendMessage(QString::fromStdString(message->serialize()) + '\n', message->getLength() + 1);
+    client.sendMessage(QString::fromStdString(message->serialize()) + "\n\n", message->getLength() + 5);
     qDebug() << "Type: " << message->getType();
     qDebug() << "Length: " << message->getLength();
 }
@@ -168,6 +168,11 @@ void MainWindow::onMessageReceived(const QString &message)
 
     case PROMOTE:
         handlePromote(rcv);
+        break;
+
+    case OFFER_DRAW:
+        handleOfferDraw(rcv);
+        break;
 
     default:
         break;
@@ -183,26 +188,23 @@ void MainWindow::handleHistory(Message *msg) {
 }
 
 void MainWindow::handleMatch(Message *msg) {
-    HistoryMessage *msgM = new HistoryMessage(*msg);
+    HistoryMessage *rcv = new HistoryMessage(*msg);
 
     // Parse move
     std::vector<std::pair<int, std::string>> test;
-    std::istringstream iss(msgM->getMatches()[0]["moves"]);
+    std::string delimiter = ",";
+    std::string token = "";
+    size_t pos = 0;
+    std::string s = rcv->getMatches()[0]["moves"];
+    while ((pos = s.find(delimiter)) != std::string::npos) {
+        if (s.length() <= 1) break;
+        token = s.substr(0, pos);
+        s.erase(0, pos + delimiter.length());
 
-    // Iterate through each move in the input string
-    std::string move;
-    while (std::getline(iss, move, ',')) {
-        // Create a string stream for each move
-        std::istringstream moveStream(move);
-
-        // Parse the two integers from the move
-        int move1;
-        std::string move2;
-        if (moveStream >> move1 >> move2) {
-            // Add the pair to the vector
-            test.emplace_back(move1, move2);
+        if (token.length() == 4) {
+            test.push_back(std::pair(std::stoi(token.substr(0, 2)), token.substr(2, 2)));
         } else {
-            std::cerr << "Error parsing move: " << move << std::endl;
+            test.push_back(std::pair(std::stoi(token.substr(0, 2)), token.substr(2, 3)));
         }
     }
 
@@ -258,6 +260,8 @@ void MainWindow::handleUserLoggedIn(Message *msg) {
 
 void MainWindow::handleLoginSuccessful(Message *msg) {
     user = homeWid->ui->txtUsername->text(); // Set the username for this session
+    homeWid->ui->txtUsername->setText("");
+    homeWid->ui->txtPassword->setText("");
     // Remove the login layer
     homeWid->ui->lbDim->setVisible(false);
     homeWid->ui->frLogin->setVisible(false);
@@ -271,9 +275,9 @@ void MainWindow::handleOnlineList(Message *msg) {
 
     ListMessage *rcv = new ListMessage(*msg);
     std::vector<std::pair<std::string, int>> newList = rcv->getList();
-    playWid->list.insert(playWid->list.end(), newList.begin(), newList.end());
+    playWid->list = newList;
 
-    playWid->fetchData(newList);
+    playWid->fetchData();
 }
 
 void MainWindow::handleMatchFound(Message *msg) {
@@ -282,6 +286,7 @@ void MainWindow::handleMatchFound(Message *msg) {
     playWid->ui->btnBack->setEnabled(true);
     playWid->ui->btnMM->setText("RANDOM\nMATCHMAKING");
     playWid->ui->btnMM->setEnabled(true);
+    playWid->ui->playView->setRowCount(0);
 
     MatchFoundMessage* rcv = new MatchFoundMessage(*msg);
     // Setup game scene
@@ -299,6 +304,9 @@ void MainWindow::handleMatchmakingTimeout(Message *msg) {
     playWid->ui->btnBack->setEnabled(true);
     playWid->ui->btnMM->setText("RANDOM\nMATCHMAKING");
     playWid->ui->lbNoMM->setVisible(true);
+    playWid->ui->btnYes->setEnabled(true);
+    playWid->ui->btnNo->setEnabled(true);
+    playWid->ui->btnMM->setEnabled(true);
 }
 
 void MainWindow::handleMoveNotOk(Message *msg) {
@@ -472,5 +480,42 @@ void MainWindow::handleIsCheck(Message *msg) {
 }
 
 void MainWindow::handlePromote(Message *msg) {
-    gameWid->ui->frPromote->setVisible(true);
+    if (msg->getLength() == 0) {
+        gameWid->ui->frPromote->setVisible(true);
+
+    } else {
+        MoveMessage *rcv = new MoveMessage(*msg);
+        int sRow, sCol, dRow, dCol;
+        sRow = rcv->getSource()[0] - '0'; sCol = rcv->getSource()[1] - '0';
+        dRow = rcv->getDestination()[0] - '0'; dCol = rcv->getDestination()[1] - '0';
+
+        gameWid->moves(gameWid->collection[sRow][sCol], gameWid->collection[dRow][dCol]);
+
+        switch (rcv->getDestination()[2]) {
+        case 'Q':
+            gameWid->collection[dRow][dCol]->placePiece(gameWid->side == BLACK ? QueenW : QueenB);
+            break;
+
+        case 'N':
+            gameWid->collection[dRow][dCol]->placePiece(gameWid->side == BLACK  ? KnightW : KnightB);
+            break;
+
+        case 'R':
+            gameWid->collection[dRow][dCol]->placePiece(gameWid->side == BLACK  ? RookW : RookB);
+            break;
+
+        case 'B':
+            gameWid->collection[dRow][dCol]->placePiece(gameWid->side == BLACK  ? BishopW : BishopB);
+            break;
+
+        default:
+            break;
+        }
+
+        gameWid->isTurn = true;
+    }
+}
+
+void MainWindow::handleOfferDraw(Message *msg) {
+    gameWid->frOffer2->setVisible(true);
 }

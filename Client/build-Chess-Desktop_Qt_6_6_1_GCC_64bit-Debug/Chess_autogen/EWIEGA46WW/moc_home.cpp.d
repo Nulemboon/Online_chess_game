@@ -123,6 +123,7 @@
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qtversionchecks.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qtypeinfo.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qtypes.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qurl.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qutf8stringview.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qvariant.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtCore/qvarlengtharray.h \
@@ -143,12 +144,14 @@
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qpainter.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qpalette.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qpen.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qpicture.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qpixelformat.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qpixmap.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qpolygon.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qregion.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qrgb.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qrgba64.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qtextdocument.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qtextoption.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qtgui-config.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtGui/qtguiexports.h \
@@ -165,6 +168,8 @@
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QFrame \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QGraphicsView \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QGridLayout \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QHBoxLayout \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QLabel \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QMainWindow \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QPushButton \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/QStackedWidget \
@@ -176,6 +181,7 @@
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qgraphicsscene.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qgraphicsview.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qgridlayout.h \
+  /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qlabel.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qlayout.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qlayoutitem.h \
   /home/pert/Qt/6.6.1/gcc_64/include/QtWidgets/qmainwindow.h \

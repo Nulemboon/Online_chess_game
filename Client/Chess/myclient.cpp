@@ -10,7 +10,7 @@ MyClient::MyClient(QObject *parent)
     connect(socket, &QTcpSocket::connected, this, &MyClient::onConnected);
 
     // Connect to the server
-    socket->connectToHost("192.168.1.34", 5500); // Replace with your server's IP and port
+    socket->connectToHost("127.0.0.1", 8080); // Replace with your server's IP and port
 }
 
 void MyClient::onConnected()
@@ -43,10 +43,9 @@ void MyClient::pollSocket()
         for (int i = 0; i < bytesRead; i++) {
             std::cout << static_cast<int>(buff[i]) << " ";
         }
-        if (buff[0] == '\n') continue;
         std::cout << std::endl;
         if (bytesRead > 0) {
-            std::string delimiter = "\n";
+            std::string delimiter = "\n\n";
             std::string token = "";
             size_t pos = 0;
             std::string s(buff, bytesRead);
@@ -58,7 +57,10 @@ void MyClient::pollSocket()
                 if (s.length() <= 1) break;
                 token = s.substr(0, pos);
                 s.erase(0, pos + delimiter.length());
-
+                if (token.length() == 0) {
+                    s.erase(s.begin(), s.begin() + 3);
+                    continue;
+                }
 
                 QString message = QString::fromStdString(token);
                 qDebug() << "Received message:" << message;
@@ -77,7 +79,7 @@ void MyClient::sendMessage(const QString message, int length)
     if (socket->state() == QAbstractSocket::ConnectedState) {
         // Convert the QString to a QByteArray before sending
 
-        qint64 bytesWritten = socket->write(message.toStdString().c_str(), length + 3);
+        qint64 bytesWritten = socket->write(message.toStdString().c_str(), length + 5);
 
         if (bytesWritten == -1) {
             // An error occurred during writing

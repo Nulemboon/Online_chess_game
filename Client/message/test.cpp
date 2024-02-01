@@ -1,20 +1,11 @@
 #include <bits/stdc++.h>
-// #include "json.hpp"
 
-// using json = nlohmann::json;
-
-void abc(int *test) {
-    std::cout << *test << std::endl;
-    *test = 5;
-}
 
 int main() {
-    // int tmp = 0;
-    // abc(&tmp);
-    std::string tmp("abc");
-
-    std::cout << tmp << std::endl;
-
-
+    auto t = std::time(nullptr);
+    auto tm = *std::localtime(&t);
+    std::stringstream ss;
+    ss << std::put_time(&tm, "%Y-%m-%d");
+    std::cout <<ss.str() << std::endl;
     return 0;
 }

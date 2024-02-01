@@ -49,10 +49,10 @@ int randm(int min, int max) {
 }
 
 void sendMessage(int sockfd, Message *message) {
-    char delim = '\n';
-    int n = write(sockfd, (message->serialize() + delim).c_str(), message->getLength() + HEADER_SIZE + 1);
+    std::string delim = "\n\n";
+    int n = write(sockfd, (message->serialize() + delim).c_str(), message->getLength() + HEADER_SIZE + 2);
     std::cout << n << std::endl;
-    // std::cout << message->serialize() << "\n" << std::endl;
+    std::cout << static_cast<int>(message->getType()) << " " << static_cast<int>(message->getLength()) << " " << message->serialize() << "\n" << std::endl;
     if (n < 0) {
         std::cerr << "Error sending message" << std::endl;
     }
@@ -211,6 +211,7 @@ void newMatch(int white, int black) {
     playerMap.insert({gameID, {white, black}});
     clients[white].gameID = gameID;
     clients[black].gameID = gameID;
+    
 }
 
 void invite(int index, Message* msg) {
@@ -239,7 +240,10 @@ void accept_invite(int index, Message* msg) {
             sendMessage(clients[op_index].sockfd, new MatchFoundMessage(MATCH_FOUND, 1, clients[index].username, clients[index].ELO));
 
             newMatch(op_index, index);
+            
         }
+        deleteRoom(index);
+        deleteRoom(op_index);
     }
     
 }
@@ -262,7 +266,7 @@ void afterMatch(int gameID, int white, int black, int res) {
             clients[black].ELO -= change;
         }
     } else {
-        int change = 25 - abs(clients[white].ELO - clients[black].ELO) / 10;
+        int change = 50 - abs(clients[white].ELO - clients[black].ELO) / 10;
         if (res == 1) {
             clients[white].ELO += change;
             clients[black].ELO -= change;
@@ -272,12 +276,21 @@ void afterMatch(int gameID, int white, int black, int res) {
         }
     }
 
+    auto t = std::time(nullptr);
+    auto tm = *std::localtime(&t);
+    std::stringstream ss;
+    ss << std::put_time(&tm, "%Y-%m-%d");
     //update database
-    db->addMatch(clients[white].username, clients[black].username, res, movesMap[gameID], gameID);
+    std::cout << "gameID " << gameID << std::endl;
+    std::cout << ss.str() << std::endl;
+    db->addMatch(clients[white].username, clients[black].username, res, movesMap[gameID], gameID, ss.str());
     db->updateELO(clients[white].username, clients[white].ELO);
     db->updateELO(clients[black].username, clients[black].ELO);
 
     movesMap.erase(gameID);
+
+    createRoom(white);
+    createRoom(black);
 }
 
 void randomMatch(int index) {
@@ -442,10 +455,10 @@ void promote(int index, Message* msg) {
     Message* rep2;
     switch(game->IsGameOver()) {
         case 0: {
-            rep1 = new Message(OK);
+            // rep1 = new Message(OK);
 
-            sendMessage(clients[playerMap[gameID].first].sockfd, rep1);
-            sendMessage(clients[playerMap[gameID].second].sockfd, rep2);
+            // sendMessage(clients[playerMap[gameID].first].sockfd, rep1);
+            // sendMessage(clients[playerMap[gameID].second].sockfd, rep2);
             break;
         }
         case 1: {
@@ -499,8 +512,8 @@ void promote(int index, Message* msg) {
         default: {}
     }
 
-    delete(rep1);
-    delete(rep2);
+    // delete(rep1);
+    // delete(rep2);
 }
 
 void offerDraw(int index) {

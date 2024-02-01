@@ -399,6 +399,7 @@ public:
                 if (MainGameBoard[row][col] != 0) {
                     if (MainGameBoard[row][col]->GetColor() != pieceColor) {
                         if (MainGameBoard[row][col]->IsLegalMove(row, col, kingRow, kingCol, MainGameBoard)) {
+                            isPromotion = false;
                             return true;
                         }
                     }
@@ -420,6 +421,7 @@ public:
                             for (int moveCol = 0; moveCol < 8; ++moveCol) {
                                 isCastle = false;
                                 if (MainGameBoard[row][col]->IsLegalMove(row, col, moveRow, moveCol, MainGameBoard)) {
+                                    isPromotion = false;
                                     if (isCastle && IsInCheck(pieceColor)) {
                                         continue;
                                     }

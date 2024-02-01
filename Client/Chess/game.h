@@ -5,6 +5,8 @@
 #include <QGraphicsView>
 #include <QPushButton>
 #include <QGridLayout>
+#include <QLabel>
+#include <QHBoxLayout>
 #include "chesssquare.h"
 #include "mainwindow.h"
 class MainWindow;
@@ -37,6 +39,11 @@ public:
     bool isTurn;
     int rowPr, colPr;
     int rowClicked, colClicked, rowCheck, colCheck;
+    QFrame* frOffer2;
+    QPushButton* btnYes2;
+    QPushButton* btnNo2;
+    QLabel* label;
+    QHBoxLayout* horizontalLayout_2;
 public slots:
     void chessSquareClicked(int row, int col);
 private slots:
@@ -58,6 +65,9 @@ private slots:
 
     void on_btnBack_clicked();
 
+    void onBtnYes2Clicked();
+
+    void onBtnNo2Clicked();
 private:
     QGraphicsScene *scene;
     QGraphicsView *view;

@@ -3,6 +3,7 @@
 #include "../gameplay.h"
 #include <QPointer>
 #include <QObject>
+#include <QSpacerItem>
 
 game::game(Side side, QString opponentName, MainWindow* mainwindow, QWidget *parent)
     : QWidget(parent)
@@ -46,6 +47,43 @@ game::game(Side side, QString opponentName, MainWindow* mainwindow, QWidget *par
     ui->frChessBoard->setLayout(chessboard);
     chessboard->setSpacing(0);
     chessboard->setContentsMargins(0, 0, 0, 0);
+
+    // Create frOffer
+    frOffer2 = new QFrame(this);  // 'parent' is the parent widget
+
+    frOffer2->setObjectName("frOffer2");
+    frOffer2->setGeometry(570, 640, 400, 70);
+    frOffer2->setStyleSheet("QFrame{background-color: #F4DCC5;}");
+    frOffer2->setVisible(false);
+
+    btnYes2 = new QPushButton(frOffer2);
+    btnYes2->setObjectName("btnYes2");
+    btnYes2->setMaximumSize(75, 21);
+    btnYes2->setText("Yes");
+    btnYes2->setStyleSheet("QPushButton{ border: none; color:black;background-color:#EF9A09;border-radius:10px; font-size: 18px; text-align: center } QPushButton:hover{background-color:#d98100}");
+    connect(btnYes2, SIGNAL(clicked()), this, SLOT(onBtnYes2Clicked()));
+
+    btnNo2 = new QPushButton(frOffer2);
+    btnNo2->setObjectName("btnNo2");
+    btnNo2->setMaximumSize(75, 21);
+    btnNo2->setText("No");
+    btnNo2->setStyleSheet("QPushButton{ border: none; color:black;background-color:#EF9A09;border-radius:10px; font-size: 18px; text-align: center } QPushButton:hover{background-color:#d98100}");
+    connect(btnNo2, SIGNAL(clicked()), this, SLOT(onBtnNo2Clicked()));
+
+    label = new QLabel(frOffer2);
+    label->setObjectName("label");
+    label->setText("Your opponent is offering draw");
+
+    horizontalLayout_2 = new QHBoxLayout(frOffer2);
+    horizontalLayout_2->setObjectName("horizontalLayout_2");
+    horizontalLayout_2->addWidget(label);
+    horizontalLayout_2->addWidget(btnYes2);
+    horizontalLayout_2->addWidget(btnNo2);
+
+    // Add a spacer
+    QSpacerItem* horizontalSpacer_2 = new QSpacerItem(15, 20, QSizePolicy::Maximum, QSizePolicy::Maximum);
+    horizontalLayout_2->addSpacerItem(horizontalSpacer_2);
+
 
     drawBoxes();
     setupBoard();
@@ -542,8 +580,8 @@ void game::handleEnPassant(ChessSquare* src, ChessSquare* dst) {
         if (side == BLACK) isPlayer = 0; // BW
         else isPlayer = 1; // WW
     } else {
-        if (side == BLACK) isPlayer = 3; // BB
-        else isPlayer = 4; // WB
+        if (side == BLACK) isPlayer = 2; // BB
+        else isPlayer = 3; // WB
     }
 
     if (src->getPiece() == PawnW) {
@@ -553,20 +591,20 @@ void game::handleEnPassant(ChessSquare* src, ChessSquare* dst) {
     }
 
     switch (isPlayer) {
-    case 0:
-        playerDead.append(PawnB);
+    case 2:
+        playerDead.append(PawnW);
         addDead(true);
         break;
-    case 1:
-        opponentDead.append(PawnB);
-        addDead(false);
-        break;
-    case 2:
+    case 3:
         opponentDead.append(PawnW);
         addDead(false);
         break;
-    case 3:
-        playerDead.append(PawnW);
+    case 0:
+        opponentDead.append(PawnB);
+        addDead(false);
+        break;
+    case 1:
+        playerDead.append(PawnB);
         addDead(true);
         break;
     }
@@ -610,3 +648,14 @@ void game::on_btnBack_clicked()
     mainwindow->switchScene(PLAYS);
 }
 
+void game::onBtnYes2Clicked() {
+    Message *msg = new Message(ACCEPT_DRAW);
+    mainwindow->sendMessage(msg);
+    frOffer2->setVisible(false);
+}
+
+void game::onBtnNo2Clicked() {
+    Message *msg = new Message(REJECT_DRAW);
+    mainwindow->sendMessage(msg);
+    frOffer2->setVisible(false);
+}
