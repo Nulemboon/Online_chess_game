@@ -102,7 +102,7 @@ void history::fetchData(std::vector<std::map<std::string, std::string>> newHisto
 
         // Get opponent name
         int sideMatch = match["whiteID"] == mainwindow->user.toStdString() ? 0 : 1; // 0 for White, 1 for Black
-        QString nameO = sideMatch == 1 ? QString::fromStdString(match["blackID"]) : QString::fromStdString(match["whiteID"]);
+        QString nameO = sideMatch == 1 ? QString::fromStdString(match["whiteID"]) : QString::fromStdString(match["blackID"]);
         item = new QTableWidgetItem(nameO);
         ui->historyView->setItem(count, 0, item);
 
